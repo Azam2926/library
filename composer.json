@@ -1,0 +1,38 @@
+{
+    "name": "azam2926/libms",
+    "description": "Library management system",
+    "keywords": ["yii2", "framework", "advanced", "libms"],
+    "homepage": "http://library.dev",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-bootstrap5": "^2.0",
+        "kartik-v/yii2-widget-fileinput": "^1.1",
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "yii-dream-team/yii2-upload-behavior": "*",
+        "ramsey/uuid": "^4.2",
+        "lesha724/yii2-youtube-widget": "*"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-gii": "~2.2.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "symfony/var-dumper": "^5.3"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
