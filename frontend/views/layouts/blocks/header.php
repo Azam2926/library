@@ -8,8 +8,8 @@ $title_publisher = Yii::$app->request->get('ResourceFilter')
         <!-- bottom bar -->
         <div class="g-py-20 d-flex flex-wrap justify-content-between">
             <div>
-                <a href="/">
-                    <img class="me-3" width="410" src="https://library.tiiame.uz/images/logo-tiiame-uz.png" alt="logo-tiiame-lib">
+                <a href="/" class="fs-2 fw-bold d-block" style="max-width: 400px">
+                    Buxoro tabiiy resurslarni boshqarish instituti
                 </a>
 
             </div>
