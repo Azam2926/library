@@ -47,19 +47,19 @@ class ResourceQuery extends ActiveQuery
         return $this->andWhere(['type_id' => $this->getVideosId()])->limit($limit);
     }
 
-    protected function getElectronsId(): int
+    protected function getElectronsId(): ?int
     {
-        return Type::findOne(['name' => self::ELECTRON_RESOURCES_NAME])->id;
+        return Type::findOne(['name' => self::ELECTRON_RESOURCES_NAME])?->id;
     }
 
-    private function getAudiosId(): int
+    private function getAudiosId(): ?int
     {
-        return Type::findOne(['name' => self::AUDIO_RESOURCES_NAME])->id;
+        return Type::findOne(['name' => self::AUDIO_RESOURCES_NAME])?->id;
     }
 
-    private function getVideosId(): int
+    private function getVideosId(): ?int
     {
-        return Type::findOne(['name' => self::VIDEO_RESOURCES_NAME])->id;
+        return Type::findOne(['name' => self::VIDEO_RESOURCES_NAME])?->id;
 
     }
 }

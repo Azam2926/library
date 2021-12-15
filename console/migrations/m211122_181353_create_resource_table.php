@@ -21,6 +21,7 @@ class m211122_181353_create_resource_table extends Migration
             'title' => $this->string()->notNull(),
             'description' => $this->text(),
             'file' => $this->string(),
+            'thumbnail' => $this->string(),
             'publisher' => $this->string(),
             'date' => $this->string(),
             'language' => $this->tinyInteger(),
