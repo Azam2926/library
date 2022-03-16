@@ -271,6 +271,12 @@ class Resource extends ActiveRecord
 
     }
 
+    public function beforeDelete()
+    {
+        $this->deleteResourceViews();
+        return parent::beforeDelete();
+    }
+
     public function afterDelete()
     {
         $this->removeFile();
@@ -391,6 +397,11 @@ class Resource extends ActiveRecord
 
         if (!$model->save())
             throw new \yii\db\Exception('something wrong!!');
+    }
+
+    private function deleteResourceViews()
+    {
+        ResourceViews::deleteAll(['resource_id' => $this->id]);
     }
 }
 
