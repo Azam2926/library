@@ -21,7 +21,7 @@ class Subject extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'Subject';
+        return 'subject';
     }
 
     public function rules(): array
