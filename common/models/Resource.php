@@ -148,7 +148,8 @@ class Resource extends ActiveRecord
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subject_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => Type::class, 'targetAttribute' => ['type_id' => 'id']],
             ['file', 'file'],
-            ['thumbnail', 'file', 'extensions' => 'jpeg, gif, jpg, png'],
+//            ['thumbnail', 'file', 'extensions' => 'jpeg, gif, jpg, png'],
+            ['thumbnail', 'file'],
         ];
     }
 
