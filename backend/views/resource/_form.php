@@ -58,7 +58,7 @@ JS, position: yii\web\View::POS_LOAD)
     ]); ?>
 
     <div class="row">
-        <div class="col alert alert-danger">
+        <div class="col">
             <?= Html::errorSummary($model) ?>
         </div>
     </div>
