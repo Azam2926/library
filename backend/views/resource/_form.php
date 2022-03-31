@@ -16,7 +16,7 @@ use yii\bootstrap5\Html;
 // default icons used in the plugin are from Bootstrap 5.x icon library (which can be enabled by loading CSS below)
 $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css', ['crossorigin' => 'anonymous']);
 
-$this->registerJs(<<<JS
+$this->registerJs(js: <<<JS
 function initFileFields() {
     $(".field-textandaudio").fadeOut('slow')
     $(".field-youtubevideo").fadeOut('slow')
@@ -47,7 +47,7 @@ $("#resource-type").on('change',function(e){
 });
 $("#resource-type").trigger('change')
 
-JS, yii\web\View::POS_LOAD)
+JS, position: yii\web\View::POS_LOAD)
 ?>
 <div class="resource-form">
 
@@ -58,7 +58,7 @@ JS, yii\web\View::POS_LOAD)
     ]); ?>
 
     <div class="row">
-        <div class="col">
+        <div class="col alert alert-danger">
             <?= Html::errorSummary($model) ?>
         </div>
     </div>
