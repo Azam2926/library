@@ -42,7 +42,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'resources' => 'site/resource',
+                'resources' => 'site/resources',
                 'resource/<uuid>' => 'site/resource',
                 'resource/<uuid>/view' => 'site/resource-view',
                 'resource/<uuid>/download' => 'site/resource-download'
