@@ -3,7 +3,7 @@ $title_publisher = Yii::$app->request->get('ResourceFilter')
     ? Yii::$app->request->get('ResourceFilter')['title_publisher']
     : '';
 ?>
-<header class="border-bottom p-2 sticky-lg-top bg-white">
+<header class="border-bottom p-2 bg-white">
     <div class="container">
         <!-- bottom bar -->
         <div class="g-py-20 d-flex flex-wrap justify-content-between">
@@ -43,12 +43,12 @@ $title_publisher = Yii::$app->request->get('ResourceFilter')
         <div class="container">
             <div class="row justify-content-around">
                 <div class="my-3 col-md-3">
-                    <a href="/site/resources" class="g-text-underline--none--hover ">
+                    <a href="/resources" class="g-text-underline--none--hover ">
                         <span class="g-pr-5 align-middle"><i class="fs-5 align-middle fas fa-bars text-light"></i></span>
                         <span class="text-white align-middle g-font-size-14">Resurslar katalogi</span>
                     </a>
                 </div>
-                <form class="d-flex align-items-center my-3 mx-0 search-box col-md-6" action="/site/resources">
+                <form class="d-flex align-items-center my-3 mx-0 search-box col-md-6" action="/resources">
                     <div class="input-group flex-nowrap">
                         <input id="title_publisher" type="text" class="form-control" name="ResourceFilter[title_publisher]"
                                value="<?= $title_publisher ?>"
