@@ -77,12 +77,13 @@ class SiteController extends Controller
 
     public function actionIndex(): string
     {
+        $new_resource_counter = 5;
         return $this->render('index', [
-            'new_resources' => Resource::find()->news(6)->all(),
+            'new_resources' => Resource::find()->news($new_resource_counter)->all(),
             'statistics' => (new Stats())->getStats(),
-            'new_electron_resources' => Resource::find()->with('types')->newEelectrons(6)->all(),
-            'new_audio_resources' => Resource::find()->with('types')->newAudios(6)->all(),
-            'new_video_resources' => Resource::find()->with('types')->newVideos(6)->all(),
+            'new_electron_resources' => Resource::find()->with('types')->newEelectrons($new_resource_counter)->all(),
+            'new_audio_resources' => Resource::find()->with('types')->newAudios($new_resource_counter)->all(),
+            'new_video_resources' => Resource::find()->with('types')->newVideos($new_resource_counter)->all(),
         ]);
     }
 
