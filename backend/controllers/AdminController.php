@@ -20,7 +20,7 @@ class AdminController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['resource', 'subject', 'type', 'subject', 'site/logout', 'site/index'],
+                        'controllers' => ['resource', 'subject', 'type', 'subject', 'site/logout', 'site/index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
