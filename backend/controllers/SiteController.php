@@ -44,7 +44,7 @@ class SiteController extends AdminController
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-                'layout' => 'login'
+                'layout' => 'blank'
             ],
         ];
     }
