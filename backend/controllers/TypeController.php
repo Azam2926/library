@@ -11,18 +11,18 @@ use yii\filters\VerbFilter;
 /**
  * TypeController implements the CRUD actions for Type model.
  */
-class TypeController extends Controller
+class TypeController extends AdminController
 {
     /**
      * @inheritDoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],

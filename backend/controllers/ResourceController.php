@@ -13,18 +13,18 @@ use yii\web\Response;
 /**
  * ResourceController implements the CRUD actions for Resource model.
  */
-class ResourceController extends Controller
+class ResourceController extends AdminController
 {
     /**
      * @inheritDoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],

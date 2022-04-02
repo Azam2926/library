@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -12,41 +14,32 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends AdminController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    #[ArrayShape(['verbs' => "array"])]
+    public function behaviors(): array
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::class,
+                    'actions' => [
+                        'logout' => ['post'],
                     ],
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+            ]
+        );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function actions()
+    #[ArrayShape(['error' => "string[]"])]
+    public function actions(): array
     {
         return [
             'error' => [
