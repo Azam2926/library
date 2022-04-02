@@ -237,6 +237,15 @@ class Resource extends ActiveRecord
         }
     }
 
+    public function removeThumb()
+    {
+        try {
+            FileHelper::removeDirectory(Yii::getAlias('@webroot/uploads/resource/thumbs/' . $this->id));
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+    }
+
     public function showFile(): ?string
     {
         if (!$this->file)
@@ -282,6 +291,7 @@ class Resource extends ActiveRecord
     public function afterDelete()
     {
         $this->removeFile();
+        $this->removeThumb();
     }
 
     public function isTypeAudio(): bool
