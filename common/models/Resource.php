@@ -275,6 +275,7 @@ class Resource extends ActiveRecord
     public function beforeDelete()
     {
         $this->deleteResourceViews();
+        $this->deleteResourceDownloads();
         return parent::beforeDelete();
     }
 
@@ -403,6 +404,11 @@ class Resource extends ActiveRecord
     private function deleteResourceViews()
     {
         ResourceViews::deleteAll(['resource_id' => $this->id]);
+    }
+
+    private function deleteResourceDownloads()
+    {
+        ResourceDownloads::deleteAll(['resource_id' => $this->id]);
     }
 }
 
