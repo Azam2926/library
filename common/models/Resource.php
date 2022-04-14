@@ -53,7 +53,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  */
 class Resource extends ActiveRecord
 {
-    const TRUNCATE_TEXT_NUMBER = 40;
+    const TRUNCATE_TEXT_NUMBER = 35;
 
     const NON_OPEN_ACCESS = 0;
     const OPEN_ACCESS = 1;
