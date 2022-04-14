@@ -420,5 +420,14 @@ class Resource extends ActiveRecord
     {
         ResourceDownloads::deleteAll(['resource_id' => $this->id]);
     }
+
+    public function getFirstTwoPublisher(): string
+    {
+        $publishers = StringHelper::explode($this->publisher, ',');
+        if (count($publishers) > 2)
+            return $publishers[0] . ', ' . $publishers[1];
+
+        return $this->publisher;
+    }
 }
 
