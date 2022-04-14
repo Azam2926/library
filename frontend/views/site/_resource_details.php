@@ -35,7 +35,7 @@ use yii\web\View;
         <strong><?= $resource->getAttributeLabel('date') ?></strong>
     </div>
     <div class="col-md-9">
-        <span><?= $resource->getYearFromDate() ?></span>
+        <span><?= $resource->date ?></span>
     </div>
 
     <div class="col-md-3">

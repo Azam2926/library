@@ -337,7 +337,7 @@ class Resource extends ActiveRecord
         if (!$this->date)
             return '';
 
-        return StringHelper::explode($this->date, '-')[2];
+        return StringHelper::explode($this->date, '-')[0];
     }
 
     #[Pure]
