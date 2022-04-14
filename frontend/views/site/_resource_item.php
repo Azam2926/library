@@ -10,17 +10,18 @@ use yii\web\View;
 <div class="card shadow">
     <?= $model->showAccess() ?>
     <a href="/resource/<?= $model->uuid ?>">
-        <img title="<?= $model->title ?>" style="border-radius: unset" src="<?= $model->getUploadedFileUrlFromFrontend('thumbnail') ?>" height="270" class="card-img-top" alt="<?= $model->title ?>">
+        <img title="<?= $model->title ?>" style="border-radius: unset" src="<?= $model->getUploadedFileUrlFromFrontend('thumbnail') ?>" height="270" class="card-img-top"
+             alt="<?= $model->title ?>">
     </a>
     <div class="card-body">
-        <div class="d-flex flex-column justify-content-between" style="min-height: 89px">
+        <div class="d-flex flex-column justify-content-between" style="min-height: 90px;">
             <a href="/resource/<?= $model->uuid ?>">
                 <h5 class="card-title fw-bold" title="<?= $model->title ?>" style="word-break: break-word; font-size: 16px">
                     <?= StringHelper::truncate($model->title, Resource::TRUNCATE_TEXT_NUMBER) ?>
                 </h5>
             </a>
-            <p class="m-0"><?= $model->getFirstTwoPublisher() ?></p>
         </div>
+        <p class="mb-1" style="min-height: 50px"><?= $model->getFirstTwoPublisher() ?></p>
         <p class="card-text"><?= $model->showType() ?></p>
         <a href="/resource/<?= $model->uuid ?>" class="d-block btn bg-primary-color text-white">Batafsil</a>
     </div>

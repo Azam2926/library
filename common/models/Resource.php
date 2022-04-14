@@ -305,9 +305,9 @@ class Resource extends ActiveRecord
     public function showType(): string
     {
         return match ($this->type) {
-            Resource::TYPE_YOUTUBEVIDEO => "<p><i class='fab fa-youtube me-1'></i>Video</p>",
-            Resource::TYPE_AUDIO => "<p><i class='far fa-headphones me-1'></i>Audio</p>",
-            Resource::TYPE_TEXT => "<p><i class='far fa-book me-1'></i>" . $this->types->name . "</p>",
+            Resource::TYPE_YOUTUBEVIDEO => "<i class='fab fa-youtube me-1'></i>Video",
+            Resource::TYPE_AUDIO => "<i class='far fa-headphones me-1'></i>Audio",
+            Resource::TYPE_TEXT => "<i class='far fa-book me-1'></i>" . $this->types->name,
             default => 'default'
         };
     }
