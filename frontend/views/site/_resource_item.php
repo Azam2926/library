@@ -14,14 +14,14 @@ use yii\web\View;
              alt="<?= $model->title ?>">
     </a>
     <div class="card-body">
-        <div class="d-flex flex-column justify-content-between" style="min-height: 90px;">
+        <div class="d-flex flex-column justify-content-between" style="min-height: 70px;">
             <a href="/resource/<?= $model->uuid ?>">
-                <h5 class="card-title fw-bold" title="<?= $model->title ?>" style="word-break: break-word; font-size: 16px">
+                <h5 class="card-title fw-bold" title="<?= $model->title ?>" style="word-break: break-word; font-size: 14px">
                     <?= StringHelper::truncate($model->title, Resource::TRUNCATE_TEXT_NUMBER) ?>
                 </h5>
             </a>
         </div>
-        <p class="mb-1" style="min-height: 50px"><?= $model->getFirstTwoPublisher() ?></p>
+        <p class="mb-1" style="min-height: 40px; font-size: 13px"><?= $model->getFirstTwoPublisher() ?></p>
         <p class="card-text"><?= $model->showType() ?></p>
         <a href="/resource/<?= $model->uuid ?>" class="d-block btn bg-primary-color text-white">Batafsil</a>
     </div>
