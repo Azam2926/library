@@ -50,4 +50,14 @@ class Subject extends ActiveRecord
     {
         return self::find()->select('name')->indexBy('id')->column();
     }
+
+    public function beforeDelete(): bool
+    {
+        if (parent::beforeDelete()) {
+            Resource::deleteAll(['subject_id' => $this->id]);
+            return true;
+        }
+
+        return parent::beforeDelete();
+    }
 }
