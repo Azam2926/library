@@ -53,11 +53,7 @@ class Subject extends ActiveRecord
 
     public function beforeDelete(): bool
     {
-        if (parent::beforeDelete()) {
-            Resource::deleteAll(['subject_id' => $this->id]);
-            return true;
-        }
-
+        Resource::deleteAll(['subject_id' => $this->id]);
         return parent::beforeDelete();
     }
 }
