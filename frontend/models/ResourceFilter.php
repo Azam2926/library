@@ -18,7 +18,7 @@ use yii\helpers\ArrayHelper;
  */
 class ResourceFilter extends Model
 {
-    const PAGE_SIZE = 8;
+    const PAGE_SIZE = 16;
     public string $title_publisher = '';
 
     public mixed $subjects = [];
