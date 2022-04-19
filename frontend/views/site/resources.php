@@ -16,7 +16,8 @@ $this->title = 'Resurslar';
     <?php Pjax::begin([
         'id' => 'resource_pjax',
         'options' => ['class' => 'container'],
-        'clientOptions' => ['container' => '#resources-list']
+        'clientOptions' => ['container' => '#resources-list'],
+        'timeout' => 3000
     ]) ?>
 
     <div class="row">
