@@ -47,7 +47,7 @@ JS, 3)
 
 
 <?= Accordion::widget([
-    'itemToggleOptions' => ['class' => 'fs-5 text-black'],
+    'itemToggleOptions' => ['class' => 'fs-6 text-black'],
     'items' => [
         [
             'label' => $filterModel->getAttributeLabel('subjects'),
