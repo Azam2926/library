@@ -9,7 +9,7 @@ use yii\db\ActiveQuery;
 class ResourceQuery extends ActiveQuery
 {
     const ELECTRON_RESOURCES_NAME = 'Elektron kitob';
-    const AUDIO_RESOURCES_NAME = 'Audio Kitob';
+    const AUDIO_RESOURCES_NAME = 'Audio kitob';
     const VIDEO_RESOURCES_NAME = 'Video darslik';
 
     public function all($db = null): array
@@ -32,7 +32,7 @@ class ResourceQuery extends ActiveQuery
         return $this->andWhere(['uuid' => $uuid]);
     }
 
-    public function newEelectrons(int $limit): ResourceQuery
+    public function newElectrons(int $limit): ResourceQuery
     {
         return $this->andWhere(['type_id' => $this->getElectronsId()])->limit($limit);
     }

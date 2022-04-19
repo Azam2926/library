@@ -81,7 +81,7 @@ class SiteController extends Controller
         return $this->render('index', [
             'new_resources' => Resource::find()->news($new_resource_counter)->all(),
             'statistics' => (new Stats())->getStats(),
-            'new_electron_resources' => Resource::find()->with('types')->newEelectrons($new_resource_counter)->all(),
+            'new_electron_resources' => Resource::find()->with('types')->newElectrons($new_resource_counter)->all(),
             'new_audio_resources' => Resource::find()->with('types')->newAudios($new_resource_counter)->all(),
             'new_video_resources' => Resource::find()->with('types')->newVideos($new_resource_counter)->all(),
         ]);
