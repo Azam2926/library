@@ -35,9 +35,9 @@ class ResourceController extends AdminController
 
     /**
      * Lists all Resource models.
-     * @return mixed
+     * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new ResourceSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
