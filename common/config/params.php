@@ -8,6 +8,7 @@ return [
     'user.passwordMinLength' => 8,
     'bsVersion' => '5.x',
 
-    'curl' => 'http://c.library.dev',
+//    'curl' => 'http://c.library.dev',
+    'curl' => 'http://library-uz-fcd4264270e0.herokuapp.com/backend',
     ''
 ];
