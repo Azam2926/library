@@ -75,7 +75,7 @@ JS, position: yii\web\View::POS_LOAD)
         </div>
     </div>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'value' => 'Title has been created at ' . date_format(new DateTime(), 'Y-m-d H:i::s')]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'value' => $model->title ?: 'Title has been created at ' . date_format(new DateTime(), 'Y-m-d H:i::s')]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6, 'value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda dolores dolorum earum explicabo ipsam laboriosam maxime, minus necessitatibus quam, reprehenderit, tempora. Doloremque impedit laboriosam possimus sit tempora, ut. Earum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda dolores dolorum earum explicabo ipsam laboriosam maxime, minus necessitatibus quam, reprehenderit, tempora. Doloremque impedit laboriosam possimus sit tempora, ut. Earum.']) ?>
 
