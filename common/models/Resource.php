@@ -39,6 +39,11 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int|null $open_access
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property float|null $price
+ * @property string|null $discount_type
+ * @property float|null $discount_value
+ * @property int|null $count
+ * @property int|null $status
  *
  * @property ResourceDownloads $resourceDownload
  * @property ResourceViews $resourceView
@@ -66,8 +71,21 @@ class Resource extends ActiveRecord
     const LANG_RU = 1;
     const LANG_EN = 2;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_IN_ACTIVE = 2;
+
     public int $popularity = 0;
     public ?string $youtubelink = '';
+
+    #[ArrayShape([self::STATUS_ACTIVE => "string", self::STATUS_IN_ACTIVE => "string"])]
+    public static function getStatus(): array
+    {
+        return [
+            self::STATUS_ACTIVE => 'Faol',
+            self::STATUS_IN_ACTIVE => 'Faol emas',
+        ];
+    }
+
 
     #[ArrayShape([self::OPEN_ACCESS => "string", self::NON_OPEN_ACCESS => "string"])]
     public static function getAccessList(): array
@@ -140,10 +158,11 @@ class Resource extends ActiveRecord
     {
         return [
             [['subject_id', 'title'], 'required'],
-            [['subject_id', 'type_id', 'language', 'type', 'open_access', 'created_at', 'updated_at'], 'integer'],
+            [['discount_value', 'price'], 'float'],
+            [['subject_id', 'type_id', 'language', 'type', 'open_access', 'created_at', 'updated_at', 'count', 'status'], 'integer'],
             [['description', 'youtubelink'], 'string'],
             [['uuid'], 'string', 'max' => 36],
-            [['title', 'publisher', 'date'], 'string', 'max' => 255],
+            [['title', 'publisher', 'date', 'discount_type'], 'string', 'max' => 255],
             [['uuid'], 'unique'],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subject_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => Type::class, 'targetAttribute' => ['type_id' => 'id']],
@@ -171,7 +190,11 @@ class Resource extends ActiveRecord
             'open_access' => 'Ruxsat',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-
+            'status' => 'Status',
+            'price' => 'Price',
+            'discount_value' => 'Discount Value',
+            'discount_type' => 'Discount Type',
+            'count' => 'Count',
             'format' => 'Format',
             'size' => 'Hajmi'
         ];
