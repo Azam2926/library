@@ -1,65 +1,128 @@
-<?php
-$title_publisher = Yii::$app->request->get('ResourceFilter')
-    ? Yii::$app->request->get('ResourceFilter')['title_publisher']
-    : '';
-?>
-<header class="border-bottom p-2 bg-white">
-    <div class="container">
-        <!-- bottom bar -->
-        <div class="g-py-20 d-flex flex-wrap justify-content-between">
-            <div>
-                <a href="/" class="fs-2 fw-bold d-block" style="max-width: 400px">
-                    Buxoro tabiiy resurslarni boshqarish instituti
-                </a>
+<header id="header" class="header-size-md dark transparent-header" data-sticky-shrink="false"
+        data-sticky-class="not-dark">
+    <div id="header-wrap">
+        <div class="container-fluid">
+            <div class="header-row justify-content-lg-between">
 
-            </div>
-            <div class="d-flex align-self-center mt-2 mt-lg-0 flex-wrap">
-                <a href="mailto:eldor@tiiame.uz" class="g-color-gray-dark-v2 g-text-underline--none--hover">
-                    <div class="g-me-25 my-1 d-flex">
-                        <div class="me-2 align-self-center"><i class="fs-2 far fa-envelope"></i></div>
-                        <div class="me-4">
-                            <div class="g-line-height-1_2">eldor@tiiame.uz</div>
-                            <div class="g-line-height-1_2"><strong class="clearfix">Email</strong></div>
-                        </div>
-                    </div>
-                </a>
-                <a href="tel:+998901752102" class="g-color-gray-dark-v2 g-text-underline--none--hover">
-                    <div class="my-1 d-flex">
-                        <div class="me-2 align-self-center"><i class="fs-2 fal fa-mobile-android"></i></div>
-                        <div class="me-4">
-                            <div class="g-line-height-1_2">+99890 175-21-02</div>
-                            <div class="g-line-height-1_2"><strong class="clearfix">Telefon</strong></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <!-- end of bottom bar -->
-    </div>
-</header>
-
-<div class="container">
-    <div class="search-bar rounded-bottom">
-        <div class="container">
-            <div class="row justify-content-around">
-                <div class="my-3 col-md-3">
-                    <a href="/resources" class="g-text-underline--none--hover ">
-                        <span class="g-pr-5 align-middle"><i class="fs-5 align-middle fas fa-bars text-light"></i></span>
-                        <span class="text-white align-middle g-font-size-14">Resurslar katalogi</span>
+                <!-- Logo
+                ============================================= -->
+                <div id="logo" class="me-lg-auto me-0 order-lg-2 col-lg-auto">
+                    <a href="demo-shop-2.html">
+                        <img class="logo-default"
+                             srcset="canvas/demos/shop-2/images/logo.png, canvas/demos/shop-2/images/logo@2x.png 2x"
+                             src="canvas/demos/shop-2/images/logo@2x.png" alt="Canvas Logo">
+                        <img class="logo-dark"
+                             srcset="canvas/demos/shop-2/images/logo-dark.png, canvas/demos/shop-2/images/logo-dark@2x.png 2x"
+                             src="canvas/demos/shop-2/images/logo-dark@2x.png" alt="Canvas Logo">
                     </a>
+                </div><!-- #logo end -->
+
+                <!-- Primary Navigation
+                ============================================= -->
+                <nav class="primary-menu me-lg-0 order-lg-3 order-5">
+
+                    <!-- Menu Left -->
+                    <ul class="menu-container">
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>FAQs</div>
+                            </a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>Journal</div>
+                            </a></li><!-- .mega-menu end -->
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>Contact</div>
+                            </a></li>
+                    </ul>
+
+                </nav><!-- #primary-menu end -->
+
+                <div class="header-misc col-lg-auto order-lg-4 ms-auto ms-lg-0 justify-content-lg-end ">
+
+                    <!-- Top Login
+                    ============================================= -->
+                    <div id="top-account" class="header-misc-icon px-3">
+                        <a href="#"><i class="bi-people"></i></a>
+                    </div><!-- #top-search end -->
+
+                    <!-- Top Cart
+                    ============================================= -->
+                    <div id="top-cart" class="header-misc-icon">
+                        <a href="#" id="top-cart-trigger"><i class="uil uil-shopping-bag"></i></a>
+                        <div class="top-cart-content">
+                            <div class="top-cart-title">
+                                <h4 class="text-dark">Shopping Cart</h4>
+                            </div>
+                            <div class="top-cart-items">
+                                <div class="top-cart-item">
+                                    <div class="top-cart-item-image">
+                                        <a href="#"><img src="canvas/demos/shop-2/images/cart-thumb-1.jpg"
+                                                         alt="Black Monk Table Jar"></a>
+                                    </div>
+                                    <div class="top-cart-item-desc">
+                                        <div class="top-cart-item-desc-title">
+                                            <a href="#" class="fw-normal">Black Monk Table Jar</a>
+                                            <span class="top-cart-item-price d-block">$129.00</span>
+                                        </div>
+                                        <div class="top-cart-item-quantity fw-semibold">x 1</div>
+                                    </div>
+                                </div>
+                                <div class="top-cart-item">
+                                    <div class="top-cart-item-image">
+                                        <a href="#" class="fw-normal"><img src="canvas/demos/shop-2/images/cart-thumb-2.jpg"
+                                                                           alt="White Big Showcase Jar"></a>
+                                    </div>
+                                    <div class="top-cart-item-desc">
+                                        <div class="top-cart-item-desc-title">
+                                            <a href="#" class="fw-normal">White Big Showcase Jar</a>
+                                            <span class="top-cart-item-price d-block">$299.99</span>
+                                        </div>
+                                        <div class="top-cart-item-quantity fw-semibold">x 1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="top-cart-action">
+                                <span class="top-checkout-price fw-semibold text-dark">$429.98</span>
+                                <button class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
+                                    View Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div><!-- #top-cart end -->
                 </div>
-                <form class="d-flex align-items-center my-3 mx-0 search-box col-md-6" action="/resources">
-                    <div class="input-group flex-nowrap">
-                        <input id="title_publisher" type="text" class="form-control" name="ResourceFilter[title_publisher]"
-                               value="<?= $title_publisher ?>"
-                               placeholder="Sarlavha yoki muallif bo‘yicha qidirish"
-                        >
-                        <button id="title_publisher-trigger" type="submit" class="input-group-text bg-secondary-color text-white pointer-event">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </form>
+
+                <div class="primary-menu-trigger">
+                    <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
+                        <span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
+                    </button>
+                </div>
+
+                <!-- Primary Navigation
+                ============================================= -->
+                <nav class="primary-menu with-arrows col-lg-auto me-lg-auto order-lg-1">
+
+                    <!-- Menu Left -->
+                    <ul class="menu-container">
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>Home</div>
+                            </a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>Products</div>
+                            </a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>New Arrivals</div>
+                            </a></li>
+                        <li class="menu-item"><a class="menu-link" href="#">
+                                <div>Offers</div>
+                            </a></li>
+                    </ul>
+
+                </nav><!-- #primary-menu end -->
+
             </div>
+
         </div>
+
     </div>
-</div>
+    <div class="header-wrap-clone"></div>
+
+</header>
