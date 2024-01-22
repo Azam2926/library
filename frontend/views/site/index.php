@@ -12,34 +12,7 @@ use frontend\components\Stats;
 
 $this->title = 'Library app';
 ?>
-<div class="site-index">
-
-    <div class="new-resources py-5 my-3">
-        <?= $this->render('_new_resources', ['title' => 'Yangi resurslar',
-            'resources' => $new_resources
-        ]) ?>
-    </div>
-
-    <div class="container statistics py-5 my-3">
-        <?= $this->render('_statistics', ['statistics' => $statistics]) ?>
-    </div>
-
-    <div class="new-resources py-5 my-3">
-        <?= $this->render('_new_resources', ['title' => 'Yangi elektron kitoblar',
-            'resources' => $new_electron_resources
-        ]) ?>
-    </div>
-
-    <div class="new-resources py-5 my-3">
-        <?= $this->render('_new_resources', ['title' => 'Yangi audio kitoblar',
-            'resources' => $new_audio_resources
-        ]) ?>
-    </div>
-
-    <div class="new-resources py-5 my-3">
-        <?= $this->render('_new_resources', ['title' => 'Yangi videolar',
-            'resources' => $new_video_resources
-        ]) ?>
-    </div>
-
-</div>
+<?= $this->render('blocks/index/features') ?>
+<?= $this->render('blocks/index/featured_books') ?>
+<?= $this->render('blocks/index/new_books') ?>
+<?= $this->render('blocks/index/links') ?>
