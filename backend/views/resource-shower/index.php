@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use common\helpers\ResourceShowerHelper;
 
 /** @var yii\web\View $this */
 /** @var backend\models\ResourceShowerSearch $searchModel */
@@ -29,9 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'resource_id',
-            'type',
+//            'id',
+            [
+                'attribute' => 'resource_id',
+                'value' => fn($model) => $model->resource->title
+            ],
+            [
+                'attribute' => 'type',
+                'value' => fn($model) => ResourceShowerHelper::getPosition($model->type)
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, ResourceShower $model, $key, $index, $column) {

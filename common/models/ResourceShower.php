@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\querys\ResourceQuery;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "resource_shower".
@@ -54,7 +56,7 @@ class ResourceShower extends \yii\db\ActiveRecord
      */
     public function getResource()
     {
-        return $this->hasOne(Resource::class, ['id' => 'resource_id'])->inverseOf('resourceShowers');
+        return $this->hasOne(Resource::class, ['id' => 'resource_id']);
     }
 
     /**

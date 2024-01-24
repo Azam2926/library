@@ -158,7 +158,7 @@ class Resource extends ActiveRecord
     {
         return [
             [['subject_id', 'title'], 'required'],
-            [['discount_value', 'price'], 'float'],
+            [['discount_value', 'price'], 'safe'],
             [['subject_id', 'type_id', 'language', 'type', 'open_access', 'created_at', 'updated_at', 'count', 'status'], 'integer'],
             [['description', 'youtubelink'], 'string'],
             [['uuid'], 'string', 'max' => 36],

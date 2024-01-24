@@ -15,7 +15,8 @@
         "kartik-v/yii2-widget-datepicker": "dev-master",
         "yii-dream-team/yii2-upload-behavior": "*",
         "ramsey/uuid": "^4.2",
-        "lesha724/yii2-youtube-widget": "*"
+        "lesha724/yii2-youtube-widget": "*",
+        "kartik-v/yii2-widget-select2": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

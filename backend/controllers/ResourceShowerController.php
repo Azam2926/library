@@ -2,8 +2,15 @@
 
 namespace backend\controllers;
 
+use backend\dto\ResourceShowerCreateDTO;
+use backend\form\ResourceShowerForm;
+use backend\repositories\ResourceShowerRepository;
+use backend\service\ResourceShowerService;
+use common\helpers\ResourceShowerHelper;
+use common\models\enum\ResourceShowerEnum;
 use common\models\ResourceShower;
 use backend\models\ResourceShowerSearch;
+use ReflectionClass;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,6 +20,17 @@ use yii\filters\VerbFilter;
  */
 class ResourceShowerController extends Controller
 {
+
+    public $resourceShowerRepository;
+    public $resourceShowerService;
+
+    public function __construct($id, $module,ResourceShowerService $resourceShowerService, ResourceShowerRepository $resourceShowerRepository, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->resourceShowerRepository = $resourceShowerRepository;
+        $this->resourceShowerService = $resourceShowerService;
+    }
+
     /**
      * @inheritDoc
      */
@@ -69,16 +87,23 @@ class ResourceShowerController extends Controller
     {
         $model = new ResourceShower();
 
+        $createForm = new ResourceShowerForm();
+
+
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($createForm->load($this->request->post())) {
+                $this->resourceShowerService->create($createForm);
+                return $this->redirect('index');
             }
-        } else {
-            $model->loadDefaultValues();
         }
+//        else {
+//            $model->loadDefaultValues();
+//        }
 
         return $this->render('create', [
-            'model' => $model,
+            'createForm' => $createForm,
+            'resources' => $this->resourceShowerRepository->getResourceList(),
+//            'positionList' => ResourceShowerHelper::getPositionList(),
         ]);
     }
 

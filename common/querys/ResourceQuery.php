@@ -62,4 +62,9 @@ class ResourceQuery extends ActiveQuery
         return Type::findOne(['name' => self::VIDEO_RESOURCES_NAME])?->id;
 
     }
+
+    public function active(): ResourceQuery
+    {
+        return $this->where(['status' => Resource::STATUS_ACTIVE]);
+    }
 }
