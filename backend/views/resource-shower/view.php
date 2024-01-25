@@ -1,12 +1,15 @@
 <?php
 
+use common\helpers\ResourceShowerHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\ResourceShower;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\ResourceShower $model */
+/** @var View $this */
+/** @var ResourceShower $model */
 
-$this->title = $model->id;
+$this->title = $model->resource->title;
 $this->params['breadcrumbs'][] = ['label' => 'Resource Showers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -30,8 +33,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'resource_id',
-            'type',
+            [
+                'attribute' => 'resource_id',
+                'value' => fn($model) => $model->resource->title
+            ],
+            [
+                'attribute' => 'type',
+                'value' => fn($model) => ResourceShowerHelper::positionName($model->type)
+            ],
         ],
     ]) ?>
 

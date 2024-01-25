@@ -6,10 +6,13 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use common\helpers\ResourceShowerHelper;
+use backend\models\ResourceShowerSearch;
+use yii\web\View;
+use yii\data\ActiveDataProvider;
 
-/** @var yii\web\View $this */
-/** @var backend\models\ResourceShowerSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var View $this */
+/** @var ResourceShowerSearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 
 $this->title = 'Resource Showers';
 $this->params['breadcrumbs'][] = $this->title;
@@ -37,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'type',
-                'value' => fn($model) => ResourceShowerHelper::getPosition($model->type)
+                'value' => fn($model) => ResourceShowerHelper::positionName($model->type)
             ],
             [
                 'class' => ActionColumn::className(),

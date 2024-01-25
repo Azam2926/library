@@ -67,4 +67,9 @@ class ResourceQuery extends ActiveQuery
     {
         return $this->where(['status' => Resource::STATUS_ACTIVE]);
     }
+
+    public function findById($id): ResourceQuery
+    {
+        return $this->andWhere(['id' => $id]);
+    }
 }

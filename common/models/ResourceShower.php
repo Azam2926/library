@@ -17,6 +17,11 @@ use yii\db\ActiveQuery;
  */
 class ResourceShower extends \yii\db\ActiveRecord
 {
+
+    const SLIDER = 1;
+    const FEATURE = 2;
+    const ARCHIVED = 3;
+
     /**
      * {@inheritdoc}
      */

@@ -3,14 +3,29 @@
 namespace backend\repositories;
 
 
-use common\models\Resource;
-use yii\helpers\ArrayHelper;
+use common\models\ResourceShower;
+use yii\db\Exception;
 
 class ResourceShowerRepository
 {
-    public function getResourceList()
+    public function findByid($id)
     {
-        return  ArrayHelper::map(Resource::find()->active()->asArray()->all(),'id', 'title');
+        $model = ResourceShower::find()->findById($id)->one();
+        if(!$model){
+            throw new Exception("Resource not found");
+        }
+
+        return $model;
+    }
+
+    public function findByType($type)
+    {
+        $model = ResourceShower::find()->findById($id)->one();
+        if(!$model){
+            throw new Exception("Resource not found");
+        }
+
+        return $model;
     }
 
 }

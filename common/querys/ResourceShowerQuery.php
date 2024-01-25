@@ -2,21 +2,20 @@
 
 namespace common\querys;
 
+use common\models\ResourceShower;
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[\common\models\ResourceShower]].
  *
- * @see \common\models\ResourceShower
+ * @see ResourceShower
  */
-class ResourceShowerQuery extends \yii\db\ActiveQuery
+class ResourceShowerQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
 
     /**
      * {@inheritdoc}
-     * @return \common\models\ResourceShower[]|array
+     * @return ResourceShower[]|array
      */
     public function all($db = null)
     {
@@ -25,10 +24,15 @@ class ResourceShowerQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return \common\models\ResourceShower|array|null
+     * @return ResourceShower|array|null
      */
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    public function findById($id): ResourceShowerQuery
+    {
+        return $this->andWhere(['id' => $id]);
     }
 }

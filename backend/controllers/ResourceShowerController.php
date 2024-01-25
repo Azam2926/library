@@ -2,15 +2,13 @@
 
 namespace backend\controllers;
 
-use backend\dto\ResourceShowerCreateDTO;
-use backend\form\ResourceShowerForm;
+use backend\form\ResourceShowerCreateForm;
+use backend\form\ResourceShowerUpdateForm;
+use backend\repositories\ResourceRepository;
 use backend\repositories\ResourceShowerRepository;
 use backend\service\ResourceShowerService;
-use common\helpers\ResourceShowerHelper;
-use common\models\enum\ResourceShowerEnum;
 use common\models\ResourceShower;
 use backend\models\ResourceShowerSearch;
-use ReflectionClass;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,14 +18,19 @@ use yii\filters\VerbFilter;
  */
 class ResourceShowerController extends Controller
 {
+    public ResourceShowerRepository $resourceShowerRepository;
+    public ResourceRepository $resourceRepository;
+    public ResourceShowerService $resourceShowerService;
 
-    public $resourceShowerRepository;
-    public $resourceShowerService;
-
-    public function __construct($id, $module,ResourceShowerService $resourceShowerService, ResourceShowerRepository $resourceShowerRepository, $config = [])
+    public function __construct($id, $module,
+                                ResourceShowerService $resourceShowerService,
+                                ResourceShowerRepository $resourceShowerRepository,
+                                ResourceRepository $resourceRepository,
+                                $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->resourceShowerRepository = $resourceShowerRepository;
+        $this->resourceRepository = $resourceRepository;
         $this->resourceShowerService = $resourceShowerService;
     }
 
@@ -51,7 +54,6 @@ class ResourceShowerController extends Controller
 
     /**
      * Lists all ResourceShower models.
-     *
      * @return string
      */
     public function actionIndex()
@@ -74,7 +76,7 @@ class ResourceShowerController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->resourceShowerRepository->findByid($id),
         ]);
     }
 
@@ -85,10 +87,10 @@ class ResourceShowerController extends Controller
      */
     public function actionCreate()
     {
+        $createForm = new ResourceShowerCreateForm();
         $model = new ResourceShower();
 
-        $createForm = new ResourceShowerForm();
-
+//        dd($createForm->load($this->request->post()));
 
         if ($this->request->isPost) {
             if ($createForm->load($this->request->post())) {
@@ -96,14 +98,11 @@ class ResourceShowerController extends Controller
                 return $this->redirect('index');
             }
         }
-//        else {
-//            $model->loadDefaultValues();
-//        }
 
         return $this->render('create', [
+            'model' => $model,
             'createForm' => $createForm,
-            'resources' => $this->resourceShowerRepository->getResourceList(),
-//            'positionList' => ResourceShowerHelper::getPositionList(),
+            'resources' => $this->resourceRepository->getResourceList(),
         ]);
     }
 
@@ -116,14 +115,22 @@ class ResourceShowerController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $createForm = new ResourceShowerCreateForm();
+        $model = $this->resourceShowerRepository->findByid($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+//        dd($this->request->post());
+
+        if($this->request->isPost){
+            if($createForm->load($this->request->post())){
+                $this->resourceShowerService->update($createForm);
+                return $this->redirect('index');
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'createForm' => $createForm,
+            'resources' => $this->resourceRepository->getResourceList(),
         ]);
     }
 

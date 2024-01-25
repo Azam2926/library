@@ -1,12 +1,15 @@
 <?php
 
 use yii\helpers\Html;
+use backend\form\ResourceShowerCreateForm;
+use common\models\ResourceShower;
+use  yii\web\View;
+use common\models\Resource;
 
-/** @var yii\web\View $this */
-/** @var common\models\ResourceShower $model */
-/** @var common\models\Resource[] $resources */
-/** @var \backend\form\ResourceShowerForm $createForm */
-/** @var common\helpers\ResourceShowerHelper $positionList */
+/** @var View $this */
+/** @var ResourceShower $model */
+/** @var Resource[] $resources */
+/** @var ResourceShowerCreateForm $createForm */
 
 
 
@@ -19,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
+        'model' => $model,
         'createForm' => $createForm,
         'resources' => $resources,
-//        'positionList' => $positionList
     ]) ?>
 
 </div>

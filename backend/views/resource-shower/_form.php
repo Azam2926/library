@@ -5,29 +5,30 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\View;
 use common\models\ResourceShower;
-use backend\form\ResourceShowerForm;
+use backend\form\ResourceShowerCreateForm;
 use common\helpers\ResourceShowerHelper;
 
 /** @var View $this */
 /** @var ResourceShower $model */
 /** @var yii\widgets\ActiveForm $form */
 /** @var common\models\Resource[] $resources */
-/** @var ResourceShowerForm $createForm */
-/** @var ResourceShowerHelper $positionList */
+/** @var ResourceShowerCreateForm $createForm */
 
-//dd($createForm);
 ?>
 
 <div class="resource-shower-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($createForm, 'id')->hiddenInput(['value' => $model->id])->label(false); ?>
+
     <?= $form->field($createForm, 'type')->widget(Select2::className(),
         [
-            'data' => ResourceShowerHelper::$array,
+            'data' => ResourceShowerHelper::positionList(),
             'options' => [
                 'prompt' => 'Select Position',
                 'required' => 'required',
+                'value' => $model->type,
             ]
         ])->label(Yii::t('yii', 'Position')); ?>
 
@@ -37,6 +38,7 @@ use common\helpers\ResourceShowerHelper;
             'options' => [
                 'placeholder' => Yii::t('app', 'Select Resources'),
                 'required' => 'required',
+                'value' => $model->resource_id,
             ],
             'pluginOptions' => ['multiple' => true],
         ])->label(Yii::t('yii', 'Resources')) ?>

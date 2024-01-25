@@ -10,7 +10,7 @@ use common\models\User;
 /**
  * Signup form
  */
-class ResourceShowerForm extends Model
+class ResourceShowerUpdateForm extends Model
 {
     public $resource_id;
     public $type;

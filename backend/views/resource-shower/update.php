@@ -1,11 +1,13 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
+use common\models\ResourceShower;
 
-/** @var yii\web\View $this */
-/** @var common\models\ResourceShower $model */
+/** @var View $this */
+/** @var ResourceShower $model */
 
-$this->title = 'Update Resource Shower: ' . $model->id;
+$this->title = 'Update Resource Shower: ' . $model->resource->title;
 $this->params['breadcrumbs'][] = ['label' => 'Resource Showers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'createForm' => $createForm,
+        'resources' => $resources
     ]) ?>
 
 </div>
