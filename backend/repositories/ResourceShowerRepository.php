@@ -8,19 +8,13 @@ use yii\db\Exception;
 
 class ResourceShowerRepository
 {
-    public function findByid($id)
+    /**
+     * @throws Exception
+     */
+    public function findById($id): array|ResourceShower
     {
         $model = ResourceShower::find()->findById($id)->one();
-        if(!$model){
-            throw new Exception("Resource not found");
-        }
 
-        return $model;
-    }
-
-    public function findByType($type)
-    {
-        $model = ResourceShower::find()->findById($id)->one();
         if(!$model){
             throw new Exception("Resource not found");
         }

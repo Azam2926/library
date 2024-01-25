@@ -3,15 +3,16 @@
 namespace backend\controllers;
 
 use backend\form\ResourceShowerCreateForm;
-use backend\form\ResourceShowerUpdateForm;
 use backend\repositories\ResourceRepository;
 use backend\repositories\ResourceShowerRepository;
 use backend\service\ResourceShowerService;
 use common\models\ResourceShower;
 use backend\models\ResourceShowerSearch;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ResourceShowerController implements the CRUD actions for ResourceShower model.
@@ -56,7 +57,7 @@ class ResourceShowerController extends Controller
      * Lists all ResourceShower models.
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new ResourceShowerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -71,32 +72,28 @@ class ResourceShowerController extends Controller
      * Displays a single ResourceShower model.
      * @param int $id ID
      * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws Exception
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
-            'model' => $this->resourceShowerRepository->findByid($id),
+            'model' => $this->resourceShowerRepository->findById($id),
         ]);
     }
 
     /**
      * Creates a new ResourceShower model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $createForm = new ResourceShowerCreateForm();
         $model = new ResourceShower();
 
-//        dd($createForm->load($this->request->post()));
-
-        if ($this->request->isPost) {
-            if ($createForm->load($this->request->post())) {
-                $this->resourceShowerService->create($createForm);
-                return $this->redirect('index');
-            }
+        if ($this->request->isPost && $createForm->load($this->request->post())) {
+            $this->resourceShowerService->create($createForm);
+            return $this->redirect('index');
         }
 
         return $this->render('create', [
@@ -110,21 +107,18 @@ class ResourceShowerController extends Controller
      * Updates an existing ResourceShower model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws Exception
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
         $createForm = new ResourceShowerCreateForm();
-        $model = $this->resourceShowerRepository->findByid($id);
+        $model = $this->resourceShowerRepository->findById($id);
 
-//        dd($this->request->post());
-
-        if($this->request->isPost){
-            if($createForm->load($this->request->post())){
-                $this->resourceShowerService->update($createForm);
-                return $this->redirect('index');
-            }
+        if($this->request->isPost && $createForm->load($this->request->post())){
+            $this->resourceShowerService->update($createForm);
+            return $this->redirect('index');
         }
 
         return $this->render('update', [
@@ -138,29 +132,16 @@ class ResourceShowerController extends Controller
      * Deletes an existing ResourceShower model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return Response
+     * @throws Exception
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the ResourceShower model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return ResourceShower the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = ResourceShower::findOne(['id' => $id])) !== null) {
-            return $model;
+        try {
+            $this->resourceShowerService->delete($id);
+        } catch (Exception|\Throwable $e) {
+            throw new Exception($e->getMessage());
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return $this->redirect(['index']);
     }
 }

@@ -4,14 +4,21 @@ namespace backend\service;
 
 use backend\repositories\ResourceShowerRepository;
 use common\models\ResourceShower;
+use yii\base\Component;
 use yii\db\Exception;
 
-class ResourceShowerService
+class ResourceShowerService extends Component
 {
 
     public ResourceShowerRepository $resourceShowerRepository;
 
-    public function create($form)
+    public function __construct(ResourceShowerRepository $resourceShowerRepository, $config = [])
+    {
+        parent::__construct($config);
+        $this->resourceShowerRepository = $resourceShowerRepository;
+    }
+
+    public function create($form): void
     {
 
         foreach ($form->resource_id as $id){
@@ -21,13 +28,16 @@ class ResourceShowerService
             $model->save();
         }
 
-        return ;
     }
 
-    public function update($form)
+    /**
+     * @throws Exception
+     */
+    public function update($form): void
     {
+        $form->id = intval($form->id);
 
-       $model =  $this->resourceShowerRepository->findByid($form->id);
+       $model =  $this->resourceShowerRepository->findById($form->id);
 
        if(!$model){
            throw new Exception('Resource shower not found');
@@ -39,6 +49,21 @@ class ResourceShowerService
             $model->type = $form->type;
             $model->save();
         }
+    }
+
+    /**
+     * @throws Exception
+     * @throws \Throwable
+     */
+    public function delete(int $id): void
+    {
+        $model =  $this->resourceShowerRepository->findById($id);
+
+        if(!$model){
+            throw new Exception('Resource shower not found');
+        }
+
+        $model->delete();
     }
 
 }
