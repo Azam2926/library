@@ -2,17 +2,38 @@
 
 namespace backend\controllers;
 
+use backend\repositories\SubjectRepository;
+use backend\service\SubjectService;
 use common\models\Subject;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * SubjectController implements the CRUD actions for Subject model.
  */
 class SubjectController extends AdminController
 {
+
+    public SubjectRepository $subjectRepository;
+    public SubjectService $subjectService;
+
+    public function __construct($id, $module,
+                                SubjectRepository $subjectRepository,
+                                SubjectService $subjectService,
+        $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->subjectRepository = $subjectRepository;
+        $this->subjectService = $subjectService;
+    }
+
+
     /**
      * @inheritDoc
      */
@@ -59,22 +80,23 @@ class SubjectController extends AdminController
     /**
      * Displays a single Subject model.
      * @param int $id ID
-     * @return mixed
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->subjectRepository->findById($id),
+            'parentSubjectList' => $this->subjectRepository->parentSubjectList()
         ]);
     }
 
     /**
      * Creates a new Subject model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|Response
      */
-    public function actionCreate()
+    public function actionCreate(): string|Response
     {
         $model = new Subject();
 
@@ -88,6 +110,7 @@ class SubjectController extends AdminController
 
         return $this->render('create', [
             'model' => $model,
+            'parentSubjectList' => $this->subjectRepository->parentSubjectList()
         ]);
     }
 
@@ -95,12 +118,12 @@ class SubjectController extends AdminController
      * Updates an existing Subject model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return mixed
+     * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): string|Response
     {
-        $model = $this->findModel($id);
+        $model = $this->subjectRepository->findById($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -108,6 +131,7 @@ class SubjectController extends AdminController
 
         return $this->render('update', [
             'model' => $model,
+            'parentSubjectList' => $this->subjectRepository->parentSubjectList()
         ]);
     }
 
@@ -115,29 +139,18 @@ class SubjectController extends AdminController
      * Deletes an existing Subject model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return mixed
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Subject model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Subject the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Subject::findOne($id)) !== null) {
-            return $model;
+        try {
+            $this->subjectService->softDelete($id);
+        }
+        catch (StaleObjectException|Exception|\Throwable $e) {
+            Yii::error($e->getMessage());
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return $this->redirect(['index']);
     }
 }

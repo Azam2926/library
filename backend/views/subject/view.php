@@ -30,6 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'parent_id',
+                'value' => fn($model) => $model->subject ? $model->subject->name : " "
+            ],
             'name',
         ],
     ]) ?>

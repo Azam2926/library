@@ -2,9 +2,11 @@
 
 use yii\bootstrap5\Html;
 use yii\grid\GridView;
+use yii\web\View;
+use yii\data\ActiveDataProvider;
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = 'Subjects';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,6 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            [
+                'attribute' => 'parent_id',
+                'value' => fn($model) => $model->subject ? $model->subject->name : " "
+            ],
             'name',
 
             ['class' => 'yii\grid\ActionColumn'],

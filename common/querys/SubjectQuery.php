@@ -31,4 +31,19 @@ class SubjectQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+    public function parent(): SubjectQuery
+    {
+        return $this->where(['parent_id' => null]);
+    }
+
+    public function findById($id): SubjectQuery
+    {
+        return $this->where(['id' => $id]);
+    }
+    public function findParent($parent_id): SubjectQuery
+    {
+        return $this->andWhere(['parent_id' => $parent_id]);
+    }
+
+
 }

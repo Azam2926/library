@@ -59,7 +59,7 @@ class ResourceShower extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|\common\querys\ResourceQuery
      */
-    public function getResource()
+    public function getResource(): ActiveQuery|ResourceQuery
     {
         return $this->hasOne(Resource::class, ['id' => 'resource_id']);
     }

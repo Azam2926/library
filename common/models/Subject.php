@@ -4,9 +4,8 @@ namespace common\models;
 
 use common\querys\SubjectQuery;
 use JetBrains\PhpStorm\ArrayShape;
-use Yii;
 use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "Subject".
@@ -33,7 +32,7 @@ class Subject extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['parent_id'], 'required'],
+//            [['parent_id'], 'required'],
             [['name'], 'required'],
             [['description', 'slug'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -60,6 +59,11 @@ class Subject extends ActiveRecord
     public static function find(): SubjectQuery
     {
         return new SubjectQuery(get_called_class());
+    }
+
+    public function getSubject(): ActiveQuery
+    {
+        return $this->hasOne(Subject::class, ['id' => 'parent_id']);
     }
 
     public static function getList(): array
