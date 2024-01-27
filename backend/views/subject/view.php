@@ -2,9 +2,11 @@
 
 use yii\bootstrap5\Html;
 use yii\widgets\DetailView;
+use common\models\Subject;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Subject */
+/* @var $this View */
+/* @var $model Subject */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['index']];

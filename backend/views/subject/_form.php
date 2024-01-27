@@ -3,10 +3,14 @@
 use kartik\select2\Select2;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\Subject;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Subject */
+/* @var $this View */
+/* @var $model Subject */
 /* @var $form yii\bootstrap5\ActiveForm */
+/* @var $parentSubjectList ArrayHelper */
 ?>
 
 <div class="subject-form">

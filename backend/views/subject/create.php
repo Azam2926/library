@@ -1,9 +1,13 @@
 <?php
 
 use yii\bootstrap5\Html;
+use common\models\Subject;
+use yii\web\View;
+use yii\helpers\ArrayHelper;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Subject */
+/* @var View */
+/* @var $model Subject */
+/* @var $parentSubjectList ArrayHelper */
 
 $this->title = 'Create Subject';
 $this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['index']];

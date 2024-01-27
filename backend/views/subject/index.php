@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            [
-                'attribute' => 'parent_id',
-                'value' => fn($model) => $model->subject ? $model->subject->name : " "
-            ],
+//            'id',
+//            [
+//                'attribute' => 'parent_id',
+//                'value' => fn($model) => $model->subject ? $model->subject->name : " "
+//            ],
             'name',
 
             ['class' => 'yii\grid\ActionColumn'],

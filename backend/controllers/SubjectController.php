@@ -81,7 +81,6 @@ class SubjectController extends AdminController
      * Displays a single Subject model.
      * @param int $id ID
      * @return string
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView(int $id): string
     {
@@ -118,7 +117,7 @@ class SubjectController extends AdminController
      * Updates an existing Subject model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate(int $id): string|Response
@@ -140,7 +139,6 @@ class SubjectController extends AdminController
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return Response
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete(int $id): Response
     {

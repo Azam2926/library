@@ -1,9 +1,13 @@
 <?php
 
 use yii\bootstrap5\Html;
+use common\models\Subject;
+use yii\helpers\ArrayHelper;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Subject */
+/* @var $this View */
+/* @var $model Subject */
+/* @var $parentSubjectList ArrayHelper */
 
 $this->title = 'Update Subject: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['index']];
