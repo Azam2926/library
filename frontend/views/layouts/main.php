@@ -28,7 +28,7 @@ CanvasAsset::register($this);
     <?php $this->beginBody() ?>
 
     <div id="wrapper">
-        <?= $this->render('blocks/top_bar') ?>
+<!--        --><?php //= $this->render('blocks/top_bar') ?>
         <?= $this->render('blocks/header') ?>
         <?= $this->render('blocks/slider') ?>
 
