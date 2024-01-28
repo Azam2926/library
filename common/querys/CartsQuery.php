@@ -31,4 +31,9 @@ class CartsQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function findByUserId($user_id): CartsQuery
+    {
+        return $this->andWhere(['created_by' => $user_id]);
+    }
 }

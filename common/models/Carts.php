@@ -17,6 +17,9 @@ use Yii;
  */
 class Carts extends \yii\db\ActiveRecord
 {
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_IN_ACTIVE =2;
     /**
      * {@inheritdoc}
      */
