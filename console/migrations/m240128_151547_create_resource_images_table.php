@@ -15,6 +15,7 @@ class m240128_151547_create_resource_images_table extends Migration
         $this->createTable('{{%resource_images}}', [
             'id' => $this->primaryKey(),
             'resource_id' => $this->integer()->notNull(),
+            'path' => $this->string(),
         ]);
 
         $this->createIndex(
