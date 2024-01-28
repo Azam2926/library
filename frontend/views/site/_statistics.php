@@ -15,19 +15,5 @@ use frontend\components\Stats;
             <span><?= $statistics->resources ?></span>
         </div>
     </div>
-    <div class="d-flex p-2">
-        <span class="p-4 bg-primary-color rounded "><i class="fas fa-eye"></i></span>
-        <div class="d-flex flex-column align-items-center justify-content-between">
-            <strong class="ms-2">Ko'rishlar soni</strong>
-            <span><?= $statistics->resource_views ?></span>
-        </div>
-    </div>
-    <div class="d-flex p-2">
-        <span class="p-4 bg-primary-color rounded "><i class="fas fa-arrow-circle-down"></i></span>
-        <div class="d-flex flex-column align-items-center justify-content-between">
-            <strong class="ms-2">Yuklashlar soni</strong>
-            <span><?= $statistics->resource_downloads ?></span>
-        </div>
-    </div>
 </div>
 

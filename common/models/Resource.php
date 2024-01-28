@@ -45,8 +45,6 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int|null $count
  * @property int|null $status
  *
- * @property ResourceDownloads $resourceDownload
- * @property ResourceViews $resourceView
  * @property Subject $subject
  * @property Type $types
  * @property string $format
@@ -200,16 +198,6 @@ class Resource extends ActiveRecord
         ];
     }
 
-    public function getResourceDownload(): ActiveQuery|ResourceDownloadsQuery
-    {
-        return $this->hasOne(ResourceDownloads::class, ['resource_id' => 'id']);
-    }
-
-    public function getResourceView(): ActiveQuery|ResourceViewsQuery
-    {
-        return $this->hasOne(ResourceViews::class, ['resource_id' => 'id']);
-    }
-
     public function getSubject(): SubjectQuery|ActiveQuery
     {
         return $this->hasOne(Subject::class, ['id' => 'subject_id']);
@@ -302,13 +290,6 @@ class Resource extends ActiveRecord
 
         return true;
 
-    }
-
-    public function beforeDelete()
-    {
-        $this->deleteResourceViews();
-        $this->deleteResourceDownloads();
-        return parent::beforeDelete();
     }
 
     public function afterDelete()
@@ -406,44 +387,6 @@ class Resource extends ActiveRecord
     {
         return Yii::getAlias('@backend/web' . $this->getUploadedFileUrl($file));
     }
-
-    public function updateViewCount(): void
-    {
-        if (!$model = ResourceViews::findOne(['resource_id' => $this->id]))
-            $model = new ResourceViews();
-        $this->updateCount($model);
-    }
-
-    public function updateDownloadCount()
-    {
-        if (!$model = ResourceDownloads::findOne(['resource_id' => $this->id]))
-            $model = new ResourceDownloads();
-        $this->updateCount($model);
-    }
-
-    private function updateCount(ResourceViews|ResourceDownloads $model): void
-    {
-        $model->resource_id = $this->id;
-
-        if (!$model->count)
-            $model->count = 1;
-        else
-            $model->count = $model->count + 1;
-
-        if (!$model->save())
-            throw new \yii\db\Exception('something wrong!!');
-    }
-
-    private function deleteResourceViews()
-    {
-        ResourceViews::deleteAll(['resource_id' => $this->id]);
-    }
-
-    private function deleteResourceDownloads()
-    {
-        ResourceDownloads::deleteAll(['resource_id' => $this->id]);
-    }
-
     public function getFirstTwoPublisher(): string
     {
         $publishers = StringHelper::explode($this->publisher, ',');

@@ -41,32 +41,6 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionResourceDownload($uuid): Response|string
-    {
-        $resource = $this->findResource($uuid);
-
-        if (!$resource->file)
-            throw new NotFoundHttpException('fayl yoq');
-
-        $resource->updateDownloadCount();
-
-        return 'ok';
-    }
-
-    public function actionResourceView($uuid): Response|string
-    {
-        $resource = $this->findResource($uuid);
-        if (!$resource->file)
-            throw new NotFoundHttpException('fayl yoq');
-
-        $resource->updateViewCount();
-
-        if ($resource->type == Resource::TYPE_YOUTUBEVIDEO)
-            return $this->redirect($resource->youtubelink);
-
-        return $this->redirect($resource->getUploadedFileUrlFromFrontend('file'));
-    }
-
     public function actionResource($uuid): string
     {
         $resource = $this->findResourceWithVD($uuid);
