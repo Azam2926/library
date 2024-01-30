@@ -2,12 +2,11 @@
 
 namespace backend\controllers;
 
-use common\models\Resource;
+use backend\form\ResourceForm;
 use backend\models\ResourceSearch;
-use yii\base\ActionFilter;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use common\models\Resource;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -62,6 +61,22 @@ class ResourceController extends AdminController
     }
 
     /**
+     * Finds the Resource model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Resource the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Resource::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
      * Creates a new Resource model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -69,6 +84,7 @@ class ResourceController extends AdminController
     public function actionCreate()
     {
         $model = new Resource();
+        $form = new ResourceForm();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->type == Resource::TYPE_YOUTUBEVIDEO)
@@ -82,6 +98,7 @@ class ResourceController extends AdminController
 
         return $this->render('create', [
             'model' => $model,
+            'form' => $form
         ]);
     }
 
@@ -117,21 +134,5 @@ class ResourceController extends AdminController
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Resource model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Resource the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Resource::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
