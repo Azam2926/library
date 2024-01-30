@@ -45,6 +45,7 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property int|null $count
  * @property int|null $status
  *
+ * @property ResourceImages[] $images
  * @property Subject $subject
  * @property Type $types
  * @property string $format
@@ -94,16 +95,6 @@ class Resource extends ActiveRecord
         ];
     }
 
-    #[ArrayShape([self::LANG_UZ => "string", self::LANG_RU => "string", self::LANG_EN => "string"])]
-    public static function getLanguageList(): array
-    {
-        return [
-            self::LANG_UZ => 'O\'zbekcha',
-            self::LANG_RU => 'Ruscha',
-            self::LANG_EN => 'Inglizcha',
-        ];
-    }
-
     #[ArrayShape([self::TYPE_TEXT => "string", self::TYPE_AUDIO => "string", self::TYPE_YOUTUBEVIDEO => "string"])]
     public static function getTypeList(): array
     {
@@ -112,6 +103,16 @@ class Resource extends ActiveRecord
             self::TYPE_AUDIO => 'Audio',
             self::TYPE_YOUTUBEVIDEO => 'Youtube video'
         ];
+    }
+
+    public static function tableName(): string
+    {
+        return 'resource';
+    }
+
+    public static function find(): ResourceQuery
+    {
+        return new ResourceQuery(get_called_class());
     }
 
     #[ArrayShape([0 => "string", 'file_uploader' => "string[]"])]
@@ -133,11 +134,6 @@ class Resource extends ActiveRecord
             ],
 
         ];
-    }
-
-    public static function tableName(): string
-    {
-        return 'resource';
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -198,6 +194,11 @@ class Resource extends ActiveRecord
         ];
     }
 
+    public function getImages(): ResourceImagesQuery|ActiveQuery
+    {
+        return $this->hasMany(ResourceImages::class, ['resource_id' => 'id']);
+    }
+
     public function getSubject(): SubjectQuery|ActiveQuery
     {
         return $this->hasOne(Subject::class, ['id' => 'subject_id']);
@@ -206,11 +207,6 @@ class Resource extends ActiveRecord
     public function getTypes(): TypeQuery|ActiveQuery
     {
         return $this->hasOne(Type::class, ['id' => 'type_id']);
-    }
-
-    public static function find(): ResourceQuery
-    {
-        return new ResourceQuery(get_called_class());
     }
 
     public function beforeSave($insert): bool
@@ -237,24 +233,6 @@ class Resource extends ActiveRecord
     {
         $this->detachBehavior('file_uploader');
         $this->file = $this->youtubelink;
-    }
-
-    public function removeFile()
-    {
-        try {
-            FileHelper::removeDirectory(Yii::getAlias('@webroot/uploads/resource/' . $this->id));
-        } catch (Exception $exception) {
-            dd($exception);
-        }
-    }
-
-    public function removeThumb()
-    {
-        try {
-            FileHelper::removeDirectory(Yii::getAlias('@webroot/uploads/resource/thumbs/' . $this->id));
-        } catch (Exception $exception) {
-            dd($exception);
-        }
     }
 
     public function showFile(): ?string
@@ -298,6 +276,24 @@ class Resource extends ActiveRecord
         $this->removeThumb();
     }
 
+    public function removeFile()
+    {
+        try {
+            FileHelper::removeDirectory(Yii::getAlias('@webroot/uploads/resource/' . $this->id));
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+    }
+
+    public function removeThumb()
+    {
+        try {
+            FileHelper::removeDirectory(Yii::getAlias('@webroot/uploads/resource/thumbs/' . $this->id));
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+    }
+
     public function isTypeAudio(): bool
     {
         if ($this->type == self::TYPE_AUDIO)
@@ -336,6 +332,11 @@ class Resource extends ActiveRecord
             : '<span class="card-header p-0 px-1 text-center">RUXSAT EMAS</span>';
     }
 
+    public function inStock(): string
+    {
+        return $this->count == 0 ?? '<div class="sale-flash badge bg-secondary p-2">Out of Stock</div>';
+    }
+
     public function getYearFromDate(): string
     {
         if (!$this->date)
@@ -350,6 +351,16 @@ class Resource extends ActiveRecord
         return self::getLanguageList()[$this->language];
     }
 
+    #[ArrayShape([self::LANG_UZ => "string", self::LANG_RU => "string", self::LANG_EN => "string"])]
+    public static function getLanguageList(): array
+    {
+        return [
+            self::LANG_UZ => 'O\'zbekcha',
+            self::LANG_RU => 'Ruscha',
+            self::LANG_EN => 'Inglizcha',
+        ];
+    }
+
     public function getFormat(): ?string
     {
         if ($this->type == self::TYPE_YOUTUBEVIDEO)
@@ -359,6 +370,11 @@ class Resource extends ActiveRecord
             return '';
 
         return FileHelper::getMimeType($this->getFilePath('file'));
+    }
+
+    protected function getFilePath($file): bool|string
+    {
+        return Yii::getAlias('@backend/web' . $this->getUploadedFileUrl($file));
     }
 
     public function getSize(): ?string
@@ -383,10 +399,6 @@ class Resource extends ActiveRecord
         return pathinfo($this->getFilePath('file'), PATHINFO_EXTENSION);
     }
 
-    protected function getFilePath($file): bool|string
-    {
-        return Yii::getAlias('@backend/web' . $this->getUploadedFileUrl($file));
-    }
     public function getFirstTwoPublisher(): string
     {
         $publishers = StringHelper::explode($this->publisher, ',');
@@ -394,6 +406,15 @@ class Resource extends ActiveRecord
             return $publishers[0] . ', ' . $publishers[1];
 
         return $this->publisher;
+    }
+
+    public function getImagesUrl(): array
+    {
+        $res = [];
+        foreach ($this->images as $image)
+            $res[] = Yii::getAlias('@backend/web' . $image->path);
+
+        return $res;
     }
 }
 
