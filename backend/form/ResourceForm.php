@@ -22,11 +22,10 @@ class ResourceForm extends Model
     public $open_access;
     public $price;
     public $count;
-    public $status;
     /**
      * @var UploadedFile[]
      */
-    public $images;
+    public  $images;
 
 
     /**
@@ -35,11 +34,10 @@ class ResourceForm extends Model
     public function rules()
     {
         return [
-            ['images', 'file'],
-            [['id', 'subject_id', 'type_id', 'count', 'status'], 'integer'],
+            [['images'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 5],
+            [['id', 'subject_id', 'type_id', 'count', 'language', 'open_access'], 'integer'],
             ['price', 'double'],
-            [['title', 'description', ''], 'string'],
-            ['type', 'required'],
+            [['title', 'description', 'publisher', 'date'], 'string'],
         ];
     }
 }

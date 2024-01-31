@@ -77,6 +77,34 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/
     ]) ?>
     <div class="row">
         <div class="col">
+            <?= $form->field($resource_form, 'price')->textInput([
+                'type' => 'number',
+                'option' => ['step' => '0.01'],
+                'class' => 'form-control',
+                'placeholder' => 'Enter price ...',
+            ])->widget(\yii\widgets\MaskedInput::class,[
+                'clientOptions' => [
+                    'alias' => 'numeric',
+                    'digits' => 2, // Number of decimal places
+                    'groupSeparator' => ',', // Thousands separator
+                    'autoGroup' => true,
+                    'removeMaskOnSubmit' => true,
+                ],
+            ])?>
+        </div>
+        <div class="col">
+            <?= $form->field($resource_form, 'count')->textInput([
+                'type' => 'number',
+                'options' => [
+                    'class' => 'form-control', // Specify the CSS class for styling
+                    'placeholder' => 'Enter count...',
+                    'min' => 1// Placeholder text
+                ],
+            ]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <?= $form->field($resource_form, 'language')->dropDownList(Resource::getLanguageList(), [
 //                'prompt' => 'Tilni tanlang'
             ]) ?>
@@ -93,3 +121,12 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+$this->registerCss("
+#resourceform-price {
+text-align: left !important;
+}
+");
+
+?>

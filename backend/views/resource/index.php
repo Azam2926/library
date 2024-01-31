@@ -42,11 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
             //'date',
             [
                 'attribute' => 'language',
-                'value' => fn($model) => Resource::getLanguageList()[$model->language]
+                'value' => fn($model) => $model->getLanguage()
             ],
             [
                 'attribute' => 'type',
-                'value' => fn($model) => Resource::getTypeList()[$model->type]
+                'value' => fn($model) => $model->getTypeName()
             ],
             //'open_access',
             //'created_at',

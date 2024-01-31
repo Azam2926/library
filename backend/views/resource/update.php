@@ -1,9 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
+use common\models\Resource;
+use backend\form\ResourceForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Resource */
+/* @var $this View */
+/* @var $model Resource */
+/* @var $updateForm ResourceForm */
+
 
 $this->title = 'Update Resource: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Resources', 'url' => ['index']];
@@ -16,6 +21,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'resource_form' => $updateForm
     ]) ?>
 
 </div>

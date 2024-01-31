@@ -55,16 +55,22 @@ YiiAsset::register($this);
                     'date',
                     [
                         'attribute' => 'language',
-                        'value' => Resource::getLanguageList()[$model->language]
+                        'value' => $model->getLanguage()
                     ],
                     [
                         'attribute' => 'type',
-                        'value' => Resource::getTypeList()[$model->type]
+                        'value' => $model->getTypeName()
                     ],
                     [
                         'attribute' => 'file',
                         'format' => 'html',
-                        'value' => $model->showFile()
+                        'value' => function (Resource $model) {
+                            $html = '';
+                              foreach ($model->images as $image){
+                                  $html .= $image->showImages();
+                              }
+//                            dd($html);
+                        }
                     ],
                     'open_access:boolean',
                     'created_at:datetime',

@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use backend\form\ResourceForm;
 use backend\models\ResourceSearch;
+use backend\repositories\ResourceRepository;
+use backend\service\ResourceService;
 use common\models\Resource;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -14,6 +16,21 @@ use yii\web\Response;
  */
 class ResourceController extends AdminController
 {
+
+    public ResourceService $resourceService;
+    public ResourceRepository $resourceRepository;
+
+
+    public function __construct($id, $module,
+                                ResourceService $resourceService,
+                                ResourceRepository $resourceRepository,
+        $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->resourceService = $resourceService;
+        $this->resourceRepository = $resourceRepository;
+    }
+
     /**
      * @inheritDoc
      */
@@ -79,21 +96,17 @@ class ResourceController extends AdminController
     /**
      * Creates a new Resource model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|Response
      */
-    public function actionCreate()
+    public function actionCreate(): string|Response
     {
         $model = new Resource();
         $form = new ResourceForm();
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->type == Resource::TYPE_YOUTUBEVIDEO)
-                    $model->videoUpload();
-                if ($model->saveAll())
-                    return $this->redirect(['view', 'id' => $model->id]);
+            if ($form->load($this->request->post())) {
+                $model = $this->resourceService->create($form);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -104,7 +117,11 @@ class ResourceController extends AdminController
 
     public function actionUpdate(int $id): string|Response
     {
-        $model = $this->findModel($id);
+        $updateForm = new ResourceForm();
+        $model = $this->resourceRepository->findById($id);
+
+        // TODO : not yet finished images have any
+
         if ($this->request->isPost && $model->load($this->request->post())) {
             $isVideoUploading = $model->type == Resource::TYPE_YOUTUBEVIDEO;
             if ($isVideoUploading)
@@ -119,6 +136,7 @@ class ResourceController extends AdminController
         }
         return $this->render('update', [
             'model' => $model,
+            'updateForm' => $updateForm
         ]);
     }
 
