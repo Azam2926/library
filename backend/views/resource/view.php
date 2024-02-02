@@ -66,10 +66,11 @@ YiiAsset::register($this);
                         'format' => 'html',
                         'value' => function (Resource $model) {
                             $html = '';
+//                            dd($model->images);
                               foreach ($model->images as $image){
                                   $html .= $image->showImages();
                               }
-//                            dd($html);
+                           return $html;
                         }
                     ],
                     'open_access:boolean',
