@@ -58,10 +58,6 @@ YiiAsset::register($this);
                         'value' => $model->getLanguage()
                     ],
                     [
-                        'attribute' => 'type',
-                        'value' => $model->getTypeName()
-                    ],
-                    [
                         'attribute' => 'file',
                         'format' => 'html',
                         'value' => function (Resource $model) {

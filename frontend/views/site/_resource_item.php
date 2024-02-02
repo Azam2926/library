@@ -22,7 +22,7 @@ use yii\web\View;
             </a>
         </div>
         <p class="mb-1" style="min-height: 40px; font-size: 13px"><?= $model->getFirstTwoPublisher() ?></p>
-        <p class="card-text"><?= $model->showType() ?></p>
+        <p class="card-text"></p>
         <a href="/resource/<?= $model->uuid ?>" class="d-block btn bg-primary-color text-white">Batafsil</a>
     </div>
 </div>

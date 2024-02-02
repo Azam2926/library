@@ -4,8 +4,11 @@ namespace common\models;
 
 use common\querys\SubjectQuery;
 use JetBrains\PhpStorm\ArrayShape;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use yii\db\BaseActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "Subject".
@@ -38,6 +41,20 @@ class Subject extends ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['created_at', 'updated_at'], 'integer'],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['parent_id' => 'id']],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
         ];
     }
 

@@ -62,13 +62,9 @@ class Resource extends ActiveRecord
     const NON_OPEN_ACCESS = 0;
     const OPEN_ACCESS = 1;
 
-    const TYPE_TEXT = 0;
-    const TYPE_AUDIO = 1;
-    const TYPE_YOUTUBEVIDEO = 2;
-
-    const LANG_UZ = 0;
-    const LANG_RU = 1;
-    const LANG_EN = 2;
+    const LANG_UZ = 1;
+    const LANG_RU = 2;
+    const LANG_EN = 3;
 
     const STATUS_ACTIVE = 1;
     const STATUS_IN_ACTIVE = 2;
@@ -93,24 +89,6 @@ class Resource extends ActiveRecord
             self::OPEN_ACCESS => 'Ruxsat',
             self::NON_OPEN_ACCESS => 'Ruxsat emas',
         ];
-    }
-
-    #[ArrayShape([self::TYPE_TEXT => "string", self::TYPE_AUDIO => "string", self::TYPE_YOUTUBEVIDEO => "string"])]
-    public static function getTypeList(): array
-    {
-        return [
-            self::TYPE_TEXT => 'Text',
-            self::TYPE_AUDIO => 'Audio',
-            self::TYPE_YOUTUBEVIDEO => 'Youtube video'
-        ];
-    }
-
-    public function getTypeName(): string
-    {
-        if ($this->type == null)
-            return '';
-
-        return self::getTypeList()[$this->type];
     }
 
     public static function tableName(): string
@@ -290,24 +268,6 @@ class Resource extends ActiveRecord
         } catch (Exception $exception) {
             dd($exception);
         }
-    }
-
-    public function isTypeAudio(): bool
-    {
-        if ($this->type == self::TYPE_AUDIO)
-            return true;
-
-        return false;
-    }
-
-    public function showType(): string
-    {
-        return match ($this->type) {
-            Resource::TYPE_YOUTUBEVIDEO => "<i class='fab fa-youtube me-1'></i>Video",
-            Resource::TYPE_AUDIO => "<i class='far fa-headphones me-1'></i>Audio",
-            Resource::TYPE_TEXT => "<i class='far fa-book me-1'></i>" . $this->types->name,
-            default => 'default'
-        };
     }
 
     public function getUploadedFileUrlFromFrontend(string $file_name): string

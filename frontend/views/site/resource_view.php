@@ -25,7 +25,6 @@ use yii\web\View;
                 <h3><?= $resource->title ?></h3>
                 <p><?= $resource->publisher ?></p>
                 <p><?= $resource->getYearFromDate() ?></p>
-                <p><?= $resource->showType() ?></p>
                 <?= Tabs::widget([
                     'id' => 'resource_view-tab',
                     'options' => ['class' => 'mt-3 mt-md-5'],
