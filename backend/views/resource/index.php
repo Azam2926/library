@@ -44,10 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'language',
                 'value' => fn($model) => $model->getLanguage()
             ],
-            [
-                'attribute' => 'type',
-                'value' => fn($model) => $model->getTypeName()
-            ],
             //'open_access',
             //'created_at',
             //'updated_at',

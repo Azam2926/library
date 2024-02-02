@@ -70,7 +70,6 @@ class Resource extends ActiveRecord
     const STATUS_IN_ACTIVE = 2;
 
     public int $popularity = 0;
-    public ?string $youtubelink = '';
 
     #[ArrayShape([self::STATUS_ACTIVE => "string", self::STATUS_IN_ACTIVE => "string"])]
     public static function getStatus(): array
@@ -195,12 +194,6 @@ class Resource extends ActiveRecord
 
         // ...custom code here...
         return true;
-    }
-
-    public function afterFind()
-    {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            $this->youtubelink = $this->file;
     }
 
     public function videoUpload()
