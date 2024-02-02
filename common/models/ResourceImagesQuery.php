@@ -31,4 +31,9 @@ class ResourceImagesQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function resourceId($resource_id): ResourceImagesQuery
+    {
+        return $this->andWhere(['resource_id' => $resource_id]);
+    }
 }

@@ -6,6 +6,7 @@ use common\models\Subject;
 use common\models\Type;
 use kartik\date\DatePicker;
 use kartik\file\FileInput;
+use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
@@ -32,29 +33,45 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/
         </div>
     </div>
     <div class="row">
+        <?= $form->field($resource_form, 'id')->hiddenInput(['value' => $model->id])->label(false); ?>
         <div class="col">
-            <?= $form->field($resource_form, 'subject_id')->dropdownList(Subject::getList(), [
-//                'prompt' => 'Fan yo\'nalishlarini tanglang ...'
-            ]) ?>
+            <?= $form->field($resource_form, 'subject_id')->widget(Select2::className(),
+                [
+                    'data' => Subject::getList(),
+                    'options' => [
+                        'prompt' => 'Kategoriya tanlang',
+                        'required' => 'required',
+                        'value' => $model->subject_id,
+                    ]
+                ])->label(Yii::t('yii', 'Kategoriya tanlang')); ?>
         </div>
         <div class="col">
-            <?= $form->field($resource_form, 'type_id')->dropdownList(Type::getList(), [
-//                'prompt' => 'Turini tanlang ...'
-            ]) ?>
+            <?= $form->field($resource_form, 'type_id')->widget(Select2::className(),
+                [
+                    'data' => Type::getList(),
+                    'options' => [
+                        'prompt' => 'Turini tanlang',
+                        'required' => 'required',
+                        'value' => $model->type_id,
+                    ]
+                ])->label(Yii::t('yii', 'Turini tanlang')); ?>
         </div>
     </div>
 
     <?= $form->field($resource_form, 'title')->textInput(['maxlength' => true, 'value' => $model->title ?: 'Title has been created at ' . date_format(new DateTime(), 'Y-m-d H:i::s')]) ?>
 
-    <?= $form->field($resource_form, 'description')->textarea(['rows' => 6, 'value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda dolores dolorum earum explicabo ipsam laboriosam maxime, minus necessitatibus quam, reprehenderit, tempora. Doloremque impedit laboriosam possimus sit tempora, ut. Earum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda dolores dolorum earum explicabo ipsam laboriosam maxime, minus necessitatibus quam, reprehenderit, tempora. Doloremque impedit laboriosam possimus sit tempora, ut. Earum.']) ?>
+    <?= $form->field($resource_form, 'description')->textarea(['rows' => 6, 'value' => $model->description ?: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda dolores dolorum earum explicabo ipsam laboriosam maxime, minus necessitatibus quam, reprehenderit, tempora. Doloremque impedit laboriosam possimus sit tempora, ut. Earum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda dolores dolorum earum explicabo ipsam laboriosam maxime, minus necessitatibus quam, reprehenderit, tempora. Doloremque impedit laboriosam possimus sit tempora, ut. Earum.']) ?>
 
     <div class="row">
         <div class="col">
-            <?= $form->field($resource_form, 'publisher')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($resource_form, 'publisher')->textInput(['maxlength' => true, 'value' => $model->publisher ?: '']) ?>
         </div>
         <div class="col">
             <?= $form->field($resource_form, 'date')->widget(DatePicker::class, [
-                'options' => ['placeholder' => 'Yaratilgan sanani kiriting ...'],
+                'options' => [
+                    'placeholder' => 'Yaratilgan sanani kiriting ...',
+                    'value' => $model->date ?: null
+                    ],
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'yyyy-mm-dd',
@@ -105,9 +122,15 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/
     </div>
     <div class="row">
         <div class="col">
-            <?= $form->field($resource_form, 'language')->dropDownList(Resource::getLanguageList(), [
-//                'prompt' => 'Tilni tanlang'
-            ]) ?>
+            <?= $form->field($resource_form, 'language')->widget(Select2::className(),
+                [
+                    'data' => Resource::getLanguageList(),
+                    'options' => [
+                        'prompt' => 'Tilni tanlang',
+                        'required' => 'required',
+                        'value' => $model->language,
+                    ]
+                ])->label(Yii::t('yii', 'Tilni tanlang')); ?>
         </div>
     </div>
     <div class="my-41">

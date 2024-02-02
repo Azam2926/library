@@ -12,7 +12,7 @@ class ResourceRepository
     {
         return  ArrayHelper::map(Resource::find()->active()->asArray()->all(),'id', 'title');
     }
-    public function findById($id)
+    public function findById($id): ?Resource
     {
         return Resource::find()->findById($id)->one();
     }

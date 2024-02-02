@@ -58,22 +58,29 @@ class ResourceService extends Component
     /**
      * @throws Exception
      */
-    public function update($form): void
+    public function update(ResourceForm $form, Resource $resource): Resource
     {
-        $form->id = intval($form->id);
 
-        $model = $this->resourceShowerRepository->findById($form->id);
+        $resource->subject_id = $form->subject_id;
+        $resource->type_id = $form->type_id;
+        $resource->title = $form->title;
+        $resource->description = $form->description;
+        $resource->publisher = $form->publisher;
+        $resource->date = $form->date;
+        $resource->language = $form->language;
+        $resource->open_access = $form->open_access;
+        $resource->price = $form->price;
+        $resource->count = $form->count;
+        $resource->status = Resource::STATUS_ACTIVE;
 
-        if (!$model) {
-            throw new Exception('Resource shower not found');
+        $form->images = UploadedFile::getInstances($form, 'images');
+
+        if ($resource->save()) {
+            $this->resourceImagesService->deleteAll($resource->id);
+            $this->resourceImagesService->create($form, $resource);
         }
 
-        foreach ($form->resource_id as $id) {
-
-            $model->resource_id = $id;
-            $model->type = $form->type;
-            $model->save();
-        }
+        return $resource;
     }
 
     /**

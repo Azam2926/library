@@ -420,7 +420,7 @@ class Resource extends ActiveRecord
     {
         $res = [];
         foreach ($this->images as $image)
-            $res[] = Yii::getAlias('@backend/web' . $image->path);
+            $res[] = Yii::getAlias('/uploads/resourceImages/'.$this->id. '/' . $image->path);
 
         return $res;
     }

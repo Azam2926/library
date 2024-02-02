@@ -104,8 +104,8 @@ class ResourceController extends AdminController
         $form = new ResourceForm();
         if ($this->request->isPost) {
             if ($form->load($this->request->post())) {
-                $model = $this->resourceService->create($form);
-                return $this->redirect(['view', 'id' => $model->id]);
+                $newModel = $this->resourceService->create($form);
+                return $this->redirect(['view', 'id' => $newModel->id]);
             }
         }
 
@@ -120,17 +120,10 @@ class ResourceController extends AdminController
         $updateForm = new ResourceForm();
         $model = $this->resourceRepository->findById($id);
 
-        // TODO : not yet finished images have any
-
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $isVideoUploading = $model->type == Resource::TYPE_YOUTUBEVIDEO;
-            if ($isVideoUploading)
-                $model->videoUpload();
-            if ($model->save()) {
-                if ($isVideoUploading)
-                    $model->removeFile();
-
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if($updateForm->load($this->request->post())){
+                $newModel = $this->resourceService->update($updateForm, $model);
+                return $this->redirect(['view', 'id' => $newModel->id]);
             }
 
         }
