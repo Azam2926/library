@@ -127,7 +127,7 @@ class Resource extends ActiveRecord
             [['subject_id', 'title'], 'required'],
             [['discount_value', 'price'], 'safe'],
             [['subject_id', 'type_id', 'language', 'type', 'open_access', 'created_at', 'updated_at', 'count', 'status'], 'integer'],
-            [['description', 'youtubelink'], 'string'],
+            [['description'], 'string'],
             [['uuid'], 'string', 'max' => 36],
             [['title', 'publisher', 'date', 'discount_type'], 'string', 'max' => 255],
             [['uuid'], 'unique'],
@@ -196,23 +196,6 @@ class Resource extends ActiveRecord
         return true;
     }
 
-    public function videoUpload()
-    {
-        $this->detachBehavior('file_uploader');
-        $this->file = $this->youtubelink;
-    }
-
-    public function showFile(): ?string
-    {
-        if (!$this->file)
-            return '';
-        return match ($this->type) {
-            Resource::TYPE_YOUTUBEVIDEO => Html::a('View Video', $this->file, ['_target' => 'blank']),
-            Resource::TYPE_AUDIO, Resource::TYPE_TEXT => Html::a('View File', $this->getUploadedFileUrl('file'), ['_target' => 'blank']),
-            default => 'default'
-        };
-    }
-
     public function showThumbnail(): ?string
 
     {
@@ -265,14 +248,6 @@ class Resource extends ActiveRecord
 
     public function getUploadedFileUrlFromFrontend(string $file_name): string
     {
-        if (!$this->getUploadedFileUrl($file_name))
-            return match ($this->type) {
-                Resource::TYPE_YOUTUBEVIDEO => "/fallbacks/video.jpg",
-                Resource::TYPE_AUDIO => "/fallbacks/audio.jpg",
-                Resource::TYPE_TEXT => "/fallbacks/text.jpg",
-                default => 'default'
-            };
-
         return Yii::$app->params['curl'] . $this->getUploadedFileUrl($file_name);
     }
 
@@ -324,9 +299,6 @@ class Resource extends ActiveRecord
 
     public function getFormat(): ?string
     {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            return "Youtube video";
-
         if (!$this->file)
             return '';
 
@@ -340,9 +312,6 @@ class Resource extends ActiveRecord
 
     public function getSize(): ?string
     {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            return "Youtube video";
-
         if (!$this->file)
             return '';
 
@@ -351,9 +320,6 @@ class Resource extends ActiveRecord
 
     public function getExtension(): ?string
     {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            return "Youtube video";
-
         if (!$this->file)
             return '';
 
