@@ -2,12 +2,16 @@
 
 namespace common\querys;
 
+use common\models\CartItems;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * This is the ActiveQuery class for [[\common\models\CartItems]].
  *
  * @see \common\models\CartItems
  */
-class CartItemsQuery extends \yii\db\ActiveQuery
+class CartItemsQuery extends ActiveQuery
 {
     /*public function active()
     {
@@ -16,18 +20,18 @@ class CartItemsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return \common\models\CartItems[]|array
+     * @return CartItems[]|array
      */
-    public function all($db = null)
+    public function all($db = null): array
     {
         return parent::all($db);
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\models\CartItems|array|null
+     * @return array|ActiveRecord|null
      */
-    public function one($db = null)
+    public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
     }

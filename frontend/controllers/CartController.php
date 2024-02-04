@@ -7,9 +7,10 @@ use frontend\service\CartService;
 use Throwable;
 use Yii;
 use yii\db\Exception;
+use yii\web\Controller;
 use yii\web\Response;
 
-class CartController extends \yii\web\Controller
+class CartController extends Controller
 {
 
     public CartService $cartService;
@@ -35,8 +36,13 @@ class CartController extends \yii\web\Controller
     public function actionAddToCart(): Response|array|string
     {
         if(Yii::$app->user->isGuest){
-            Yii::$app->getResponse()->setStatusCode(401, "Unauthorization");
-            return ['status' => 'Unsuccessfully', 'result' => null];
+
+            Yii::$app->getResponse()->setStatusCode(401, "Unauthorized");
+
+            return [
+                'status' => 'Unsuccessfully',
+                'result' => null
+            ];
         }
         else{
             if(Yii::$app->request->isAjax){

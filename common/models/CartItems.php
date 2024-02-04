@@ -2,7 +2,12 @@
 
 namespace common\models;
 
+use common\querys\CartItemsQuery;
+use common\querys\CartsQuery;
+use common\querys\ResourceQuery;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "cart_items".
@@ -17,12 +22,12 @@ use Yii;
  * @property Carts $cart
  * @property Resource $resource
  */
-class CartItems extends \yii\db\ActiveRecord
+class CartItems extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'cart_items';
     }
@@ -30,7 +35,7 @@ class CartItems extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['cart_id', 'resource_id'], 'required'],
@@ -45,7 +50,7 @@ class CartItems extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -60,9 +65,9 @@ class CartItems extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Cart]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\CartsQuery
+     * @return ActiveQuery|CartsQuery
      */
-    public function getCart()
+    public function getCart(): ActiveQuery|CartsQuery
     {
         return $this->hasOne(Carts::class, ['id' => 'cart_id'])->inverseOf('cartItems');
     }
@@ -70,19 +75,19 @@ class CartItems extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Resource]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\ResourceQuery
+     * @return ActiveQuery|ResourceQuery
      */
-    public function getResource()
+    public function getResource(): ActiveQuery|ResourceQuery
     {
         return $this->hasOne(Resource::class, ['id' => 'resource_id'])->inverseOf('cartItems');
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\querys\CartItemsQuery the active query used by this AR class.
+     * @return CartItemsQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): CartItemsQuery
     {
-        return new \common\querys\CartItemsQuery(get_called_class());
+        return new CartItemsQuery(get_called_class());
     }
 }
