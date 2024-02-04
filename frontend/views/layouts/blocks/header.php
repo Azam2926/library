@@ -9,11 +9,11 @@
                 <div id="logo" class="me-lg-auto me-0 order-lg-2 col-lg-auto">
                     <a href="demo-shop-2.html">
                         <img class="logo-default"
-                             srcset="canvas/demos/shop-2/images/logo.png, canvas/demos/shop-2/images/logo@2x.png 2x"
-                             src="canvas/demos/shop-2/images/logo@2x.png" alt="Canvas Logo">
+                             srcset="/canvas/demos/shop-2/images/logo.png, /canvas/demos/shop-2/images/logo@2x.png 2x"
+                             src="/canvas/demos/shop-2/images/logo@2x.png" alt="Canvas Logo">
                         <img class="logo-dark"
-                             srcset="canvas/demos/shop-2/images/logo-dark.png, canvas/demos/shop-2/images/logo-dark@2x.png 2x"
-                             src="canvas/demos/shop-2/images/logo-dark@2x.png" alt="Canvas Logo">
+                             srcset="/canvas/demos/shop-2/images/logo-dark.png, /canvas/demos/shop-2/images/logo-dark@2x.png 2x"
+                             src="/canvas/demos/shop-2/images/logo-dark@2x.png" alt="Canvas Logo">
                     </a>
                 </div><!-- #logo end -->
 
@@ -55,7 +55,7 @@
                             <div class="top-cart-items">
                                 <div class="top-cart-item">
                                     <div class="top-cart-item-image">
-                                        <a href="#"><img src="canvas/demos/shop-2/images/cart-thumb-1.jpg"
+                                        <a href="#"><img src="/canvas/demos/shop-2/images/cart-thumb-1.jpg"
                                                          alt="Black Monk Table Jar"></a>
                                     </div>
                                     <div class="top-cart-item-desc">
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="top-cart-item">
                                     <div class="top-cart-item-image">
-                                        <a href="#" class="fw-normal"><img src="canvas/demos/shop-2/images/cart-thumb-2.jpg"
+                                        <a href="#" class="fw-normal"><img src="/canvas/demos/shop-2/images/cart-thumb-2.jpg"
                                                                            alt="White Big Showcase Jar"></a>
                                     </div>
                                     <div class="top-cart-item-desc">

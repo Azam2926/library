@@ -3,7 +3,7 @@
 <div class="section py-lg-0 pt-0">
     <div class="row g-5 align-items-center">
         <div class="col-md-6">
-            <img src="canvas/demos/shop-2/images/section/2.jpg" alt="..">
+            <img src="/canvas/demos/shop-2/images/section/2.jpg" alt="..">
         </div>
 
         <div class="col-md-6 px-5">
@@ -26,7 +26,7 @@
 
         <div class="row g-5">
             <div class="col-md-7 parallax scroll-detect min-vh-lg-90 min-vh-50">
-                <img src="canvas/demos/shop-2/images/section/1.jpg" class="parallax-bg">
+                <img src="/canvas/demos/shop-2/images/section/1.jpg" class="parallax-bg">
             </div>
 
             <div class="col-md-5 d-md-flex flex-column align-items-center justify-content-center">
@@ -48,7 +48,7 @@
 
         <div class="row g-5 flex-md-row-reverse">
             <div class="col-md-7 parallax scroll-detect min-vh-lg-90 min-vh-50">
-                <img src="canvas/demos/shop-2/images/section/3.jpg" class="parallax-bg">
+                <img src="/canvas/demos/shop-2/images/section/3.jpg" class="parallax-bg">
             </div>
 
             <div class="col-md-5 d-flex flex-column align-items-center justify-content-center">

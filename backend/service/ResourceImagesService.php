@@ -33,6 +33,8 @@ class ResourceImagesService extends Component
             $resource_image = new ResourceImages();
             $resource_image->resource_id = $resource->id;
             $resource_image->path = $image;
+            $resource_image->name = $image->getBaseName();
+
             if (!$resource_image->save()) {
                 dd($resource_image->errors);
             }

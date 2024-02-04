@@ -30,7 +30,6 @@ CanvasAsset::register($this);
     <div id="wrapper">
 <!--        --><?php //= $this->render('blocks/top_bar') ?>
         <?= $this->render('blocks/header') ?>
-        <?= $this->render('blocks/slider') ?>
 
         <section id="content">
             <div class="content-wrap">

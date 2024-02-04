@@ -14,13 +14,16 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property int $id
  * @property int $resource_id
  * @property string|null $path
+ * @property string|null $name
  *
  * @property Resource $resource
  * @method getUploadedFileUrl(string $string)
+ * @method getImageFileUrl(string $string)
  */
 class ResourceImages extends \yii\db\ActiveRecord
 {
 
+    const FILE_ATTRIBUTE_NAME = 'path';
 
     /**
      * {@inheritdoc}
@@ -69,7 +72,7 @@ class ResourceImages extends \yii\db\ActiveRecord
         return [
             [
                 'class' => ImageUploadBehavior::class,
-                'attribute' => 'path',
+                'attribute' => self::FILE_ATTRIBUTE_NAME,
                 'filePath' => '@webroot/uploads/[[model]]/[[attribute_resource_id]]/[[filename]].[[extension]]',
                 'fileUrl' => '/uploads/[[model]]/[[attribute_resource_id]]/[[filename]].[[extension]]',
             ]
@@ -81,18 +84,21 @@ class ResourceImages extends \yii\db\ActiveRecord
         return $this->hasOne(Resource::class, ['id' => 'resource_id']);
     }
 
+    public function getUploadedUrl(): string
+    {
+        return $this->getImageFileUrl(self::FILE_ATTRIBUTE_NAME);
+    }
+
     public function getUploadedFileUrlFromFrontend(): string
     {
-        return Yii::$app->params['curl'] . $this->getUploadedFileUrl('path');
+        return Yii::$app->params['curl'] . $this->getUploadedUrl();
     }
     public function showImages(): ?string
-
     {
         if (!$this->path)
             return '';
-        $res = '';
 
-        return Html::img(Yii::$app->params['curl'].$this->getUploadedFileUrl('path'), ['alt' => 'Thumbnail', 'width' => 400, 'height' => 'auto']);
+        return Html::img(Yii::$app->params['curl'].$this->getUploadedFileUrl(self::FILE_ATTRIBUTE_NAME), ['alt' => 'Thumbnail', 'width' => 400, 'height' => 'auto']);
     }
 
 }

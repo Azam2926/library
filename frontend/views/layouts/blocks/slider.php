@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide-bg"
-                         style="background-image: url('canvas/demos/shop-2/images/slider/1.jpg'); background-position: 50% 10%;"></div>
+                         style="background-image: url('/canvas/demos/shop-2/images/slider/1.jpg'); background-position: 50% 10%;"></div>
                 </div>
                 <div class="swiper-slide dark">
                     <div class="container-fluid h-100 p-5 p-lg-6">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide-bg"
-                         style="background-image: url('canvas/demos/shop-2/images/slider/2.jpg'); background-position: 50% 10%;"></div>
+                         style="background-image: url('/canvas/demos/shop-2/images/slider/2.jpg'); background-position: 50% 10%;"></div>
                 </div>
                 <div class="swiper-slide dark">
                     <div class="container-fluid h-100 p-5 p-lg-6">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide-bg"
-                         style="background-image: url('canvas/demos/shop-2/images/slider/3.jpg'); background-position: 50% 10%;"></div>
+                         style="background-image: url('/canvas/demos/shop-2/images/slider/3.jpg'); background-position: 50% 10%;"></div>
                 </div>
             </div>
             <div class="swiper-pagination"></div>

@@ -2,9 +2,7 @@
 
 namespace common\models;
 
-use common\querys\ResourceDownloadsQuery;
 use common\querys\ResourceQuery;
-use common\querys\ResourceViewsQuery;
 use common\querys\SubjectQuery;
 use common\querys\TypeQuery;
 use Exception;
@@ -16,7 +14,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\bootstrap5\Html;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\AfterSaveEvent;
 use yii\helpers\FileHelper;
 use yii\helpers\StringHelper;
 use yiidreamteam\upload\FileUploadBehavior;
@@ -48,9 +45,6 @@ use yiidreamteam\upload\FileUploadBehavior;
  * @property ResourceImages[] $images
  * @property Subject $subject
  * @property Type $types
- * @property string $format
- * @property string $size
- * @property string $extension
  * @method getUploadedFileUrl(string $string)
  * @method getImageFileUrl(string $string)
  * @method getThumbFileUrl(string $string)
@@ -127,7 +121,7 @@ class Resource extends ActiveRecord
             [['subject_id', 'title'], 'required'],
             [['discount_value', 'price'], 'safe'],
             [['subject_id', 'type_id', 'language', 'type', 'open_access', 'created_at', 'updated_at', 'count', 'status'], 'integer'],
-            [['description', 'youtubelink'], 'string'],
+            [['description'], 'string'],
             [['uuid'], 'string', 'max' => 36],
             [['title', 'publisher', 'date', 'discount_type'], 'string', 'max' => 255],
             [['uuid'], 'unique'],
@@ -195,24 +189,6 @@ class Resource extends ActiveRecord
         // ...custom code here...
         return true;
     }
-
-    public function videoUpload()
-    {
-        $this->detachBehavior('file_uploader');
-        $this->file = $this->youtubelink;
-    }
-
-    public function showFile(): ?string
-    {
-        if (!$this->file)
-            return '';
-        return match ($this->type) {
-            Resource::TYPE_YOUTUBEVIDEO => Html::a('View Video', $this->file, ['_target' => 'blank']),
-            Resource::TYPE_AUDIO, Resource::TYPE_TEXT => Html::a('View File', $this->getUploadedFileUrl('file'), ['_target' => 'blank']),
-            default => 'default'
-        };
-    }
-
     public function showThumbnail(): ?string
 
     {
@@ -267,9 +243,6 @@ class Resource extends ActiveRecord
     {
         if (!$this->getUploadedFileUrl($file_name))
             return match ($this->type) {
-                Resource::TYPE_YOUTUBEVIDEO => "/fallbacks/video.jpg",
-                Resource::TYPE_AUDIO => "/fallbacks/audio.jpg",
-                Resource::TYPE_TEXT => "/fallbacks/text.jpg",
                 default => 'default'
             };
 
@@ -321,45 +294,10 @@ class Resource extends ActiveRecord
         return self::getLanguageList()[$this->language];
     }
 
-
-    public function getFormat(): ?string
-    {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            return "Youtube video";
-
-        if (!$this->file)
-            return '';
-
-        return FileHelper::getMimeType($this->getFilePath('file'));
-    }
-
     protected function getFilePath($file): bool|string
     {
         return Yii::getAlias('@backend/web' . $this->getUploadedFileUrl($file));
     }
-
-    public function getSize(): ?string
-    {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            return "Youtube video";
-
-        if (!$this->file)
-            return '';
-
-        return Yii::$app->formatter->asShortSize(filesize($this->getFilePath('file')));
-    }
-
-    public function getExtension(): ?string
-    {
-        if ($this->type == self::TYPE_YOUTUBEVIDEO)
-            return "Youtube video";
-
-        if (!$this->file)
-            return '';
-
-        return pathinfo($this->getFilePath('file'), PATHINFO_EXTENSION);
-    }
-
     public function getFirstTwoPublisher(): string
     {
         $publishers = StringHelper::explode($this->publisher, ',');
@@ -367,6 +305,20 @@ class Resource extends ActiveRecord
             return $publishers[0] . ', ' . $publishers[1];
 
         return $this->publisher;
+    }
+
+    public function getFirstImageUrl(): string
+    {
+        $imagesUrl = $this->getImagesUrl();
+        if (!$imagesUrl)
+            return '';
+
+        return $imagesUrl[0];
+    }
+
+    public function getFirstImageUrlFront(): string
+    {
+        return Yii::$app->params['curl'] . $this->getFirstImageUrl();
     }
 
     public function getImagesUrl(): array

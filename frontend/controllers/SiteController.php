@@ -51,7 +51,8 @@ class SiteController extends Controller
 
     public function actionIndex(): string
     {
-        $new_resource_counter = 5;
+        $new_resource_counter = 3;
+        $this->layout = 'home';
         return $this->render('index', [
             'new_resources' => Resource::find()->news($new_resource_counter)->all(),
             'statistics' => (new Stats())->getStats(),
@@ -154,9 +155,9 @@ class SiteController extends Controller
         return $model;
     }
 
-    private function findResourceWithVD($uuid): array|Resource
+    private function findResourceWithVD($uuid): Resource
     {
-        $model = Resource::find()->with(['resourceDownload', 'resourceView'])->uuid($uuid)->one();
+        $model = Resource::find()->uuid($uuid)->one();
         if (!$model)
             throw new NotFoundHttpException('Resurs topilmadi');
 

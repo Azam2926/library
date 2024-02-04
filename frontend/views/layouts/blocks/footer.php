@@ -91,12 +91,12 @@
 
                 <div class="col-auto">
                     <ul class="list-unstyled d-flex flex-row mb-2">
-                        <li class="me-2"><img src="canvas/demos/xmas/images/cards/visa.svg" alt="Visa" width="34"></li>
-                        <li class="me-2"><img src="canvas/demos/xmas/images/cards/mc.svg" alt="Master Card" width="34"></li>
-                        <li class="me-2"><img src="canvas/demos/xmas/images/cards/ae.svg" alt="American Express" width="34">
+                        <li class="me-2"><img src="/canvas/demos/xmas/images/cards/visa.svg" alt="Visa" width="34"></li>
+                        <li class="me-2"><img src="/canvas/demos/xmas/images/cards/mc.svg" alt="Master Card" width="34"></li>
+                        <li class="me-2"><img src="/canvas/demos/xmas/images/cards/ae.svg" alt="American Express" width="34">
                         </li>
-                        <li class="me-2"><img src="canvas/demos/xmas/images/cards/pp.svg" alt="PayPal" width="34"></li>
-                        <li class="me-2"><img src="canvas/demos/xmas/images/cards/wu.svg" alt="Western Union" width="34"></li>
+                        <li class="me-2"><img src="/canvas/demos/xmas/images/cards/pp.svg" alt="PayPal" width="34"></li>
+                        <li class="me-2"><img src="/canvas/demos/xmas/images/cards/wu.svg" alt="Western Union" width="34"></li>
                     </ul>
                 </div>
             </div>
