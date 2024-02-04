@@ -8,20 +8,21 @@ use yii\web\JqueryAsset;
 use yii\web\View;
 
 $this->registerJs(<<<JS
+    const id = document.getElementById('resource-id')
     const form = document.getElementById('add-to-cart')
     const addButton = document.getElementById('add-to-cart-button')
-    const uuid = document.getElementById('resource-uuid')
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+
     form.addEventListener('submit', (e) => {
         e.preventDefault()
-        console.log(addButton.value)
-        $.post('add-to-cart', {qty: addButton.value, uuid: uuid.value})
+        $.post('/cart/add-to-cart', {qty: addButton.value, resource_id: id.value, '_csrf-frontend': csrfToken }, console.log)
     })
 
 JS, 3);
 $this->registerAssetBundle(JqueryAsset::class, 3);
 
 ?>
-<input type="text" id="resource-uuid" hidden="hidden" value="<?= $resource->uuid ?>">
+<input type="text" id="resource-id" hidden="hidden" value="<?= $resource->id ?>">
 <div class="container">
 
     <div class="single-product">
@@ -94,76 +95,15 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
                     <!-- Product Single - Short Description
                     ============================================= -->
                     <p><?= $resource->description ?></p>
-                    <ul class="iconlist">
-                        <li><i class="fa-solid fa-caret-right"></i> Dynamic Color Options</li>
-                        <li><i class="fa-solid fa-caret-right"></i> Lots of Size Options</li>
-                        <li><i class="fa-solid fa-caret-right"></i> 30-Day Return Policy</li>
-                    </ul><!-- Product Single - Short Description End -->
+                    <!-- Product Single - Short Description End -->
 
                     <!-- Product Single - Meta
                     ============================================= -->
-                    <div class="card product-meta">
-                        <div class="card-body">
-                            <span itemprop="productID" class="sku_wrapper">SKU: <span class="sku">8465415</span></span>
-                            <span class="posted_in">Category: <a href="#" rel="tag">Dress</a>.</span>
-                            <span class="tagged_as">Tags: <a href="#" rel="tag">Pink</a>, <a href="#"
-                                                                                             rel="tag">Short</a>, <a
-                                        href="#" rel="tag">Dress</a>, <a href="#" rel="tag">Printed</a>.</span>
-                        </div>
-                    </div><!-- Product Single - Meta End -->
+                    <!-- Product Single - Meta End -->
 
                     <!-- Product Single - Share
                     ============================================= -->
-                    <div class="card mt-6 pt-4 border-0 border-top rounded-0 border-default">
-                        <div class="card-body p-0">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h6 class="fs-6 fw-semibold mb-0">Share:</h6>
-                                <div class="d-flex">
-                                    <a href="#"
-                                       class="social-icon si-small text-white border-transparent rounded-circle bg-facebook"
-                                       title="Facebook">
-                                        <i class="fa-brands fa-facebook-f"></i>
-                                        <i class="fa-brands fa-facebook-f"></i>
-                                    </a>
-
-                                    <a href="#"
-                                       class="social-icon si-small text-white border-transparent rounded-circle bg-x-twitter"
-                                       title="Twitter">
-                                        <i class="fa-brands fa-x-twitter"></i>
-                                        <i class="fa-brands fa-x-twitter"></i>
-                                    </a>
-
-                                    <a href="#"
-                                       class="social-icon si-small text-white border-transparent rounded-circle bg-pinterest"
-                                       title="Pinterest">
-                                        <i class="fa-brands fa-pinterest-p"></i>
-                                        <i class="fa-brands fa-pinterest-p"></i>
-                                    </a>
-
-                                    <a href="#"
-                                       class="social-icon si-small text-white border-transparent rounded-circle bg-whatsapp"
-                                       title="Whatsapp">
-                                        <i class="fa-brands fa-whatsapp"></i>
-                                        <i class="fa-brands fa-whatsapp"></i>
-                                    </a>
-
-                                    <a href="#"
-                                       class="social-icon si-small text-white border-transparent rounded-circle bg-rss"
-                                       title="RSS">
-                                        <i class="fa-solid fa-rss"></i>
-                                        <i class="fa-solid fa-rss"></i>
-                                    </a>
-
-                                    <a href="#"
-                                       class="social-icon si-small text-white border-transparent rounded-circle bg-email3 me-0"
-                                       title="Mail">
-                                        <i class="fa-solid fa-envelope"></i>
-                                        <i class="fa-solid fa-envelope"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- Product Single - Share End -->
+                    <!-- Product Single - Share End -->
 
                 </div>
 
@@ -477,177 +417,6 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
 
             </div>
         </div>
-    </div>
-
-    <div class="line"></div>
-
-    <div class="w-100">
-
-        <h4>Related Products</h4>
-
-        <div class="owl-carousel product-carousel carousel-widget" data-margin="30" data-pagi="false"
-             data-autoplay="5000" data-items-xs="1" data-items-md="2" data-items-lg="3" data-items-xl="4">
-
-            <div class="oc-item">
-                <div class="product">
-                    <div class="product-image">
-                        <a href="#"><img src="/canvas/images/shop/dress/1.jpg" alt="Checked Short Dress"></a>
-                        <a href="#"><img src="/canvas/images/shop/dress/1-1.jpg" alt="Checked Short Dress"></a>
-                        <div class="badge bg-success p-2">50% Off*</div>
-                        <div class="bg-overlay">
-                            <div class="bg-overlay-content align-items-end justify-content-between"
-                                 data-hover-animate="fadeIn" data-hover-speed="400">
-                                <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                            class="bi-bag-plus"></i></a>
-                                <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"
-                                   title="Quick View"><i class="bi-eye"></i></a>
-                            </div>
-                            <div class="bg-overlay-bg bg-transparent"></div>
-                        </div>
-                    </div>
-                    <div class="product-desc text-center">
-                        <div class="product-title"><h3><a href="#">Checked Short Dress</a></h3></div>
-                        <div class="product-price">
-                            <del>$24.99</del>
-                            <ins>$12.49</ins>
-                        </div>
-                        <div class="product-rating">
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-half"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="oc-item">
-                <div class="product">
-                    <div class="product-image">
-                        <a href="#"><img src="/canvas/images/shop/pants/1-1.jpg" alt="Slim Fit Chinos"></a>
-                        <a href="#"><img src="/canvas/images/shop/pants/1.jpg" alt="Slim Fit Chinos"></a>
-                        <div class="bg-overlay">
-                            <div class="bg-overlay-content align-items-end justify-content-between"
-                                 data-hover-animate="fadeIn" data-hover-speed="400">
-                                <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                            class="bi-bag-plus"></i></a>
-                                <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"
-                                   title="Quick View"><i class="bi-eye"></i></a>
-                            </div>
-                            <div class="bg-overlay-bg bg-transparent"></div>
-                        </div>
-                    </div>
-                    <div class="product-desc text-center">
-                        <div class="product-title"><h3><a href="#">Slim Fit Chinos</a></h3></div>
-                        <div class="product-price">$39.99</div>
-                        <div class="product-rating">
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-half"></i>
-                            <i class="bi-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="oc-item">
-                <div class="product">
-                    <div class="product-image">
-                        <a href="#"><img src="/canvas/images/shop/shoes/1-1.jpg" alt="Dark Brown Boots"></a>
-                        <a href="#"><img src="/canvas/images/shop/shoes/1.jpg" alt="Dark Brown Boots"></a>
-                        <div class="bg-overlay">
-                            <div class="bg-overlay-content align-items-end justify-content-between"
-                                 data-hover-animate="fadeIn" data-hover-speed="400">
-                                <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                            class="bi-bag-plus"></i></a>
-                                <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"
-                                   title="Quick View"><i class="bi-eye"></i></a>
-                            </div>
-                            <div class="bg-overlay-bg bg-transparent"></div>
-                        </div>
-                    </div>
-                    <div class="product-desc text-center">
-                        <div class="product-title"><h3><a href="#">Dark Brown Boots</a></h3></div>
-                        <div class="product-price">$49</div>
-                        <div class="product-rating">
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star"></i>
-                            <i class="bi-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="oc-item">
-                <div class="product">
-                    <div class="product-image">
-                        <a href="#"><img src="/canvas/images/shop/dress/2.jpg" alt="Light Blue Denim Dress"></a>
-                        <a href="#"><img src="/canvas/images/shop/dress/2-2.jpg" alt="Light Blue Denim Dress"></a>
-                        <div class="bg-overlay">
-                            <div class="bg-overlay-content align-items-end justify-content-between"
-                                 data-hover-animate="fadeIn" data-hover-speed="400">
-                                <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                            class="bi-bag-plus"></i></a>
-                                <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"
-                                   title="Quick View"><i class="bi-eye"></i></a>
-                            </div>
-                            <div class="bg-overlay-bg bg-transparent"></div>
-                        </div>
-                    </div>
-                    <div class="product-desc text-center">
-                        <div class="product-title"><h3><a href="#">Light Blue Denim Dress</a></h3></div>
-                        <div class="product-price">$19.95</div>
-                        <div class="product-rating">
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="oc-item">
-                <div class="product">
-                    <div class="product-image">
-                        <a href="#"><img src="/canvas/images/shop/sunglasses/1.jpg" alt="Unisex Sunglasses"></a>
-                        <a href="#"><img src="/canvas/images/shop/sunglasses/1-1.jpg" alt="Unisex Sunglasses"></a>
-                        <div class="badge bg-success p-2">Sale!</div>
-                        <div class="bg-overlay">
-                            <div class="bg-overlay-content align-items-end justify-content-between"
-                                 data-hover-animate="fadeIn" data-hover-speed="400">
-                                <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                            class="bi-bag-plus"></i></a>
-                                <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax"
-                                   title="Quick View"><i class="bi-eye"></i></a>
-                            </div>
-                            <div class="bg-overlay-bg bg-transparent"></div>
-                        </div>
-                    </div>
-                    <div class="product-desc text-center">
-                        <div class="product-title"><h3><a href="#">Unisex Sunglasses</a></h3></div>
-                        <div class="product-price">
-                            <del>$19.99</del>
-                            <ins>$11.99</ins>
-                        </div>
-                        <div class="product-rating">
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star-fill"></i>
-                            <i class="bi-star"></i>
-                            <i class="bi-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
 
 </div>
