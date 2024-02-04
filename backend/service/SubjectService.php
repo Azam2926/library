@@ -38,11 +38,14 @@ class SubjectService extends Component
 
         if($model->parent_id == null){
 
+
           $child_models = $this->subjectRepository->findParent($id);
 
-          if(!$child_models){
-              throw new Exception('Child not found');
+          if(empty($child_models)){
+              $model->delete();
           }
+
+
 
           $transaction = Yii::$app->db->beginTransaction();
 
@@ -50,7 +53,7 @@ class SubjectService extends Component
               foreach ($child_models as $child_model){
                   $child_model->delete();
               }
-
+              $model->delete();
               $transaction->commit();
             }
             catch (Exception $e){
