@@ -57,6 +57,7 @@ class CartService extends Component
         }
 
         $resourceModel = $this->resourceRepository->findById($cartDTO->getResourceId());
+
         if(!$resourceModel){
             throw new Exception("Resource not found");
         }

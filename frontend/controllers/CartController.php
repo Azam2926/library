@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use frontend\dto\CartDTO;
 use frontend\service\CartService;
+use Throwable;
 use Yii;
 use yii\db\Exception;
 use yii\web\Response;
@@ -29,6 +30,7 @@ class CartController extends \yii\web\Controller
 
     /**
      * @throws Exception
+     * @throws Throwable
      */
     public function actionAddToCart(): Response|array|string
     {
