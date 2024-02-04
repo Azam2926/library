@@ -2,8 +2,10 @@
 
 namespace frontend\controllers;
 
+use frontend\dto\CartDTO;
 use frontend\service\CartService;
 use Yii;
+use yii\db\Exception;
 use yii\web\Response;
 
 class CartController extends \yii\web\Controller
@@ -25,16 +27,21 @@ class CartController extends \yii\web\Controller
         return $this->render('index');
     }
 
-    public function actionAddToCart()
+    /**
+     * @throws Exception
+     */
+    public function actionAddToCart(): Response|array|string
     {
         if(Yii::$app->user->isGuest){
-            return $this->redirect(['site/login']);
+            Yii::$app->getResponse()->setStatusCode(401, "Unauthorization");
+            return ['status' => 'Unsuccessfully', 'result' => null];
         }
         else{
             if(Yii::$app->request->isAjax){
 
-                $id = Yii::$app->request->post('resource_id');
-                $cartItem = $this->cartService->addToCart($id);
+                $cartDTO = new CartDTO(Yii::$app->request->post());
+
+                $cartItem = $this->cartService->addToCart($cartDTO);
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 

@@ -31,4 +31,19 @@ class CartItemsQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function findByResourceId($resource_id): CartItemsQuery
+    {
+       return $this->andWhere(['resource_id' => $resource_id]);
+    }
+
+    public function findByCartId($cart_id): CartItemsQuery
+    {
+       return $this->andWhere(['cart_id' => $cart_id]);
+    }
+
+    public function findByCardAndResource($resource_id, $cart_id): CartItemsQuery
+    {
+        return $this->findByResourceId($resource_id)->findByCartId($cart_id);
+    }
 }

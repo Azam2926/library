@@ -8,6 +8,8 @@ use backend\repositories\SubjectRepository;
 use common\models\CartItems;
 use common\models\Carts;
 use common\models\Subject;
+use frontend\dto\CartDTO;
+use frontend\repository\CartItemRepository;
 use frontend\repository\CartRepository;
 use Yii;
 use yii\base\Component;
@@ -20,17 +22,29 @@ class CartService extends Component
 
     public CartRepository $cartRepository;
     public ResourceRepository $resourceRepository;
+    public CartItemService $cartItemService;
+    public CartItemRepository $cartItemRepository;
 
-    public function __construct(CartRepository $cartRepository,
+    public function __construct(
+                                CartRepository $cartRepository,
                                 ResourceRepository $resourceRepository,
+                                CartItemRepository $cartItemRepository,
+                                CartItemService $cartItemService,
                                 $config = [])
     {
         parent::__construct($config);
         $this->cartRepository = $cartRepository;
         $this->resourceRepository = $resourceRepository;
+        $this->cartItemRepository = $cartItemRepository;
+        $this->cartItemService = $cartItemService;
     }
 
-    public function addToCartWithQuantity($id, $quantity): CartItems
+    /**
+     * @throws Exception
+     * @throws StaleObjectException
+     * @throws Throwable
+     */
+    public function saveCart(CartDTO $cartDTO): CartItems
     {
         $cartModel = $this->cartRepository->findByUserId(Yii::$app->user->id);
         if(!$cartModel){
@@ -42,33 +56,38 @@ class CartService extends Component
 
         }
 
-        $resourceModel = $this->resourceRepository->findById($id);
+        $resourceModel = $this->resourceRepository->findById($cartDTO->getResourceId());
         if(!$resourceModel){
             throw new Exception("Resource not found");
         }
 
-        $cartItem = new CartItems();
+        $cartItemModel = $this->cartItemRepository->findByCardAndResource($resourceModel->id, $cartModel->id);
 
-        $cartItem->cart_id = $cartModel->id;
-        $cartItem->resource_id = $resourceModel->id;
-        $cartItem->price = $resourceModel->price;
-        $cartItem->quantity = $quantity;
+        if($cartItemModel){
 
-        $cartItem->save();
+           $cartItemModel = $this->cartItemService->updateQuantity($cartItemModel, $cartDTO);
+        }
+        else{
+            $cartItemModel = $this->cartItemService->saveCartItem($cartModel, $resourceModel, $cartDTO);
+        }
 
-        return $cartItem;
+        return $cartItemModel;
 
     }
 
 
     /**
      * @throws Exception
+     * @throws Throwable
      */
-    public function addToCart($id): CartItems
+    public function addToCart(CartDTO $cartDTO): CartItems
     {
-        $quantity = 1;
 
-       return $this->addToCartWithQuantity($id, $quantity);
+        if($cartDTO->getQuantity() == null){
+            $cartDTO->setQuantity( 1);
+        }
+
+       return $this->saveCart($cartDTO);
 
     }
 
