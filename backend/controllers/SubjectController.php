@@ -9,8 +9,6 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use yii\db\StaleObjectException;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
@@ -54,9 +52,9 @@ class SubjectController extends AdminController
 
     /**
      * Lists all Subject models.
-     * @return mixed
+     * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Subject::find(),
@@ -118,7 +116,6 @@ class SubjectController extends AdminController
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|Response
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate(int $id): string|Response
     {

@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 
 class ResourceRepository
 {
-    public function getResourceList()
+    public function getResourceList(): array
     {
         return  ArrayHelper::map(Resource::find()->active()->asArray()->all(),'id', 'title');
     }

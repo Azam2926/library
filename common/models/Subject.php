@@ -44,7 +44,7 @@ class Subject extends ActiveRecord
         ];
     }
 
-    public function behaviors()
+    #[ArrayShape(['timestamp' => "array"])] public function behaviors(): array
     {
         return [
             'timestamp' => [

@@ -286,7 +286,7 @@ class Resource extends ActiveRecord
     }
 
 
-    public function getLanguage(): string
+    #[Pure] public function getLanguage(): string
     {
         if ($this->language == null)
             return '';

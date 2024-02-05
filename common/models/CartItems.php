@@ -5,7 +5,7 @@ namespace common\models;
 use common\querys\CartItemsQuery;
 use common\querys\CartsQuery;
 use common\querys\ResourceQuery;
-use Yii;
+use JetBrains\PhpStorm\ArrayShape;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -50,7 +50,7 @@ class CartItems extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels(): array
+    #[ArrayShape(['id' => "string", 'cart_id' => "string", 'resource_id' => "string", 'price' => "string", 'quantity' => "string", 'created_at' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

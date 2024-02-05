@@ -7,16 +7,12 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the ActiveQuery class for [[\common\models\CartItems]].
+ * This is the ActiveQuery class for [[CartItems]].
  *
- * @see \common\models\CartItems
+ * @see CartItems
  */
 class CartItemsQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
 
     /**
      * {@inheritdoc}

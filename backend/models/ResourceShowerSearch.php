@@ -7,14 +7,14 @@ use yii\data\ActiveDataProvider;
 use common\models\ResourceShower;
 
 /**
- * ResourceShowerSearch represents the model behind the search form of `common\models\ResourceShower`.
+ * ResourceShowerSearch represents the model behind the search form of `ResourceShower`.
  */
 class ResourceShowerSearch extends ResourceShower
 {
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'resource_id', 'type'], 'integer'],
@@ -24,7 +24,7 @@ class ResourceShowerSearch extends ResourceShower
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -37,7 +37,7 @@ class ResourceShowerSearch extends ResourceShower
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = ResourceShower::find();
 

@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 class CartRepository
 {
 
-    public function findByUserId($user_id)
+    public function findByUserId($user_id): Carts|array|null
     {
         return Carts::find()->findByUserId($user_id)->one();
     }

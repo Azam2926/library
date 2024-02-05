@@ -2,7 +2,11 @@
 
 namespace common\models;
 
-use Yii;
+use common\querys\OrderListQuery;
+use common\querys\OrderQuery;
+use JetBrains\PhpStorm\ArrayShape;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order".
@@ -14,12 +18,12 @@ use Yii;
  * @property OrderList[] $orderLists
  * @property User $user
  */
-class Order extends \yii\db\ActiveRecord
+class Order extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'order';
     }
@@ -27,7 +31,7 @@ class Order extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id'], 'required'],
@@ -40,7 +44,7 @@ class Order extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    #[ArrayShape(['id' => "string", 'user_id' => "string", 'created_at' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -52,9 +56,9 @@ class Order extends \yii\db\ActiveRecord
     /**
      * Gets query for [[OrderLists]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\OrderListQuery
+     * @return ActiveQuery|OrderListQuery
      */
-    public function getOrderLists()
+    public function getOrderLists(): ActiveQuery|OrderListQuery
     {
         return $this->hasMany(OrderList::class, ['order_id' => 'id'])->inverseOf('order');
     }
@@ -62,19 +66,19 @@ class Order extends \yii\db\ActiveRecord
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\UserQuery
+     * @return ActiveQuery|\common\querys\UserQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery|\common\querys\UserQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id'])->inverseOf('orders');
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\querys\OrderQuery the active query used by this AR class.
+     * @return OrderQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): OrderQuery
     {
-        return new \common\querys\OrderQuery(get_called_class());
+        return new OrderQuery(get_called_class());
     }
 }

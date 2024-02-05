@@ -2,32 +2,31 @@
 
 namespace common\querys;
 
-/**
- * This is the ActiveQuery class for [[\common\models\Subject]].
- *
- * @see \common\models\Subject
- */
-class SubjectQuery extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
+use yii\db\ActiveQuery;
+use common\models\Subject;
+use yii\db\ActiveRecord;
 
+/**
+ * This is the ActiveQuery class for [[Subject]].
+ *
+ * @see Subject
+ */
+class SubjectQuery extends ActiveQuery
+{
     /**
      * {@inheritdoc}
-     * @return \common\models\Subject[]|array
+     * @return Subject[]|array
      */
-    public function all($db = null)
+    public function all($db = null): array
     {
         return parent::all($db);
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\models\Subject|array|null
+     * @return array|ActiveRecord|null
      */
-    public function one($db = null)
+    public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
     }

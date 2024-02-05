@@ -2,7 +2,11 @@
 
 namespace common\models;
 
-use Yii;
+use common\querys\CartItemsQuery;
+use common\querys\CartsQuery;
+use JetBrains\PhpStorm\ArrayShape;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "carts".
@@ -15,7 +19,7 @@ use Yii;
  *
  * @property CartItems[] $cartItems
  */
-class Carts extends \yii\db\ActiveRecord
+class Carts extends ActiveRecord
 {
 
     const STATUS_ACTIVE = 1;
@@ -23,7 +27,7 @@ class Carts extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'carts';
     }
@@ -31,7 +35,7 @@ class Carts extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['created_by', 'status'], 'integer'],
@@ -42,7 +46,7 @@ class Carts extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    #[ArrayShape(['id' => "string", 'created_by' => "string", 'status' => "string", 'created_at' => "string", 'updated_at' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -56,19 +60,19 @@ class Carts extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CartItems]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\CartItemsQuery
+     * @return ActiveQuery|CartItemsQuery
      */
-    public function getCartItems()
+    public function getCartItems(): ActiveQuery|CartItemsQuery
     {
         return $this->hasMany(CartItems::class, ['cart_id' => 'id'])->inverseOf('cart');
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\querys\CartsQuery the active query used by this AR class.
+     * @return CartsQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): CartsQuery
     {
-        return new \common\querys\CartsQuery(get_called_class());
+        return new CartsQuery(get_called_class());
     }
 }

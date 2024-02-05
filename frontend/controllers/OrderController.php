@@ -2,7 +2,9 @@
 
 namespace frontend\controllers;
 
-class OrderController extends \yii\web\Controller
+use yii\web\Controller;
+
+class OrderController extends Controller
 {
     public function actionIndex(): string
     {

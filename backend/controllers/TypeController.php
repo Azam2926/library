@@ -4,9 +4,10 @@ namespace backend\controllers;
 
 use common\models\Type;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * TypeController implements the CRUD actions for Type model.
@@ -33,9 +34,9 @@ class TypeController extends AdminController
 
     /**
      * Lists all Type models.
-     * @return mixed
+     * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Type::find(),
@@ -59,10 +60,10 @@ class TypeController extends AdminController
     /**
      * Displays a single Type model.
      * @param int $id ID
-     * @return mixed
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -72,9 +73,9 @@ class TypeController extends AdminController
     /**
      * Creates a new Type model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|Response
      */
-    public function actionCreate()
+    public function actionCreate(): string|Response
     {
         $model = new Type();
 
@@ -95,10 +96,10 @@ class TypeController extends AdminController
      * Updates an existing Type model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return mixed
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): string|Response
     {
         $model = $this->findModel($id);
 
@@ -115,12 +116,14 @@ class TypeController extends AdminController
      * Deletes an existing Type model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return Response
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->delete();
+        try {
+            $this->findModel($id)->delete();
+        } catch (StaleObjectException | NotFoundHttpException | \Throwable $e) {
+        }
 
         return $this->redirect(['index']);
     }
@@ -132,7 +135,7 @@ class TypeController extends AdminController
      * @return Type the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): Type
     {
         if (($model = Type::findOne($id)) !== null) {
             return $model;

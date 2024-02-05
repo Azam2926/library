@@ -8,6 +8,7 @@ use frontend\components\Stats;
 use frontend\models\ResourceFilter;
 use frontend\models\SignupForm;
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -41,6 +42,9 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     public function actionResource($uuid): string
     {
         $resource = $this->findResourceWithVD($uuid);
@@ -62,7 +66,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function behaviors()
+    #[Pure] #[ArrayShape(['access' => "array", 'verbs' => "array"])] public function behaviors(): array
     {
         return [
             'access' => [
@@ -94,9 +98,9 @@ class SiteController extends Controller
     /**
      * Logs in a user.
      *
-     * @return mixed
+     * @return string|Response
      */
-    public function actionLogin()
+    public function actionLogin(): string|Response
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -117,9 +121,9 @@ class SiteController extends Controller
     /**
      * Logs out the current user.
      *
-     * @return mixed
+     * @return Response
      */
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         Yii::$app->user->logout();
 
@@ -130,9 +134,9 @@ class SiteController extends Controller
     /**
      * Signs user up.
      *
-     * @return mixed
+     * @return string|Response
      */
-    public function actionSignup()
+    public function actionSignup(): string|Response
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
@@ -146,6 +150,9 @@ class SiteController extends Controller
     }
 
 
+    /**
+     * @throws NotFoundHttpException
+     */
     private function findResource($uuid): array|Resource|null
     {
         $model = Resource::find()->uuid($uuid)->one();
@@ -155,6 +162,9 @@ class SiteController extends Controller
         return $model;
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     private function findResourceWithVD($uuid): Resource
     {
         $model = Resource::find()->uuid($uuid)->one();

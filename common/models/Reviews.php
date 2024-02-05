@@ -2,7 +2,11 @@
 
 namespace common\models;
 
+use common\models\querys\ReviewsQuery;
+use JetBrains\PhpStorm\ArrayShape;
 use Yii;
+use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "reviews".
@@ -18,12 +22,12 @@ use Yii;
  * @property Resource $resource
  * @property User $user
  */
-class Reviews extends \yii\db\ActiveRecord
+class Reviews extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'reviews';
     }
@@ -31,7 +35,7 @@ class Reviews extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id', 'resource_id'], 'required'],
@@ -46,7 +50,9 @@ class Reviews extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    #[ArrayShape(['id' => "string", 'user_id' => "string", 'resource_id' => "string",
+        'rating' => "string", 'comment' => "string",
+        'status' => "string", 'created_at' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -62,29 +68,19 @@ class Reviews extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Resource]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\ResourceQuery
+     * @return ActiveQuery
      */
-    public function getResource()
+    public function getResource(): ActiveQuery
     {
         return $this->hasOne(Resource::class, ['id' => 'resource_id'])->inverseOf('reviews');
     }
 
-//    /**
-//     * Gets query for [[User]].
-//     *
-//     * @return \yii\db\ActiveQuery|\common\querys\UserQuery
-//     */
-//    public function getUser()
-//    {
-//        return $this->hasOne(User::class, ['id' => 'user_id'])->inverseOf('reviews');
-//    }
-
     /**
      * {@inheritdoc}
-     * @return \common\models\querys\ReviewsQuery the active query used by this AR class.
+     * @return ReviewsQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ReviewsQuery
     {
-        return new \common\models\querys\ReviewsQuery(get_called_class());
+        return new ReviewsQuery(get_called_class());
     }
 }

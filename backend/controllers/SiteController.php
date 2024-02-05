@@ -4,11 +4,8 @@ namespace backend\controllers;
 
 use common\models\LoginForm;
 use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
 use Yii;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\Response;
 
 /**
@@ -54,7 +51,7 @@ class SiteController extends AdminController
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         return $this->render('index');
     }
@@ -64,7 +61,7 @@ class SiteController extends AdminController
      *
      * @return string|Response
      */
-    public function actionLogin()
+    public function actionLogin(): Response|string
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -89,7 +86,7 @@ class SiteController extends AdminController
      *
      * @return Response
      */
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         Yii::$app->user->logout();
 

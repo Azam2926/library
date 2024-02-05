@@ -2,32 +2,32 @@
 
 namespace common\models\querys;
 
+use common\models\Reviews;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
- * This is the ActiveQuery class for [[\common\models\Reviews]].
+ * This is the ActiveQuery class for [[Reviews]].
  *
- * @see \common\models\Reviews
+ * @see Reviews
  */
-class ReviewsQuery extends \yii\db\ActiveQuery
+class ReviewsQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
 
     /**
      * {@inheritdoc}
-     * @return \common\models\Reviews[]|array
+     * @return Reviews[]|array
      */
-    public function all($db = null)
+    public function all($db = null): array
     {
         return parent::all($db);
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\models\Reviews|array|null
+     * @return array|ActiveRecord|null
      */
-    public function one($db = null)
+    public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
     }

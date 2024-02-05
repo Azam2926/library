@@ -2,7 +2,6 @@
 
 namespace backend\models;
 
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Resource;
 

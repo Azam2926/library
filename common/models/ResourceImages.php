@@ -2,11 +2,12 @@
 
 namespace common\models;
 
+use JetBrains\PhpStorm\ArrayShape;
 use Yii;
 use yii\bootstrap5\Html;
 use yii\db\ActiveQuery;
-use yii\web\UploadedFile;
 use yiidreamteam\upload\ImageUploadBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "resource_images".
@@ -20,7 +21,7 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @method getUploadedFileUrl(string $string)
  * @method getImageFileUrl(string $string)
  */
-class ResourceImages extends \yii\db\ActiveRecord
+class ResourceImages extends ActiveRecord
 {
 
     const FILE_ATTRIBUTE_NAME = 'path';
@@ -28,7 +29,7 @@ class ResourceImages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'resource_images';
     }
@@ -37,7 +38,7 @@ class ResourceImages extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return ResourceImagesQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ResourceImagesQuery
     {
         return new ResourceImagesQuery(get_called_class());
     }
@@ -45,7 +46,7 @@ class ResourceImages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['resource_id'], 'required'],
@@ -58,7 +59,7 @@ class ResourceImages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    #[ArrayShape(['id' => "string", 'resource_id' => "string", 'path' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -67,7 +68,7 @@ class ResourceImages extends \yii\db\ActiveRecord
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             [

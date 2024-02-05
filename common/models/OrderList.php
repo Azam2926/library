@@ -2,7 +2,12 @@
 
 namespace common\models;
 
-use Yii;
+use common\querys\OrderListQuery;
+use common\querys\OrderQuery;
+use common\querys\ResourceQuery;
+use JetBrains\PhpStorm\ArrayShape;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order_list".
@@ -17,12 +22,12 @@ use Yii;
  * @property Order $order
  * @property Resource $resource
  */
-class OrderList extends \yii\db\ActiveRecord
+class OrderList extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'order_list';
     }
@@ -30,7 +35,7 @@ class OrderList extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['order_id', 'resource_id'], 'required'],
@@ -45,7 +50,7 @@ class OrderList extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    #[ArrayShape(['id' => "string", 'order_id' => "string", 'resource_id' => "string", 'price' => "string", 'quantity' => "string", 'created_at' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -60,9 +65,9 @@ class OrderList extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Order]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\OrderQuery
+     * @return ActiveQuery|OrderQuery
      */
-    public function getOrder()
+    public function getOrder(): ActiveQuery|OrderQuery
     {
         return $this->hasOne(Order::class, ['id' => 'order_id'])->inverseOf('orderLists');
     }
@@ -70,19 +75,19 @@ class OrderList extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Resource]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\ResourceQuery
+     * @return ActiveQuery|ResourceQuery
      */
-    public function getResource()
+    public function getResource(): ActiveQuery|ResourceQuery
     {
         return $this->hasOne(Resource::class, ['id' => 'resource_id'])->inverseOf('orderLists');
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\querys\OrderListQuery the active query used by this AR class.
+     * @return OrderListQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): OrderListQuery
     {
-        return new \common\querys\OrderListQuery(get_called_class());
+        return new OrderListQuery(get_called_class());
     }
 }

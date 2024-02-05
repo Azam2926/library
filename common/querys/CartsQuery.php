@@ -2,32 +2,32 @@
 
 namespace common\querys;
 
+use common\models\Carts;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
- * This is the ActiveQuery class for [[\common\models\Carts]].
+ * This is the ActiveQuery class for [[Carts]].
  *
- * @see \common\models\Carts
+ * @see Carts
  */
-class CartsQuery extends \yii\db\ActiveQuery
+class CartsQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
 
     /**
      * {@inheritdoc}
-     * @return \common\models\Carts[]|array
+     * @return Carts[]|array
      */
-    public function all($db = null)
+    public function all($db = null): array
     {
         return parent::all($db);
     }
 
     /**
      * {@inheritdoc}
-     * @return \common\models\Carts|array|null
+     * @return array|ActiveRecord|null
      */
-    public function one($db = null)
+    public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
     }

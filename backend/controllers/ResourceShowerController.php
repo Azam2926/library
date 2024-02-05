@@ -10,7 +10,6 @@ use common\models\ResourceShower;
 use backend\models\ResourceShowerSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
@@ -108,7 +107,6 @@ class ResourceShowerController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|Response
-     * @throws NotFoundHttpException if the model cannot be found
      * @throws Exception
      */
     public function actionUpdate(int $id): Response|string

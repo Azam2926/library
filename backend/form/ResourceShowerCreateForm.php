@@ -3,9 +3,7 @@
 namespace backend\form;
 
 
-use Yii;
 use yii\base\Model;
-use common\models\User;
 
 /**
  * Signup form
@@ -20,7 +18,7 @@ class ResourceShowerCreateForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             ['resource_id', 'safe'],

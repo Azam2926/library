@@ -3,7 +3,6 @@
 namespace backend\service;
 
 use backend\repositories\SubjectRepository;
-use common\models\Subject;
 use Yii;
 use yii\base\Component;
 use yii\db\Exception;

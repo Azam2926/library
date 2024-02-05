@@ -4,6 +4,7 @@ namespace backend\service;
 
 use backend\repositories\ResourceShowerRepository;
 use common\models\ResourceShower;
+use Throwable;
 use yii\base\Component;
 use yii\db\Exception;
 
@@ -53,7 +54,7 @@ class ResourceShowerService extends Component
 
     /**
      * @throws Exception
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function delete(int $id): void
     {

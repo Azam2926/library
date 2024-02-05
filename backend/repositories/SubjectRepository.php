@@ -3,9 +3,7 @@
 namespace backend\repositories;
 
 
-use common\models\Resource;
 use common\models\Subject;
-use Yii;
 use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 
@@ -26,7 +24,6 @@ class SubjectRepository
     }
 
     /**
-     * @throws Exception
      */
     public function deleteAll($models): int
     {

@@ -3,8 +3,10 @@
 namespace common\models;
 
 use common\querys\ResourceQuery;
-use Yii;
+use common\querys\ResourceShowerQuery;
+use JetBrains\PhpStorm\ArrayShape;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "resource_shower".
@@ -15,7 +17,7 @@ use yii\db\ActiveQuery;
  *
  * @property Resource $resource
  */
-class ResourceShower extends \yii\db\ActiveRecord
+class ResourceShower extends ActiveRecord
 {
 
     const SLIDER = 1;
@@ -25,7 +27,7 @@ class ResourceShower extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'resource_shower';
     }
@@ -33,7 +35,7 @@ class ResourceShower extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['resource_id', 'type'], 'required'],
@@ -45,7 +47,7 @@ class ResourceShower extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    #[ArrayShape(['id' => "string", 'resource_id' => "string", 'type' => "string"])] public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -57,7 +59,7 @@ class ResourceShower extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Resource]].
      *
-     * @return \yii\db\ActiveQuery|\common\querys\ResourceQuery
+     * @return ActiveQuery|ResourceQuery
      */
     public function getResource(): ActiveQuery|ResourceQuery
     {
@@ -66,10 +68,10 @@ class ResourceShower extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return \common\querys\ResourceShowerQuery the active query used by this AR class.
+     * @return ResourceShowerQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ResourceShowerQuery
     {
-        return new \common\querys\ResourceShowerQuery(get_called_class());
+        return new ResourceShowerQuery(get_called_class());
     }
 }

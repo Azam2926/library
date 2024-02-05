@@ -7,6 +7,8 @@ use backend\models\ResourceSearch;
 use backend\repositories\ResourceRepository;
 use backend\service\ResourceService;
 use common\models\Resource;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -67,10 +69,10 @@ class ResourceController extends AdminController
     /**
      * Displays a single Resource model.
      * @param int $id ID
-     * @return mixed
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -84,7 +86,7 @@ class ResourceController extends AdminController
      * @return Resource the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): Resource
     {
         if (($model = Resource::findOne($id)) !== null) {
             return $model;
@@ -115,6 +117,9 @@ class ResourceController extends AdminController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function actionUpdate(int $id): string|Response
     {
         $updateForm = new ResourceForm();
@@ -137,12 +142,14 @@ class ResourceController extends AdminController
      * Deletes an existing Resource model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return Response
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->delete();
+        try {
+            $this->findModel($id)->delete();
+        } catch (StaleObjectException | NotFoundHttpException | \Throwable $e) {
+        }
 
         return $this->redirect(['index']);
     }

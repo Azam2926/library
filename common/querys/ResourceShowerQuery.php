@@ -4,9 +4,10 @@ namespace common\querys;
 
 use common\models\ResourceShower;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
- * This is the ActiveQuery class for [[\common\models\ResourceShower]].
+ * This is the ActiveQuery class for [[ResourceShower]].
  *
  * @see ResourceShower
  */
@@ -17,16 +18,16 @@ class ResourceShowerQuery extends ActiveQuery
      * {@inheritdoc}
      * @return ResourceShower[]|array
      */
-    public function all($db = null)
+    public function all($db = null): array
     {
         return parent::all($db);
     }
 
     /**
      * {@inheritdoc}
-     * @return ResourceShower|array|null
+     * @return array|ActiveRecord|null
      */
-    public function one($db = null)
+    public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
     }
