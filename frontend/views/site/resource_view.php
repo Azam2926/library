@@ -15,7 +15,17 @@ $this->registerJs(<<<JS
 
     form.addEventListener('submit', (e) => {
         e.preventDefault()
-        $.post('/cart/add-to-cart', {qty: addButton.value, resource_id: id.value, '_csrf-frontend': csrfToken }, console.log)
+        $.post(
+            '/cart/add-to-cart', 
+            {qty: addButton.value, resource_id: id.value, '_csrf-frontend': csrfToken }
+            )
+            .done(console.log)
+            .fail(e => {
+                if (e.status === 401) {
+                    window.location = '/site/login'
+                    window.reload()
+                }
+            })
     })
 
 JS, 3);
