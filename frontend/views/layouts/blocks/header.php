@@ -1,3 +1,8 @@
+<?php
+
+use yii\bootstrap5\Html;
+
+?>
 <header id="header" class="header-size-md dark transparent-header" data-sticky-shrink="false"
         data-sticky-class="not-dark">
     <div id="header-wrap">
@@ -40,8 +45,23 @@
 
                     <!-- Top Login
                     ============================================= -->
-                    <div id="top-account" class="header-misc-icon px-3">
-                        <a href="#"><i class="bi-people"></i></a>
+                    <div id="top-account" class="header-misc-icon px-3 dropdown">
+                        <a href="#" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                           aria-expanded="false"><i class="bi-people"></i></a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <?php if (Yii::$app->user->isGuest) {
+                                echo '<li><a class="dropdown-item" href="/site/login">Login</a></li>';
+                            } else {
+                                echo '<li>'
+                                    . Html::beginForm(['/site/logout'])
+                                    . Html::submitButton(
+                                        'Logout (' . Yii::$app->user->identity->username . ')',
+                                        ['class' => 'dropdown-item']
+                                    )
+                                    . Html::endForm()
+                                    . '</li>';
+                            } ?>
+                        </ul>
                     </div><!-- #top-search end -->
 
                     <!-- Top Cart
@@ -68,8 +88,9 @@
                                 </div>
                                 <div class="top-cart-item">
                                     <div class="top-cart-item-image">
-                                        <a href="#" class="fw-normal"><img src="/canvas/demos/shop-2/images/cart-thumb-2.jpg"
-                                                                           alt="White Big Showcase Jar"></a>
+                                        <a href="#" class="fw-normal"><img
+                                                    src="/canvas/demos/shop-2/images/cart-thumb-2.jpg"
+                                                    alt="White Big Showcase Jar"></a>
                                     </div>
                                     <div class="top-cart-item-desc">
                                         <div class="top-cart-item-desc-title">
