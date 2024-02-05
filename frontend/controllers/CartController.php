@@ -38,10 +38,12 @@ class CartController extends Controller
         if(Yii::$app->user->isGuest){
 
             Yii::$app->getResponse()->setStatusCode(401, "Unauthorized");
+            Yii::$app->response->format = Response::FORMAT_JSON;
 
             return [
-                'status' => 'Unsuccessfully',
-                'result' => null
+                'status' => 'Error',
+                'message' => 'Unauthorized',
+                'data' => null
             ];
         }
         else{
@@ -53,7 +55,10 @@ class CartController extends Controller
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return ['status' => 'success', 'result' => $cartItem];
+                return [
+                    'status' => 'success',
+                    'result' => $cartItem
+                ];
             }
             else{
                 return $this->render('index');

@@ -4,10 +4,7 @@ namespace backend\service;
 
 use backend\form\ResourceForm;
 use backend\repositories\ResourceRepository;
-use backend\repositories\ResourceShowerRepository;
 use common\models\Resource;
-use common\models\ResourceImages;
-use common\models\ResourceShower;
 use yii\base\Component;
 use yii\db\Exception;
 use yii\web\UploadedFile;
@@ -89,7 +86,7 @@ class ResourceService extends Component
      */
     public function delete(int $id): void
     {
-        $model = $this->resourceShowerRepository->findById($id);
+        $model = $this->resourceRepository->findById($id);
 
         if (!$model) {
             throw new Exception('Resource shower not found');
