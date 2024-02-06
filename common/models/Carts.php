@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property string|null $updated_at
  *
  * @property CartItems[] $cartItems
+ * @property User $user
  */
 class Carts extends ActiveRecord
 {
@@ -64,7 +65,12 @@ class Carts extends ActiveRecord
      */
     public function getCartItems(): ActiveQuery|CartItemsQuery
     {
-        return $this->hasMany(CartItems::class, ['cart_id' => 'id'])->inverseOf('cart');
+        return $this->hasMany(CartItems::class, ['cart_id' => 'id']);
+    }
+
+    public function getUser(): ActiveQuery|CartItemsQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**

@@ -90,6 +90,45 @@ class CartService extends Component
 
     }
 
+    public function getCurrentUserCart($user_id): array
+    {
+        $cartResponseArray = [];
+
+        $cartModel = $this->cartRepository->findByUserId($user_id);
+
+        if(!$cartModel)
+        {
+            $cartResponseArray['user'] = [];
+            $cartResponseArray['cartItem'] = [];
+
+            return $cartResponseArray;
+        }
+
+
+        $cartResponseArray['user']['username'] = $cartModel->user->username;
+        $cartResponseArray['user']['status'] = $cartModel->user->status;
+
+
+        $cartResponseArray['cartItem'] = [];
+        if(!empty($cartModel->cartItems))
+        {
+
+            foreach ($cartModel->cartItems as $cartItem) {
+                $arr = [];
+                $arr['url'] = $cartItem->resource->getFirstImageUrlFront();
+                $arr['title'] = $cartItem->resource ? $cartItem->resource->title : "";
+                $arr['quantity'] = $cartItem->quantity;
+                $arr['price'] = $cartItem->price;
+
+               $cartResponseArray['cartItem'] = $arr;
+
+
+            }
+        }
+
+        return $cartResponseArray;
+    }
+
 
 
 }

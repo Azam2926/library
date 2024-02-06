@@ -66,4 +66,27 @@ class CartController extends Controller
         }
     }
 
+    public function actionCurrentUserCart(): ?array
+    {
+        if(Yii::$app->request->isAjax){
+
+            $user_id = Yii::$app->request->get('user_id');
+
+            $result = $this->cartService->getCurrentUserCart($user_id);
+
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            return [
+                'status' => 'success',
+                'result' => $result
+            ];
+        }
+
+        else{
+
+            return null;
+        }
+
+    }
+
 }

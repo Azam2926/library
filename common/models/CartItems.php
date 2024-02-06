@@ -79,7 +79,7 @@ class CartItems extends ActiveRecord
      */
     public function getResource(): ActiveQuery|ResourceQuery
     {
-        return $this->hasOne(Resource::class, ['id' => 'resource_id'])->inverseOf('cartItems');
+        return $this->hasOne(Resource::class, ['id' => 'resource_id']);
     }
 
     /**
