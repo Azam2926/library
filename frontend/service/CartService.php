@@ -106,7 +106,7 @@ class CartService extends Component
 
 
         $cartResponseArray['user']['username'] = $cartModel->user->username;
-        $cartResponseArray['user']['status'] = $cartModel->user->status;
+        $cartResponseArray['user']['user_id'] = $cartModel->user->id;
 
 
         $cartResponseArray['cartItem'] = [];
