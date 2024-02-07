@@ -50,7 +50,7 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
                                     <?php foreach ($resource->images as $image): ?>
                                         <div class="slide" data-thumb="<?= $image->getUploadedFileUrlFromFrontend() ?>">
                                             <a href="<?= $image->getUploadedFileUrlFromFrontend() ?>"
-                                               title="Pink Printed Dress - Front View"
+                                               title="<?= $image->name ?>"
                                                data-lightbox="gallery-item">
                                                 <img src="<?= $image->getUploadedFileUrlFromFrontend() ?>"
                                                      alt="<?= $image->path ?>">
