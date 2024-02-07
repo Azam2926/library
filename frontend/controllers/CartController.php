@@ -35,7 +35,7 @@ class CartController extends Controller
      */
     public function actionAddToCart(): Response|array|string
     {
-        if(Yii::$app->user->isGuest){
+        if (Yii::$app->user->isGuest) {
 
             Yii::$app->getResponse()->setStatusCode(401, "Unauthorized");
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -45,9 +45,8 @@ class CartController extends Controller
                 'message' => 'Unauthorized',
                 'data' => null
             ];
-        }
-        else{
-            if(Yii::$app->request->isAjax){
+        } else {
+            if (Yii::$app->request->isAjax) {
 
                 $cartDTO = new CartDTO(Yii::$app->request->post());
 
@@ -59,8 +58,7 @@ class CartController extends Controller
                     'status' => 'success',
                     'result' => $cartItem
                 ];
-            }
-            else{
+            } else {
                 return $this->render('index');
             }
         }
@@ -87,6 +85,18 @@ class CartController extends Controller
             return null;
         }
 
+    }
+
+    public function actionUserCart(): string
+    {
+        // Assuming you have a method to retrieve cart items, replace this with your logic
+        $user_id = Yii::$app->user->id;
+        $cartItems = $this->cartService->getCurrentUserCart($user_id); // Assuming you have a cart component
+
+        // Pass cart items to the view
+        return $this->renderPartial('cart', [
+            'cartItems' => $cartItems,
+        ]);
     }
 
 }

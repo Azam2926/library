@@ -109,12 +109,13 @@ class CartService extends Component
         $cartResponseArray['user']['user_id'] = $cartModel->user->id;
 
 
-        $cartResponseArray['cartItem'] = [];
+        $cartResponseArray['cartItems'] = [];
         if(!empty($cartModel->cartItems))
         {
 
             $arr = [];
             foreach ($cartModel->cartItems as $cartItem) {
+                $arr['uuid'] = $cartItem->resource->uuid;
                 $arr['url'] = $cartItem->resource->getFirstImageUrlFront();
                 $arr['title'] = $cartItem->resource ? $cartItem->resource->title : "";
                 $arr['quantity'] = $cartItem->quantity;

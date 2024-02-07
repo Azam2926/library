@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap5\Html;
+/* @var $this yii\web\View */
 
 ?>
 <header id="header" class="header-size-md dark transparent-header" data-sticky-shrink="false"
@@ -12,7 +13,7 @@ use yii\bootstrap5\Html;
                 <!-- Logo
                 ============================================= -->
                 <div id="logo" class="me-lg-auto me-0 order-lg-2 col-lg-auto">
-                    <a href="demo-shop-2.html">
+                    <a href="/">
                         <img class="logo-default"
                              srcset="/canvas/demos/shop-2/images/logo.png, /canvas/demos/shop-2/images/logo@2x.png 2x"
                              src="/canvas/demos/shop-2/images/logo@2x.png" alt="Canvas Logo">
@@ -66,49 +67,8 @@ use yii\bootstrap5\Html;
 
                     <!-- Top Cart
                     ============================================= -->
-                    <div id="top-cart" class="header-misc-icon">
-                        <a href="#" id="top-cart-trigger"><i class="uil uil-shopping-bag"></i></a>
-                        <div class="top-cart-content">
-                            <div class="top-cart-title">
-                                <h4 class="text-dark">Shopping Cart</h4>
-                            </div>
-                            <div class="top-cart-items">
-                                <div class="top-cart-item">
-                                    <div class="top-cart-item-image">
-                                        <a href="#"><img src="/canvas/demos/shop-2/images/cart-thumb-1.jpg"
-                                                         alt="Black Monk Table Jar"></a>
-                                    </div>
-                                    <div class="top-cart-item-desc">
-                                        <div class="top-cart-item-desc-title">
-                                            <a href="#" class="fw-normal">Black Monk Table Jar</a>
-                                            <span class="top-cart-item-price d-block">$129.00</span>
-                                        </div>
-                                        <div class="top-cart-item-quantity fw-semibold">x 1</div>
-                                    </div>
-                                </div>
-                                <div class="top-cart-item">
-                                    <div class="top-cart-item-image">
-                                        <a href="#" class="fw-normal"><img
-                                                    src="/canvas/demos/shop-2/images/cart-thumb-2.jpg"
-                                                    alt="White Big Showcase Jar"></a>
-                                    </div>
-                                    <div class="top-cart-item-desc">
-                                        <div class="top-cart-item-desc-title">
-                                            <a href="#" class="fw-normal">White Big Showcase Jar</a>
-                                            <span class="top-cart-item-price d-block">$299.99</span>
-                                        </div>
-                                        <div class="top-cart-item-quantity fw-semibold">x 1</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="top-cart-action">
-                                <span class="top-checkout-price fw-semibold text-dark">$429.98</span>
-                                <button class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
-                                    View Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div><!-- #top-cart end -->
+                    <?= Yii::$app->runAction('/cart/user-cart') ?>
+                    <!-- #top-cart end -->
                 </div>
 
                 <div class="primary-menu-trigger">
