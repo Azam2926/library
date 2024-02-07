@@ -1,9 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $cartItems array */
-$sumOfItems = 0;
-foreach ($cartItems['cartItem'] as $cartItem)
-    $sumOfItems += $cartItem['price'] * $cartItem['quantity'];
+$sumOfItems = array_reduce($cartItems['cartItem'], fn($sum, $cartItem) => $sum + ($cartItem['price'] * $cartItem['quantity']), 0);
 ?>
 
 <div id="top-cart" class="header-misc-icon">
@@ -14,20 +12,7 @@ foreach ($cartItems['cartItem'] as $cartItem)
         </div>
         <div class="top-cart-items">
             <?php foreach ($cartItems['cartItem'] as $cartItem): ?>
-                <div class="top-cart-item">
-                    <div class="top-cart-item-image">
-                        <a href="/resource/<?= $cartItem['uuid'] ?>">
-                            <img src="<?= $cartItem['url'] ?>" alt="<?= $cartItem['title'] ?>">
-                        </a>
-                    </div>
-                    <div class="top-cart-item-desc">
-                        <div class="top-cart-item-desc-title">
-                            <a href="/resource/<?= $cartItem['uuid'] ?>" class="fw-normal"><?= $cartItem['title'] ?></a>
-                            <span class="top-cart-item-price d-block"><?= $cartItem['price'] ?></span>
-                        </div>
-                        <div class="top-cart-item-quantity fw-semibold">x <?= $cartItem['quantity'] ?></div>
-                    </div>
-                </div>
+                <?= $this->render('_cart_item', ['item' => $cartItem]) ?>
             <?php endforeach; ?>
         </div>
         <div class="top-cart-action">
