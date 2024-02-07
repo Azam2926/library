@@ -66,7 +66,7 @@ class CartController extends Controller
 
     public function actionCurrentUserCart(): ?array
     {
-        if(Yii::$app->request->isAjax){
+        if (Yii::$app->request->isAjax) {
 
             $user_id = Yii::$app->request->get('user_id');
 
@@ -78,9 +78,7 @@ class CartController extends Controller
                 'status' => 'success',
                 'result' => $result
             ];
-        }
-
-        else{
+        } else {
 
             return null;
         }
@@ -89,6 +87,10 @@ class CartController extends Controller
 
     public function actionUserCart(): string
     {
+        if (Yii::$app->user->isGuest)
+            return $this->renderPartial('cart', [
+                'cartItems' => ['cartItem' => []],
+            ]);
         // Assuming you have a method to retrieve cart items, replace this with your logic
         $user_id = Yii::$app->user->id;
         $cartItems = $this->cartService->getCurrentUserCart($user_id); // Assuming you have a cart component
