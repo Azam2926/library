@@ -8,7 +8,7 @@ use yii\web\JqueryAsset;
 use yii\web\View;
 
 $this->registerJs(<<<JS
-    const id = document.getElementById('resource-id')
+    const uid = document.getElementById('uuid-id')
     const form = document.getElementById('add-to-cart')
     const addButton = document.getElementById('add-to-cart-button')
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
@@ -17,7 +17,7 @@ $this->registerJs(<<<JS
         e.preventDefault()
         $.post(
             '/cart/add-to-cart', 
-            {qty: addButton.value, resource_id: id.value, '_csrf-frontend': csrfToken }
+            {qty: addButton.value, uuid: uid.value, '_csrf-frontend': csrfToken }
             )
             .done(console.log)
             .fail(e => {
@@ -32,7 +32,7 @@ JS, 3);
 $this->registerAssetBundle(JqueryAsset::class, 3);
 
 ?>
-<input type="text" id="resource-id" hidden="hidden" value="<?= $resource->id ?>">
+<input type="text" id="uuid-id" hidden="hidden" value="<?= $resource->uuid ?>">
 <div class="container">
 
     <div class="single-product">

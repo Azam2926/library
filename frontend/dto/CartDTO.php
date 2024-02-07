@@ -4,19 +4,23 @@ namespace frontend\dto;
 
 class CartDTO
 {
-    private mixed $resource_id;
+    private mixed $uuid;
     private mixed $quantity;
 
     public function __construct($data)
     {
-        $this->resource_id = $data['resource_id'] ?? null;
+        $this->uuid = $data['uuid'] ?? null;
         $this->quantity = $data['qty'] ?? null;
     }
 
     // You can also add getter methods if needed
-    public function getResourceId()
+
+    /**
+     * @return mixed
+     */
+    public function getUuid(): mixed
     {
-        return $this->resource_id;
+        return $this->uuid;
     }
 
     public function getQuantity()

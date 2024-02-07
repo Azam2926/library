@@ -17,5 +17,10 @@ class ResourceRepository
         return Resource::find()->findById($id)->one();
     }
 
+    public function findByUUID($uuid): ?Resource
+    {
+        return Resource::find()->uuid($uuid)->one();
+    }
+
 
 }
