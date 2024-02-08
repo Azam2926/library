@@ -54,18 +54,10 @@ class CartController extends Controller
 
                 $cartItems = $this->cartService->getCurrentUserCart(Yii::$app->user->id);
 
-                $content =  $this->renderPartial('cart', [
+                return $this->renderPartial('cart', [
                     'cartItems' => $cartItems,
                 ]);
 
-                Yii::$app->response->format = Response::FORMAT_HTML;
-
-                return $content;
-
-//                return [
-//                    'status' => 'success',
-//                    'result' => $cartItem
-//                ];
             } else {
                 return $this->render('index');
             }
