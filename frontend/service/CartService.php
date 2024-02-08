@@ -134,7 +134,7 @@ class CartService extends Component
         $cartModel = $this->getCart(Yii::$app->user->id);
         $resourceModel = $this->getResource($uuid);
 
-        return $this->cartItemService->removeCartItem($resourceModel->id, $cartModel->created_by);
+        return $this->cartItemService->removeCartItem($resourceModel->id, $cartModel->id);
     }
 
     /**
