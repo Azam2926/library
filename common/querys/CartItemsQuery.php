@@ -42,7 +42,7 @@ class CartItemsQuery extends ActiveQuery
        return $this->andWhere(['cart_id' => $cart_id]);
     }
 
-    public function findByCardAndResource($resource_id, $cart_id): CartItemsQuery
+    public function findByCartAndResource($resource_id, $cart_id): CartItemsQuery
     {
         return $this->findByResourceId($resource_id)->findByCartId($cart_id);
     }

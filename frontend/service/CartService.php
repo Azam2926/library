@@ -6,6 +6,7 @@ namespace frontend\service;
 use backend\repositories\ResourceRepository;
 use common\models\CartItems;
 use common\models\Carts;
+use common\models\Resource;
 use frontend\dto\CartDTO;
 use frontend\repository\CartItemRepository;
 use frontend\repository\CartRepository;
@@ -54,13 +55,9 @@ class CartService extends Component
 
         }
 
-        $resourceModel = $this->resourceRepository->findByUUID($cartDTO->getUuid());
+        $resourceModel = $this->getResource($cartDTO->getUuid());
 
-        if(!$resourceModel){
-            throw new Exception("Resource not found");
-        }
-
-        $cartItemModel = $this->cartItemRepository->findByCardAndResource($resourceModel->id, $cartModel->id);
+        $cartItemModel = $this->cartItemRepository->findByCartAndResource($resourceModel->id, $cartModel->id);
 
         if($cartItemModel){
 
@@ -126,6 +123,33 @@ class CartService extends Component
         }
 
         return $cartResponseArray;
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function removeCartItem($uuid): bool|int
+    {
+        $user_id = Yii::$app->user->id;
+        $resourceModel = $this->getResource($uuid);
+
+        return $this->cartItemService->removeCartItem($resourceModel->id, $user_id);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function getResource($uuid): Resource
+    {
+        $resourceModel = $this->resourceRepository->findByUUID($uuid);
+
+        if(!$resourceModel){
+            throw new Exception("Resource not found");
+        }
+
+        return $resourceModel;
     }
 
 

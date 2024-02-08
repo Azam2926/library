@@ -7,6 +7,7 @@ use common\models\CartItems;
 use common\models\Carts;
 use common\models\Resource;
 use frontend\dto\CartDTO;
+use frontend\repository\CartItemRepository;
 use Yii;
 use yii\base\Component;
 use yii\db\Exception;
@@ -15,6 +16,17 @@ use Throwable;
 
 class CartItemService extends Component
 {
+
+    public CartItemRepository $cartItemRepository;
+
+    public function __construct(
+        CartItemRepository $cartItemRepository,
+        $config = [])
+    {
+        parent::__construct($config);
+        $this->cartItemRepository = $cartItemRepository;
+    }
+
     /**
      * @throws Exception
      */
@@ -49,5 +61,32 @@ class CartItemService extends Component
         }
 
         return $cartItemModel;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getCartItem($resource_id, $cart_id): CartItems|array
+    {
+        $cartItemModel = $this->cartItemRepository->findByCartAndResource($resource_id, $cart_id);
+
+        if(!$cartItemModel)
+        {
+            throw new Exception("Not found cart item");
+        }
+
+        return $cartItemModel;
+    }
+
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function removeCartItem($resource_id, $user_id): bool|int
+    {
+       $cartItemModel =  $this->getCartItem($resource_id, $user_id);
+
+       return $cartItemModel->delete();
     }
 }
