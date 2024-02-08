@@ -50,39 +50,26 @@ class CartController extends Controller
 
                 $cartDTO = new CartDTO(Yii::$app->request->post());
 
-                $cartItem = $this->cartService->addToCart($cartDTO);
+                $this->cartService->addToCart($cartDTO);
 
-                Yii::$app->response->format = Response::FORMAT_JSON;
+                $cartItems = $this->cartService->getCurrentUserCart(Yii::$app->user->id);
 
-                return [
-                    'status' => 'success',
-                    'result' => $cartItem
-                ];
+                $content =  $this->renderPartial('cart', [
+                    'cartItems' => $cartItems,
+                ]);
+
+                Yii::$app->response->format = Response::FORMAT_HTML;
+
+                return $content;
+
+//                return [
+//                    'status' => 'success',
+//                    'result' => $cartItem
+//                ];
             } else {
                 return $this->render('index');
             }
         }
-    }
-
-    public function actionCurrentUserCart(): ?array
-    {
-        if (Yii::$app->request->isAjax) {
-
-            $user_id = Yii::$app->request->get('user_id');
-
-            $result = $this->cartService->getCurrentUserCart($user_id);
-
-            Yii::$app->response->format = Response::FORMAT_JSON;
-
-            return [
-                'status' => 'success',
-                'result' => $result
-            ];
-        } else {
-
-            return null;
-        }
-
     }
 
     public function actionUserCart(): string
