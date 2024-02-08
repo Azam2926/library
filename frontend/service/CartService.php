@@ -131,10 +131,20 @@ class CartService extends Component
      */
     public function removeCartItem($uuid): bool|int
     {
-        $user_id = Yii::$app->user->id;
+        $cartModel = $this->getCart(Yii::$app->user->id);
         $resourceModel = $this->getResource($uuid);
 
-        return $this->cartItemService->removeCartItem($resourceModel->id, $user_id);
+        return $this->cartItemService->removeCartItem($resourceModel->id, $cartModel->created_by);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function removeCartItemAll(): int
+    {
+        $cartModel = $this->getCart(Yii::$app->user->id);
+
+        return $this->cartItemService->removeCartItemAll($cartModel->id);
     }
 
 
@@ -150,6 +160,20 @@ class CartService extends Component
         }
 
         return $resourceModel;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getCart($user_id): array|Carts
+    {
+        $cartModel = $this->cartRepository->findByUserId($user_id);
+
+        if(!$cartModel){
+            throw new Exception("Cart not found");
+        }
+
+        return $cartModel;
     }
 
 

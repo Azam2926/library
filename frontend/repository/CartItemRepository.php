@@ -11,4 +11,9 @@ class CartItemRepository
     {
         return CartItems::find()->findByCartAndResource($resource_id, $cart_id)->one();
     }
+
+    public function removeAllByCart($cart_id): int
+    {
+        return CartItems::deleteAll(['cart_id' => $cart_id]);
+    }
 }

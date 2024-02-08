@@ -83,10 +83,15 @@ class CartItemService extends Component
      * @throws Exception
      * @throws Throwable
      */
-    public function removeCartItem($resource_id, $user_id): bool|int
+    public function removeCartItem($resource_id, $cart_id): bool|int
     {
-       $cartItemModel =  $this->getCartItem($resource_id, $user_id);
+       $cartItemModel =  $this->getCartItem($resource_id, $cart_id);
 
        return $cartItemModel->delete();
+    }
+
+    public function removeCartItemAll($cart_id): int
+    {
+        return $this->cartItemRepository->removeAllByCart($cart_id);
     }
 }
