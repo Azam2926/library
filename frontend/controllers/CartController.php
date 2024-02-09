@@ -24,9 +24,14 @@ class CartController extends Controller
     }
 
 
+    /**
+     * @throws Exception
+     */
     public function actionIndex(): string
     {
-        return $this->render('index');
+        return $this->render('index', [
+            'model' => $this->cartService->getUserCartItems(),
+        ]);
     }
 
     /**

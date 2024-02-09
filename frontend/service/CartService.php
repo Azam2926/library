@@ -8,6 +8,8 @@ use common\models\CartItems;
 use common\models\Carts;
 use common\models\Resource;
 use frontend\dto\CartDTO;
+use frontend\dto\CartItemInlineDTO;
+use frontend\dto\CartItemResponseDTO;
 use frontend\repository\CartItemRepository;
 use frontend\repository\CartRepository;
 use Yii;
@@ -123,6 +125,33 @@ class CartService extends Component
         }
 
         return $cartResponseArray;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getUserCartItems(): CartItemResponseDTO
+    {
+        $cartItemResponseDTO = new CartItemResponseDTO();
+
+        $cartModel = $this->getCart(Yii::$app->user->id);
+
+        if(!empty($cartModel->cartItems))
+        {
+            foreach ($cartModel->cartItems as $cartItem)
+            {
+                $cartItemInlineDTO = new CartItemInlineDTO();
+                $cartItemInlineDTO->setUrl($cartItem->resource->getFirstImageUrlFront());
+                $cartItemInlineDTO->setName($cartItem->resource ? $cartItem->resource->title : "");
+                $cartItemInlineDTO->setPrice($cartItem->price*$cartItem->quantity);
+                $cartItemInlineDTO->setQuantity($cartItem->quantity);
+
+                $cartItemResponseDTO->setCartItemInlineDTO($cartItemInlineDTO);
+            }
+
+            return $cartItemResponseDTO;
+        }
+        return $cartItemResponseDTO;
     }
 
     /**
