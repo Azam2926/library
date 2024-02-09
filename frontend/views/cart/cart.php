@@ -19,7 +19,7 @@ JS);
 ?>
 
 <div id="top-cart" class="header-misc-icon">
-    <a href="#" id="top-cart-trigger"><i class="uil uil-shopping-bag"></i></a>
+    <a href="#" id="top-cart-trigger"><i class="uil uil-shopping-bag"></i><span class="top-cart-number"><?= sizeof($cartItems['cartItem']) ?></span></a>
     <div class="top-cart-content">
         <div class="top-cart-title">
             <h4 class="text-dark">Shopping Cart</h4>
