@@ -25,7 +25,7 @@ JS
         <span class="top-cart-number">
             <?= sizeof($cartItems['cartItem']) ?>
         </span>
-    </a>
+    <span class="top-cart-number"><?= sizeof($cartItems['cartItem']) ?></span></a>
     <div class="top-cart-content">
         <div class="top-cart-title">
             <h4 class="text-dark">Shopping Cart</h4>
