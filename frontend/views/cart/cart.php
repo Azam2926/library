@@ -2,6 +2,20 @@
 /* @var $this yii\web\View */
 /* @var $cartItems array */
 $sumOfItems = array_reduce($cartItems['cartItem'], fn($sum, $cartItem) => $sum + ($cartItem['price'] * $cartItem['quantity']), 0);
+$this->registerJs(<<<JS
+document.getElementById('top-cart-trigger').onclick = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    $('#top-cart').toggleClass('top-cart-open');
+};
+
+document.addEventListener('click', function(e) {
+    if( !e.target.closest('#top-cart') ) {
+        $('#top-cart').removeClass('top-cart-open');
+    }
+}, false);
+JS);
 ?>
 
 <div id="top-cart" class="header-misc-icon">
