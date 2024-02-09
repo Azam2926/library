@@ -63,7 +63,7 @@ class CartService extends Component
 
         if($cartItemModel){
 
-           $cartItemModel = $this->cartItemService->updateQuantity($cartItemModel, $cartDTO);
+           $cartItemModel = $this->cartItemService->updateCartQuantity($cartItemModel, $cartDTO);
         }
         else{
             $cartItemModel = $this->cartItemService->saveCartItem($cartModel, $resourceModel, $cartDTO);
@@ -143,7 +143,7 @@ class CartService extends Component
                 $cartItemInlineDTO = new CartItemInlineDTO();
                 $cartItemInlineDTO->setUrl($cartItem->resource->getFirstImageUrlFront());
                 $cartItemInlineDTO->setName($cartItem->resource ? $cartItem->resource->title : "");
-                $cartItemInlineDTO->setPrice($cartItem->price*$cartItem->quantity);
+                $cartItemInlineDTO->setPrice($cartItem->price);
                 $cartItemInlineDTO->setQuantity($cartItem->quantity);
                 $cartItemInlineDTO->setUUID($cartItem->resource->uuid);
 
@@ -175,6 +175,21 @@ class CartService extends Component
         $cartModel = $this->getCart(Yii::$app->user->id);
 
         return $this->cartItemService->removeCartItemAll($cartModel->id);
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function changeCartQuantity(CartDTO $cartDTO): void
+    {
+        $cartModel = $this->getCart(Yii::$app->user->id);
+        $resourceModel = $this->getResource($cartDTO->getUuid());
+
+        $cartItemModel = $this->cartItemService->getCartItem($resourceModel->id, $cartModel->id);
+
+        $this->cartItemService->updateQuantity($cartItemModel, $cartDTO->getQuantity());
+
     }
 
 
