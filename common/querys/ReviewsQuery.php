@@ -31,4 +31,19 @@ class ReviewsQuery extends ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function findByResourceId($resource_id): ReviewsQuery
+    {
+        return $this->andWhere(['resource_id' => $resource_id]);
+    }
+
+    public function getByRating(): ReviewsQuery
+    {
+        return $this->andWhere(['in', 'status', [Reviews::ONLY_RATING, Reviews::RATING_COMMENT]]);
+    }
+
+    public function getByComment(): ReviewsQuery
+    {
+        return $this->andWhere(['in', 'status', [Reviews::ONLY_COMMENT, Reviews::RATING_COMMENT]]);
+    }
 }

@@ -95,4 +95,18 @@ class ResourceService extends Component
         $model->delete();
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getResource($uuid): Resource
+    {
+        $resourceModel = $this->resourceRepository->findByUUID($uuid);
+
+        if(!$resourceModel){
+            throw new Exception("Resource not found");
+        }
+
+        return $resourceModel;
+    }
+
 }
