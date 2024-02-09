@@ -29,6 +29,7 @@ class CartController extends Controller
      */
     public function actionIndex(): string
     {
+        $this->layout = 'cart';
         return $this->render('index', [
             'model' => $this->cartService->getUserCartItems(),
         ]);

@@ -25,21 +25,31 @@ JS
         <span class="top-cart-number">
             <?= sizeof($cartItems['cartItem']) ?>
         </span>
-    <span class="top-cart-number"><?= sizeof($cartItems['cartItem']) ?></span></a>
+        <span class="top-cart-number"><?= sizeof($cartItems['cartItem']) ?></span></a>
     <div class="top-cart-content">
-        <div class="top-cart-title">
-            <h4 class="text-dark">Shopping Cart</h4>
-        </div>
-        <div class="top-cart-items">
-            <?php foreach ($cartItems['cartItem'] as $cartItem): ?>
-                <?= $this->render('_cart_item', ['item' => $cartItem]) ?>
-            <?php endforeach; ?>
-        </div>
-        <div class="top-cart-action">
-            <span class="top-checkout-price fw-semibold text-dark"><?= $sumOfItems ?></span>
-            <button class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
-                View Cart
-            </button>
-        </div>
+        <?php if (Yii::$app->user->isGuest): ?>
+            <div class="top-cart-title">
+                <h4 class="text-dark">
+                    <a href="/site/login">Login</a> to see cart
+                </h4>
+            </div>
+        <?php else: ?>
+
+            <div class="top-cart-title">
+                <h4 class="text-dark">Shopping Cart</h4>
+            </div>
+            <div class="top-cart-items">
+                <?php foreach ($cartItems['cartItem'] as $cartItem): ?>
+                    <?= $this->render('_cart_item', ['item' => $cartItem]) ?>
+                <?php endforeach; ?>
+            </div>
+            <div class="top-cart-action">
+                <span class="top-checkout-price fw-semibold text-dark"><?= $sumOfItems ?></span>
+                <button class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
+                    View Cart
+                </button>
+            </div>
+
+        <?php endif; ?>
     </div>
 </div>
