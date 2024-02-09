@@ -145,6 +145,7 @@ class CartService extends Component
                 $cartItemInlineDTO->setName($cartItem->resource ? $cartItem->resource->title : "");
                 $cartItemInlineDTO->setPrice($cartItem->price*$cartItem->quantity);
                 $cartItemInlineDTO->setQuantity($cartItem->quantity);
+                $cartItemInlineDTO->setUUID($cartItem->resource->uuid);
 
                 $cartItemResponseDTO->setCartItemInlineDTO($cartItemInlineDTO);
             }

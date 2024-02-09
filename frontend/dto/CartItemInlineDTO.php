@@ -8,6 +8,7 @@ class CartItemInlineDTO
     private mixed $name;
     private mixed $price;
     private mixed $quantity;
+    private mixed $UUID;
 
 
     public function __construct()
@@ -45,6 +46,22 @@ class CartItemInlineDTO
     public function getQuantity(): mixed
     {
         return $this->quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUUID(): mixed
+    {
+        return $this->UUID;
+    }
+
+    /**
+     * @param mixed $uuid
+     */
+    public function setUUID(mixed $UUID): void
+    {
+        $this->UUID = $UUID;
     }
 
     /**
