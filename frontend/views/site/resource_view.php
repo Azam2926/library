@@ -17,9 +17,9 @@ $this->registerJs(<<<JS
         e.preventDefault()
         $.post(
             '/cart/add-to-cart', 
-            {qty: addButton.value, uuid: uid.value, '_csrf-frontend': csrfToken }
+            {qty: addButton.value, uuid: uid.value, '_csrf-frontend': csrfToken },
+            (data) => $('#top-cart-modal').html(data)
             )
-            .done(console.log)
             .fail(e => {
                 if (e.status === 401) {
                     window.location = '/site/login'

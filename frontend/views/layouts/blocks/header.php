@@ -67,7 +67,9 @@ use yii\bootstrap5\Html;
 
                     <!-- Top Cart
                     ============================================= -->
-                    <?= Yii::$app->runAction('/cart/user-cart') ?>
+                    <div id="top-cart-modal">
+                        <?= Yii::$app->runAction('/cart/user-cart') ?>
+                    </div>
                     <!-- #top-cart end -->
                 </div>
 

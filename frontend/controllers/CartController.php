@@ -59,7 +59,7 @@ class CartController extends Controller
 
                 $cartItems = $this->cartService->getCurrentUserCart(Yii::$app->user->id);
 
-                return $this->renderPartial('cart', [
+                return $this->renderAjax('cart', [
                     'cartItems' => $cartItems,
                 ]);
 
