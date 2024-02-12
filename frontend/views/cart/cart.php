@@ -2,16 +2,9 @@
 /* @var $this yii\web\View */
 /* @var $cartItems array */
 
-if(!empty($cartItems['cartItem']))
-{
-    $sumOfItems = array_reduce($cartItems['cartItem'], fn($sum, $cartItem) => $sum + ($cartItem['price'] * $cartItem['quantity']), 0);
-    $count = sizeof($cartItems['cartItem']);
-}
-else{
-    $sumOfItems = 0;
-    $count = 0;
-    $cartItems['cartItem'] = [];
-}
+$cartItems = $cartItems['cartItem'] ?? [];
+$sumOfItems = array_reduce($cartItems, fn($sum, $cartItem) => $sum + ($cartItem['price'] * $cartItem['quantity']), 0);
+$count = count($cartItems);
 
 
 $this->registerJs(<<<JS
@@ -51,7 +44,7 @@ JS
                 <h4 class="text-dark">Shopping Cart</h4>
             </div>
             <div class="top-cart-items">
-                <?php foreach ($cartItems['cartItem'] as $cartItem): ?>
+                <?php foreach ($cartItems as $cartItem): ?>
                     <?= $this->render('_cart_item', ['item' => $cartItem]) ?>
                 <?php endforeach; ?>
             </div>
