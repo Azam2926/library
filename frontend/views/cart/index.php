@@ -16,25 +16,29 @@ $this->title = 'User cart';
 $this->registerJs(<<<JS
 $(document).ready(function (){
     
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    
     $('.check').click(function (){
-        var uuid = $('#resource_uuid').val();
-        var quantity = $('#qty').val();
-        var amount = $('#amount').text();
-        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        var uuid = $(this).closest('.quantity').find('#resource_uuid').val();
+        var quantity = $("#qty-"+uuid).val();
+        var amount = $("#amount-"+uuid).text();
+       
+        alert(csrfToken);
         
-        $.post('/cart/change-cart-quantity', {uuid: uuid, qty: quantity, '_csrf-frontend': csrfToken})
-        .done(function (response){
-            if(response==true){
-                var total = amount * quantity;
-                $('#total').text(total);
-            }
-            else{
-                alert("test");
-            }
-        })
-        .fail(e => {
-               alert(e.status);
-            })
+       
+        // $.post('/cart/change-cart-quantity', {uuid: uuid, qty: quantity, '_csrf-frontend': csrfToken})
+        // .done(function (response){
+        //     if(response==true){
+        //         var total = amount * quantity;
+        //         $('#total').text(total);
+        //     }
+        //     else{
+        //         alert("test");
+        //     }
+        // })
+        // .fail(e => {
+        //        alert(e.status);
+        //     })
         })
 })
 JS
@@ -55,7 +59,6 @@ JS
         </thead>
         <tbody>
         <?php foreach ($model->getItems() as $item): ?>
-        <input type="hidden" id="resource_uuid" value="<?= $item->getUUID(); ?>">
             <tr class="cart_item">
                 <td class="cart-product-remove">
                     <a href="#" class="remove" title="Remove this item"><i class="fa-solid fa-trash"></i></a>
@@ -72,13 +75,14 @@ JS
                 </td>
 
                 <td class="cart-product-price">
-                    <span class="amount" id="amount"><?= $item->getPrice() ?></span>
+                    <span class="amount" id="amount-<?= $item->getUUID(); ?>"><?= $item->getPrice() ?></span>
                 </td>
 
                 <td class="cart-product-quantity">
                     <div class="quantity">
+                        <input type="hidden" name="resource_uuid" id="resource_uuid" value="<?= $item->getUUID(); ?>">
                         <input type="button" value="-" class="minus check">
-                        <input type="text" name="quantity" value="<?= $item->getQuantity() ?>" class="qty" id="qty">
+                        <input type="text" name="quantity" value="<?= $item->getQuantity() ?>" class="qty" id="qty-<?= $item->getUUID() ?>">
                         <input type="button" value="+" class="plus check">
                     </div>
                 </td>
