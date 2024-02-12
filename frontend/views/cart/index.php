@@ -28,7 +28,7 @@ $(document).ready(function (){
         .done(function (response){
             if(response==true){
                 var total = amount * quantity;
-                $('#total').text(total);
+                $('#total-'+uuid).text(total);
             }
             else{
                 alert("test");
@@ -86,7 +86,7 @@ JS
                 </td>
 
                 <td class="cart-product-subtotal">
-                    <span class="amount" id="total"><?= $item->getQuantity() * $item->getPrice() ?></span>
+                    <span class="amount" id="total-<?= $item->getUUID() ?>"><?= $item->getQuantity() * $item->getPrice() ?></span>
                 </td>
             </tr>
         <?php endforeach; ?>
