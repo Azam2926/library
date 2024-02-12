@@ -26,19 +26,19 @@ $(document).ready(function (){
         alert(csrfToken);
         
        
-        // $.post('/cart/change-cart-quantity', {uuid: uuid, qty: quantity, '_csrf-frontend': csrfToken})
-        // .done(function (response){
-        //     if(response==true){
-        //         var total = amount * quantity;
-        //         $('#total').text(total);
-        //     }
-        //     else{
-        //         alert("test");
-        //     }
-        // })
-        // .fail(e => {
-        //        alert(e.status);
-        //     })
+        $.post('/cart/change-cart-quantity', {uuid: uuid, qty: quantity, '_csrf-frontend': csrfToken})
+        .done(function (response){
+            if(response==true){
+                var total = amount * quantity;
+                $('#total').text(total);
+            }
+            else{
+                alert("test");
+            }
+        })
+        .fail(e => {
+               alert(e.status);
+            })
         })
 })
 JS
