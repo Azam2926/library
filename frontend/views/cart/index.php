@@ -16,9 +16,8 @@ $this->title = 'User cart';
 $this->registerJs(<<<JS
 $(document).ready(function (){
     
-    var csrfToken = $('meta[name="csrf-token"]').attr("content");
-    
     $('.check').click(function (){
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
         var uuid = $(this).closest('.quantity').find('#resource_uuid').val();
         var quantity = $("#qty-"+uuid).val();
         var amount = $("#amount-"+uuid).text();
@@ -37,7 +36,25 @@ $(document).ready(function (){
         .fail(e => {
                alert(e.status);
             })
+    })
+    
+    $('.remove').click(function (){
+         var uuid = $(this).closest('.cart_item').find('#resource_uuid').val();
+         var csrfToken = $('meta[name="csrf-token"]').attr("content");
+         
+         $.post('/cart/remove-cart', {uuid: uuid, '_csrf-frontend': csrfToken})
+         .done(function (response){
+            if(response==true){
+                $("#uuid-"+uuid).remove();
+            }
+            else{
+                alert("false or some error");
+            }
+         })
+        .fail(e => {
+               alert(e.status);
         })
+    })
 })
 JS
 );
@@ -57,9 +74,9 @@ JS
         </thead>
         <tbody>
         <?php foreach ($model->getItems() as $item): ?>
-            <tr class="cart_item">
+            <tr class="cart_item" id="uuid-<?= $item->getUUID() ?>">
                 <td class="cart-product-remove">
-                    <a href="#" class="remove" title="Remove this item"><i class="fa-solid fa-trash"></i></a>
+                    <a href="javascript:void(0);" class="remove" title="Remove this item"><i class="fa-solid fa-trash"></i></a>
                 </td>
 
                 <td class="cart-product-thumbnail">

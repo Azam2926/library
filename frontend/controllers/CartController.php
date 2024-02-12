@@ -105,4 +105,20 @@ class CartController extends Controller
 
     }
 
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function actionRemoveCart(): bool|string
+    {
+        if(Yii::$app->request->isAjax)
+        {
+            $cartDTO = new CartDTO(Yii::$app->request->post());
+            return $this->cartService->removeCartItem($cartDTO->getUuid());
+        }
+        else{
+            return $this->render('index');
+        }
+    }
+
 }
