@@ -188,7 +188,7 @@ class CartService extends Component
 
         $cartItemModel = $this->cartItemService->getCartItem($resourceModel->id, $cartModel->id);
 
-        $this->cartItemService->updateQuantity($cartItemModel, $cartDTO->getQuantity());
+        $this->cartItemService->changeQuantity($cartItemModel, $cartDTO->getQuantity());
 
     }
 

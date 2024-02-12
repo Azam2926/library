@@ -14,7 +14,29 @@ use frontend\dto\CartItemResponseDTO;
 
 $this->title = 'User cart';
 $this->registerJs(<<<JS
-    console.log("Cart")
+$(document).ready(function (){
+    
+    $('.check').click(function (){
+        var uuid = $('#resource_uuid').val();
+        var quantity = $('#qty').val();
+        var amount = $('#amount').text();
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        
+        $.post('/cart/change-cart-quantity', {uuid: uuid, qty: quantity, '_csrf-frontend': csrfToken})
+        .done(function (response){
+            if(response==true){
+                var total = amount * quantity;
+                $('#total').text(total);
+            }
+            else{
+                alert("test");
+            }
+        })
+        .fail(e => {
+               alert(e.status);
+            })
+        })
+})
 JS
 );
 ?>
@@ -33,6 +55,7 @@ JS
         </thead>
         <tbody>
         <?php foreach ($model->getItems() as $item): ?>
+        <input type="hidden" id="resource_uuid" value="<?= $item->getUUID(); ?>">
             <tr class="cart_item">
                 <td class="cart-product-remove">
                     <a href="#" class="remove" title="Remove this item"><i class="fa-solid fa-trash"></i></a>
@@ -49,19 +72,19 @@ JS
                 </td>
 
                 <td class="cart-product-price">
-                    <span class="amount"><?= $item->getPrice() ?></span>
+                    <span class="amount" id="amount"><?= $item->getPrice() ?></span>
                 </td>
 
                 <td class="cart-product-quantity">
                     <div class="quantity">
-                        <input type="button" value="-" class="minus">
-                        <input type="text" name="quantity" value="<?= $item->getQuantity() ?>" class="qty">
-                        <input type="button" value="+" class="plus">
+                        <input type="button" value="-" class="minus check">
+                        <input type="text" name="quantity" value="<?= $item->getQuantity() ?>" class="qty" id="qty">
+                        <input type="button" value="+" class="plus check">
                     </div>
                 </td>
 
                 <td class="cart-product-subtotal">
-                    <span class="amount"><?= $item->getQuantity() * $item->getPrice() ?></span>
+                    <span class="amount" id="total"><?= $item->getQuantity() * $item->getPrice() ?></span>
                 </td>
             </tr>
         <?php endforeach; ?>

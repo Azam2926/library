@@ -75,6 +75,23 @@ class CartItemService extends Component
 
     /**
      * @throws Exception
+     * @throws Throwable
+     * @throws StaleObjectException
+     */
+    public function changeQuantity(CartItems $cartItemModel, $quantity): CartItems
+    {
+        $cartItemModel->quantity = $quantity;
+
+        if(!$cartItemModel->update())
+        {
+            throw new Exception("Not updated!!");
+        }
+
+        return $cartItemModel;
+    }
+
+    /**
+     * @throws Exception
      */
     public function getCartItem($resource_id, $cart_id): CartItems|array
     {

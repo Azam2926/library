@@ -90,12 +90,17 @@ class CartController extends Controller
      * @throws Throwable
      * @throws Exception
      */
-    public function changeCartQuantity(): void
+    public function actionChangeCartQuantity(): bool
     {
         if(Yii::$app->request->isAjax)
         {
             $cartDTO = new CartDTO(Yii::$app->request->post());
             $this->cartService->changeCartQuantity($cartDTO);
+
+            return true;
+        }
+        else{
+            return $this->render('index');
         }
 
     }
