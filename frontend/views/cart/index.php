@@ -22,8 +22,6 @@ $(document).ready(function (){
         var uuid = $(this).closest('.quantity').find('#resource_uuid').val();
         var quantity = $("#qty-"+uuid).val();
         var amount = $("#amount-"+uuid).text();
-       
-        alert(csrfToken);
         
        
         $.post('/cart/change-cart-quantity', {uuid: uuid, qty: quantity, '_csrf-frontend': csrfToken})
