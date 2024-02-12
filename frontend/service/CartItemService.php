@@ -61,7 +61,7 @@ class CartItemService extends Component
      * @throws Throwable
      * @throws StaleObjectException
      */
-    public function updateQuantity(CartItems $cartItemModel, $quantity): void
+    public function updateQuantity(CartItems $cartItemModel, $quantity): CartItems
     {
         $cartItemModel->quantity += $quantity;
 
@@ -70,6 +70,7 @@ class CartItemService extends Component
             throw new Exception("Not updated!!");
         }
 
+        return $cartItemModel;
     }
 
     /**
