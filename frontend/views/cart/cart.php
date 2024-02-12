@@ -2,6 +2,8 @@
 /* @var $this yii\web\View */
 /* @var $cartItems array */
 
+use yii\helpers\Url;
+
 $cartItems = $cartItems['cartItem'] ?? [];
 $sumOfItems = array_reduce($cartItems, fn($sum, $cartItem) => $sum + ($cartItem['price'] * $cartItem['quantity']), 0);
 $count = count($cartItems);
@@ -50,9 +52,10 @@ JS
             </div>
             <div class="top-cart-action">
                 <span class="top-checkout-price fw-semibold text-dark"><?= $sumOfItems . " UZS" ?></span>
-                <button class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
+                <a href="<?= Url::to(['cart/index']) ?>" class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
                     View Cart
-                </button>
+                </a>
+            </div>
             </div>
 
         <?php endif; ?>
