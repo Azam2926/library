@@ -129,6 +129,7 @@ class CartService extends Component
 
     /**
      * @throws Exception
+     * @return CartItemResponseDTO
      */
     public function getUserCartItems(): CartItemResponseDTO
     {
@@ -194,6 +195,8 @@ class CartService extends Component
 
 
     /**
+     * @param $uuid
+     * @return Resource
      * @throws Exception
      */
     public function getResource($uuid): Resource
@@ -208,6 +211,8 @@ class CartService extends Component
     }
 
     /**
+     * @param $user_id
+     * @return array|Carts
      * @throws Exception
      */
     public function getCart($user_id): array|Carts

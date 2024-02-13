@@ -72,6 +72,13 @@ class ReviewService extends Component
     }
 
 
+    /**
+     *
+     * @param ReviewRequestDTO $dto
+     * @param Reviews $model
+     * @return Reviews
+     */
+
     private function checkStatus(ReviewRequestDTO $dto, Reviews $model): Reviews
     {
         if($dto->getRating() && $dto->getComment())
@@ -97,6 +104,8 @@ class ReviewService extends Component
     }
 
     /**
+     * @param string $uuid
+     * @return Resource
      * @throws Exception
      */
     private function getResource(string $uuid): Resource

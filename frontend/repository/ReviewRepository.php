@@ -6,6 +6,10 @@ use common\models\Reviews;
 
 class ReviewRepository
 {
+    /**
+     * @param $resource_id
+     * @return Reviews[]
+     */
 
     public function getReviewsList($resource_id): array
     {

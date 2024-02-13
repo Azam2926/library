@@ -5,6 +5,7 @@ namespace backend\service;
 use backend\form\ResourceForm;
 use backend\repositories\ResourceRepository;
 use common\models\Resource;
+use Throwable;
 use yii\base\Component;
 use yii\db\Exception;
 use yii\web\UploadedFile;
@@ -25,6 +26,11 @@ class ResourceService extends Component
         $this->resourceRepository = $resourceRepository;
         $this->resourceImagesService = $resourceImagesService;
     }
+
+    /**
+     * @param ResourceForm $form
+     * @return Resource
+     */
 
     public function create(ResourceForm $form): Resource
     {
@@ -53,7 +59,9 @@ class ResourceService extends Component
     }
 
     /**
-     * @throws Exception
+     * @param ResourceForm $form
+     * @param Resource $resource
+     * @return Resource
      */
     public function update(ResourceForm $form, Resource $resource): Resource
     {
@@ -82,7 +90,7 @@ class ResourceService extends Component
 
     /**
      * @throws Exception
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function delete(int $id): void
     {
@@ -96,6 +104,8 @@ class ResourceService extends Component
     }
 
     /**
+     * @param $uuid
+     * @return Resource
      * @throws Exception
      */
     public function getResource($uuid): Resource
