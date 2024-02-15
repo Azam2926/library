@@ -3,6 +3,7 @@
 use common\models\Resource;
 use frontend\components\Stats;
 use frontend\dto\CartItemResponseDTO;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /** @var $new_resources Resource[] */
@@ -109,6 +110,26 @@ JS
                 </td>
             </tr>
         <?php endforeach; ?>
+        <tr class="cart_item">
+            <td colspan="6">
+                <div class="row justify-content-between align-items-center py-2 col-mb-30">
+                    <div class="col-lg-auto ps-lg-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <input type="text" value="" class="form-control text-center text-md-start" placeholder="Enter Coupon Code..">
+                            </div>
+                            <div class="col-md-4 mt-3 mt-md-0">
+                                <a href="#" class="button button-small button-3d button-black m-0" style="--cnvs-btn-padding-y:7px;line-height:22px;">Apply Coupon</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-auto pe-lg-0">
+                        <a href="#" class="button button-small button-3d m-0">Update Cart</a>
+                        <a href="<?= Url::to('/order') ?>" class="button button-small button-3d mt-2 mt-sm-0 me-0 mb-0">Proceed to Checkout</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
