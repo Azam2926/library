@@ -2,41 +2,44 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap5\ActiveForm */
+
 /* @var $model LoginForm */
 
 use common\models\LoginForm;
-use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Html;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="container">
+    <div class="mx-auto mb-0" id="tab-login-register" style="max-width: 500px;">
+        <div class="tab-pane active show" id="tab-login" role="tabpanel" aria-labelledby="canvas-tab-login-tab"
+             tabindex="0">
+            <div class="card mb-0">
+                <div class="card-body" style="padding: 40px;">
+                    <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => [
+                        'name' => 'login-form',
+                        'class' => 'mb-0'
+                    ]]); ?>
 
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-            <?= $form->field($model, 'password')->passwordInput() ?>
-
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-            <div style="color:#999;margin:1em 0">
-                If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                <br>
-                Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
+                    <h3>Login to your Account</h3>
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                        </div>
+                        <div class="col-12 form-group">
+                            <?= $form->field($model, 'password')->passwordInput() ?>
+                        </div>
+                        <div class="col-12 form-group">
+                            <div class="d-flex justify-content-between">
+                                <?= Html::submitButton('Login', ['class' => 'button button-3d button-black m-0', 'name' => 'login-form-submit']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+                </div>
             </div>
-
-            <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
+        </div
     </div>
 </div>
