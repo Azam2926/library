@@ -62,3 +62,4 @@ JS
 
     <?php endif; ?>
 </div>
+</div>
