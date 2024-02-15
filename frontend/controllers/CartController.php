@@ -86,6 +86,22 @@ class CartController extends Controller
         ]);
     }
 
+    public function actionUserCartAjax(): string
+    {
+        if (Yii::$app->user->isGuest)
+            return $this->renderAjax('cart', [
+                'cartItems' => ['cartItem' => []],
+            ]);
+        // Assuming you have a method to retrieve cart items, replace this with your logic
+        $user_id = Yii::$app->user->id;
+        $cartItems = $this->cartService->getCurrentUserCart($user_id); // Assuming you have a cart component
+
+        // Pass cart items to the view
+        return $this->renderAjax('cart', [
+            'cartItems' => $cartItems,
+        ]);
+    }
+
     /**
      * @throws Throwable
      * @throws Exception

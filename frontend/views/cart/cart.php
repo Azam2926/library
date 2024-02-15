@@ -1,5 +1,6 @@
 <?php
 /* @var $this yii\web\View */
+
 /* @var $cartItems array */
 
 use yii\helpers\Url;
@@ -42,22 +43,22 @@ JS
             </div>
         <?php else: ?>
 
-            <div class="top-cart-title">
-                <h4 class="text-dark">Shopping Cart</h4>
-            </div>
-            <div class="top-cart-items">
-                <?php foreach ($cartItems as $cartItem): ?>
-                    <?= $this->render('_cart_item', ['item' => $cartItem]) ?>
-                <?php endforeach; ?>
-            </div>
-            <div class="top-cart-action">
-                <span class="top-checkout-price fw-semibold text-dark"><?= $sumOfItems . " UZS" ?></span>
-                <a href="<?= Url::to(['cart/index']) ?>" class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
-                    View Cart
-                </a>
-            </div>
-            </div>
-
-        <?php endif; ?>
+        <div class="top-cart-title">
+            <h4 class="text-dark">Shopping Cart</h4>
+        </div>
+        <div class="top-cart-items">
+            <?php foreach ($cartItems as $cartItem): ?>
+                <?= $this->render('_cart_item', ['item' => $cartItem]) ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="top-cart-action">
+            <span class="top-checkout-price fw-semibold text-dark"><?= $sumOfItems . " UZS" ?></span>
+            <a href="<?= Url::to(['cart/index']) ?>"
+               class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
+                View Cart
+            </a>
+        </div>
     </div>
+
+    <?php endif; ?>
 </div>

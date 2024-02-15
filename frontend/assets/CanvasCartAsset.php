@@ -19,7 +19,8 @@ class CanvasCartAsset extends AssetBundle
     ];
     public $js = [
         'js/plugins.min.js',
-        'js/functions.bundle.js'
+        'js/functions.bundle.js',
+        'js/app.js'
     ];
     public $depends = [
     ];

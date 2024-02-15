@@ -28,6 +28,7 @@ $(document).ready(function (){
             if(response==true){
                 var total = amount * quantity;
                 $('#total-'+uuid).text(total);
+                updateTopCard()
             }
             else{
                 alert("test");
@@ -46,6 +47,7 @@ $(document).ready(function (){
          .done(function (response){
             if(response==true){
                 $("#uuid-"+uuid).remove();
+                updateTopCard()
             }
             else{
                 alert("false or some error");
