@@ -10,6 +10,7 @@ use common\models\Resource;
 use frontend\dto\CartDTO;
 use frontend\dto\CartItemInlineDTO;
 use frontend\dto\CartItemResponseDTO;
+use frontend\dto\UserCartDataDTO;
 use frontend\repository\CartItemRepository;
 use frontend\repository\CartRepository;
 use Yii;
@@ -154,6 +155,18 @@ class CartService extends Component
             return $cartItemResponseDTO;
         }
         return $cartItemResponseDTO;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getUserCartData(): UserCartDataDTO
+    {
+        $userCartDataDTO = new UserCartDataDTO();
+        $userCartDataDTO->setCartItemResponseDTO($this->getUserCartItems());
+        $userCartDataDTO->setCartId($this->getCart(Yii::$app->user->id)->id);
+
+        return $userCartDataDTO;
     }
 
     /**

@@ -1,9 +1,13 @@
 <?php
 
 use frontend\dto\CartItemResponseDTO;
+use frontend\dto\UserCartDataDTO;
 
 /* @var $this yii\web\View */
+/** @var $modelData UserCartDataDTO */
 /** @var $model CartItemResponseDTO */
+
+$model = $modelData->getCartItemResponseDTO();
 
 $sumOfItems = array_reduce($model->getItems(), fn($sum, $item) => $sum + ($item->getQuantity() * $item->getPrice()), 0);
 

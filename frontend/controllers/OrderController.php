@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\UserDetails;
 use frontend\service\CartService;
+use Yii;
 use yii\db\Exception;
 use yii\web\Controller;
 
@@ -24,12 +25,12 @@ class OrderController extends Controller
      */
     public function actionIndex(): string
     {
-        $userDetails = new UserDetails();
+//        $userDetails = new UserDetails();
 
         $this->layout = 'cart';
         return $this->render('index', [
-            'model' => $this->cartService->getUserCartItems(),
-            'userDetails' => $userDetails
+            'modelData' => $this->cartService->getUserCartData(),
+//            'userDetails' => $userDetails
         ]);
     }
 
