@@ -9,13 +9,13 @@ use yii\base\Model;
  */
 class OrderForm extends Model
 {
-    public $firstname;
-    public $lastname;
-    public $home_address;
-    public $work_address;
-    public $full_address;
-    public $description;
-    public $cart_id;
+    public string $firstname;
+    public string $lastname;
+    public string $home_address;
+    public string $work_address;
+    public string $full_address;
+    public string $description;
+    public string $cart_id;
 
 
     /**
