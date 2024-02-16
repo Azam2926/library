@@ -5,8 +5,11 @@ namespace common\models;
 use common\querys\OrderListQuery;
 use common\querys\OrderQuery;
 use JetBrains\PhpStorm\ArrayShape;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\BaseActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "order".
@@ -26,6 +29,19 @@ class Order extends ActiveRecord
     public static function tableName(): string
     {
         return 'order';
+    }
+
+    #[ArrayShape(['timestamp' => "array"])] public function behaviors(): array
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

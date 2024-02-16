@@ -2,21 +2,25 @@
 
 namespace common\querys;
 
-use common\models\Order;
 use yii\db\ActiveQuery;
+use common\models\UserDetails;
 use yii\db\ActiveRecord;
 
 /**
- * This is the ActiveQuery class for [[Order]].
+ * This is the ActiveQuery class for [[UserDetails]].
  *
- * @see Order
+ * @see UserDetails
  */
-class OrderQuery extends ActiveQuery
+class UserDetailsQuery extends ActiveQuery
 {
+    /*public function active()
+    {
+        return $this->andWhere('[[status]]=1');
+    }*/
 
     /**
      * {@inheritdoc}
-     * @return Order[]|array
+     * @return UserDetails[]|array
      */
     public function all($db = null): array
     {
@@ -30,10 +34,5 @@ class OrderQuery extends ActiveQuery
     public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
-    }
-
-    public function findByUserId($user_id): OrderQuery
-    {
-        return $this->andWhere(['user_id' => $user_id]);
     }
 }
