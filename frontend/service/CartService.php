@@ -159,18 +159,6 @@ class CartService extends Component
 
     /**
      * @throws Exception
-     */
-    public function getUserCartData(): UserCartDataDTO
-    {
-        $userCartDataDTO = new UserCartDataDTO();
-        $userCartDataDTO->setCartItemResponseDTO($this->getUserCartItems());
-        $userCartDataDTO->setCartId($this->getCart(Yii::$app->user->id)->id);
-
-        return $userCartDataDTO;
-    }
-
-    /**
-     * @throws Exception
      * @throws Throwable
      */
     public function removeCartItem($uuid): bool|int

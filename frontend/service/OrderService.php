@@ -6,6 +6,9 @@ namespace frontend\service;
 use backend\repositories\ResourceRepository;
 use common\models\Order;
 use common\models\Resource;
+use common\models\UserDetails;
+use frontend\dto\CartItemResponseDTO;
+use frontend\forms\OrderForm;
 use frontend\repository\OrderRepository;
 use Yii;
 use yii\base\Component;
@@ -28,18 +31,19 @@ class OrderService extends Component
         $this->resourceRepository = $resourceRepository;
     }
 
-
-    public function addOrder()
+    public function addOrder(CartItemResponseDTO $dto, UserDetails $model)
     {
-//        $orderModel = $this->orderRepository->findByUserId(Yii::$app->user->id);
-//
-//        if(!$orderModel)
-//        {
-//            $orderModel = new Order();
-//            $orderModel->user_id = Yii::$app->user->id;
-//
-//            $orderModel->save();
-//        }
+        $orderModel = $this->orderRepository->findByUserId(Yii::$app->user->id);
+        if(!$orderModel)
+        {
+            $orderModel = new Order();
+            $orderModel->user_id = Yii::$app->user->id;
+
+            $orderModel->save();
+        }
+
+
+
 
     }
 
