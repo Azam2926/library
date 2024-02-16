@@ -196,6 +196,17 @@ class CartService extends Component
 
 
     /**
+     * @throws Exception
+     * @return CartItems[]
+     */
+    public function getCartItemList(): array
+    {
+        $cartModel = $this->getCart(Yii::$app->user->id);
+        return $this->cartItemRepository->getCartItemList($cartModel->id);
+    }
+
+
+    /**
      * @param $uuid
      * @return Resource
      * @throws Exception

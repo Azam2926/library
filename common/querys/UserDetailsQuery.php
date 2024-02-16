@@ -2,6 +2,7 @@
 
 namespace common\querys;
 
+use Yii;
 use yii\db\ActiveQuery;
 use common\models\UserDetails;
 use yii\db\ActiveRecord;
@@ -34,5 +35,10 @@ class UserDetailsQuery extends ActiveQuery
     public function one($db = null): array|ActiveRecord|null
     {
         return parent::one($db);
+    }
+
+    public function findByUserId(): UserDetailsQuery
+    {
+        return $this->andWhere(['user_id' => Yii::$app->user->id]);
     }
 }

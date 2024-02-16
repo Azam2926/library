@@ -4,12 +4,15 @@ namespace frontend\service;
 
 
 use backend\repositories\ResourceRepository;
+use common\models\CartItems;
 use common\models\Order;
+use common\models\OrderList;
 use common\models\Resource;
 use common\models\UserDetails;
 use frontend\dto\CartItemResponseDTO;
-use frontend\forms\OrderForm;
+use frontend\repository\CartItemRepository;
 use frontend\repository\OrderRepository;
+use Throwable;
 use Yii;
 use yii\base\Component;
 use yii\db\Exception;
@@ -20,31 +23,60 @@ class OrderService extends Component
 
     public OrderRepository $orderRepository;
     public ResourceRepository $resourceRepository;
+    public CartItemRepository $cartItemRepository;
 
     public function __construct(
                                 OrderRepository $orderRepository,
                                 ResourceRepository $resourceRepository,
+                                CartItemRepository $cartItemRepository,
                                 $config = [])
     {
         parent::__construct($config);
         $this->orderRepository = $orderRepository;
         $this->resourceRepository = $resourceRepository;
+        $this->cartItemRepository = $cartItemRepository;
     }
 
-    public function addOrder(CartItemResponseDTO $dto, UserDetails $model)
+    /**
+     * @param CartItems[] $cartItems
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function addOrder(array $cartItems): void
     {
-        $orderModel = $this->orderRepository->findByUserId(Yii::$app->user->id);
-        if(!$orderModel)
+        $transaction = Yii::$app->db->beginTransaction();
+        try{
+            $orderModel = $this->orderRepository->findByUserId(Yii::$app->user->id);
+
+            if(!$orderModel)
+            {
+                $orderModel = new Order();
+                $orderModel->user_id = Yii::$app->user->id;
+                $orderModel->save();
+            }
+
+            foreach ($cartItems as $cartItem)
+            {
+                $orderListModel = new OrderList();
+
+                $orderListModel->order_id = $orderModel->id;
+                $orderListModel->resource_id = $cartItem->resource_id;
+                $orderListModel->quantity = $cartItem->quantity;
+                $orderListModel->price = $cartItem->quantity * $cartItem->price;
+
+                if(!$orderListModel->save()){
+                    throw new Exception("Failed to save order list");
+                }
+
+                $cartItem->delete();
+            }
+
+            $transaction->commit();
+        }catch (Exception $e)
         {
-            $orderModel = new Order();
-            $orderModel->user_id = Yii::$app->user->id;
-
-            $orderModel->save();
+            $transaction->rollBack();
+            Yii::error("Transaction failed: " . $e->getMessage());
         }
-
-
-
-
     }
 
     /**

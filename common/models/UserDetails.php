@@ -33,6 +33,8 @@ class UserDetails extends ActiveRecord
         return 'user_details';
     }
 
+    const ORDER_CREATE = 1;
+
     /**
      * {@inheritdoc}
      */
