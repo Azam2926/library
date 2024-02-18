@@ -23,7 +23,7 @@ HTML,
     'dataProvider' => $dataProvider,
     'itemView' => '_resource_item',
     'options' => ['class' => 'row'],
-    'itemOptions' => ['class' => 'col-lg-4 col-xl-3 col-6 px-1 mb-4'],
+    'itemOptions' => ['class' => 'product col-md-4 col-sm-6 col-12 mb-4'],
     'pager' => ['class' => LinkPager::class],
     'sorter' => [
         'class' => LinkSorter::class,

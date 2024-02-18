@@ -28,8 +28,7 @@ CanvasAsset::register($this);
     <?php $this->beginBody() ?>
 
     <div id="wrapper">
-        <!--        --><?php //= $this->render('blocks/top_bar') ?>
-        <?= $this->render('blocks/header') ?>
+        <?= $this->render('blocks/main/header') ?>
 
         <section id="content">
             <div class="content-wrap">
@@ -41,7 +40,7 @@ CanvasAsset::register($this);
             </div>
         </section>
 
-        <?= $this->render('blocks/footer') ?>
+        <?= $this->render('blocks/main/footer') ?>
     </div>
 
     <div id="gotoTop" class="uil uil-angle-up"></div>

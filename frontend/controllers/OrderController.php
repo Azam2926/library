@@ -50,7 +50,6 @@ class OrderController extends Controller
 
         }
 
-        $this->layout = 'cart';
         return $this->render('index', [
             'cartData' => $this->cartService->getUserCartItems(),
             'model' => $model

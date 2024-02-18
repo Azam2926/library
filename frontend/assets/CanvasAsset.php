@@ -12,11 +12,9 @@ class CanvasAsset extends AssetBundle
     public $basePath = '@webroot/canvas';
     public $baseUrl = '@web/canvas';
     public $css = [
-        'https://use.typekit.net/aay8rzy.css',
+        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap',
         'style.css',
         'css/font-icons.css',
-        'css/swiper.css',
-        'demos/shop-2/shop-2.css',
         'css/custom.css'
     ];
     public $js = [

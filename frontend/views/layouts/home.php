@@ -5,12 +5,12 @@
 /* @var $content string */
 
 use common\widgets\Alert;
-use frontend\assets\CanvasAsset;
+use frontend\assets\CanvasHomeAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\web\View;
 
-CanvasAsset::register($this);
+CanvasHomeAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -28,9 +28,8 @@ CanvasAsset::register($this);
     <?php $this->beginBody() ?>
 
     <div id="wrapper">
-<!--        --><?php //= $this->render('blocks/top_bar') ?>
-        <?= $this->render('blocks/header') ?>
-        <?= $this->render('blocks/slider') ?>
+        <?= $this->render('blocks/home/header') ?>
+        <?= Yii::$app->runAction('/site/slider') ?>
 
         <section id="content">
             <div class="content-wrap">
@@ -42,7 +41,7 @@ CanvasAsset::register($this);
             </div>
         </section>
 
-        <?= $this->render('blocks/footer') ?>
+        <?= $this->render('blocks/home/footer') ?>
     </div>
 
     <div id="gotoTop" class="uil uil-angle-up"></div>

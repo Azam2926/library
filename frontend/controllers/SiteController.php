@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\LoginForm;
 use common\models\Resource;
+use common\models\ResourceShower;
 use frontend\components\Stats;
 use frontend\models\ResourceFilter;
 use frontend\models\SignupForm;
@@ -53,6 +54,18 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
+    private function findResourceWithVD($uuid): Resource
+    {
+        $model = Resource::find()->uuid($uuid)->one();
+        if (!$model)
+            throw new NotFoundHttpException('Resurs topilmadi');
+
+        return $model;
+    }
+
     public function actionIndex(): string
     {
         $new_resource_counter = 3;
@@ -94,7 +107,6 @@ class SiteController extends Controller
         ];
     }
 
-
     /**
      * Logs in a user.
      *
@@ -130,7 +142,6 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-
     /**
      * Signs user up.
      *
@@ -149,23 +160,22 @@ class SiteController extends Controller
         ]);
     }
 
-
     /**
-     * @throws NotFoundHttpException
+     * Slider render
+     *
+     * @return string|Response
      */
-    private function findResource($uuid): array|Resource|null
+    public function actionSlider(): string|Response
     {
-        $model = Resource::find()->uuid($uuid)->one();
-        if (!$model)
-            throw new NotFoundHttpException('Resurs topilmadi');
-
-        return $model;
+        return $this->renderPartial('slider', [
+            'books' => array_map(fn($item) => $item->resource, ResourceShower::find()->findByType(ResourceShower::SLIDER)->all()),
+        ]);
     }
 
     /**
      * @throws NotFoundHttpException
      */
-    private function findResourceWithVD($uuid): Resource
+    private function findResource($uuid): array|Resource|null
     {
         $model = Resource::find()->uuid($uuid)->one();
         if (!$model)

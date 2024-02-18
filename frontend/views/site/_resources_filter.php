@@ -26,7 +26,7 @@ JS, 3)
 ?>
 
 
-<div class="d-flex my-3 p-2 px-3 justify-content-between rounded" style="background-color: #ededed">
+<div class="d-flex my-3 p-2 px-3 justify-content-between rounded bg-body-secondary">
     <div class="d-flex align-items-center">
         <i class="far fa-sliders-v fs-5 me-2"></i>
         <strong>Filtrlar</strong>
@@ -47,7 +47,7 @@ JS, 3)
 
 
 <?= Accordion::widget([
-    'itemToggleOptions' => ['class' => 'fs-6 text-black fw-bold'],
+    'itemToggleOptions' => ['class' => 'fs-6 fw-bold'],
     'items' => [
         [
             'label' => $filterModel->getAttributeLabel('subjects'),

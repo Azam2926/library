@@ -189,6 +189,7 @@ class Resource extends ActiveRecord
         // ...custom code here...
         return true;
     }
+
     public function showThumbnail(): ?string
 
     {
@@ -294,10 +295,6 @@ class Resource extends ActiveRecord
         return self::getLanguageList()[$this->language];
     }
 
-    protected function getFilePath($file): bool|string
-    {
-        return Yii::getAlias('@backend/web' . $this->getUploadedFileUrl($file));
-    }
     public function getFirstTwoPublisher(): string
     {
         $publishers = StringHelper::explode($this->publisher, ',');
@@ -305,6 +302,11 @@ class Resource extends ActiveRecord
             return $publishers[0] . ', ' . $publishers[1];
 
         return $this->publisher;
+    }
+
+    public function getFirstImageUrlFront(): string
+    {
+        return Yii::$app->params['curl'] . $this->getFirstImageUrl();
     }
 
     public function getFirstImageUrl(): string
@@ -316,18 +318,23 @@ class Resource extends ActiveRecord
         return $imagesUrl[0];
     }
 
-    public function getFirstImageUrlFront(): string
-    {
-        return Yii::$app->params['curl'] . $this->getFirstImageUrl();
-    }
-
     public function getImagesUrl(): array
     {
         $res = [];
         foreach ($this->images as $image)
-            $res[] = Yii::getAlias('/uploads/resourceImages/'.$this->id. '/' . $image->path);
+            $res[] = Yii::getAlias('/uploads/resourceImages/' . $this->id . '/' . $image->path);
 
         return $res;
+    }
+
+    public function getUrl(): string
+    {
+        return '/resource/' . $this->uuid;
+    }
+
+    protected function getFilePath($file): bool|string
+    {
+        return Yii::getAlias('@backend/web' . $this->getUploadedFileUrl($file));
     }
 }
 

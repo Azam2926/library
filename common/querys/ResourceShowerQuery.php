@@ -36,4 +36,9 @@ class ResourceShowerQuery extends ActiveQuery
     {
         return $this->andWhere(['id' => $id]);
     }
+
+    public function findByType(int $type): ResourceShowerQuery
+    {
+        return $this->andWhere(['type' => $type]);
+    }
 }

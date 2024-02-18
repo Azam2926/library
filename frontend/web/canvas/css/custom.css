@@ -5,3 +5,7 @@
 	Overwriting Default Theme Styles for Better Handling Updates
 -----------------------------------------------------------------*/
 
+:root {
+    --cnvs-themecolor: #83b341;
+    --cnvs-themecolor-rgb: 131, 179, 65;
+}
