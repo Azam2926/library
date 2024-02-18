@@ -58,7 +58,7 @@ JS
                 View Cart
             </a>
         </div>
+        <?php endif; ?>
     </div>
 
-    <?php endif; ?>
 </div>
