@@ -10,7 +10,7 @@
 
                 <div id="logo">
                     <a href="/">
-                        <img class="logo-default" srcset="/canvas/images/logo.png, images/logo@2x.png 2x"
+                        <img class="logo-default" srcset="/canvas/images/logo.png, /canvas/images/logo@2x.png 2x"
                              src="/canvas/images/logo@2x.png" alt="Canvas Logo">
                         <img class="logo-dark" srcset="/canvas/images/logo-dark.png, /canvas/images/logo-dark@2x.png 2x"
                              src="/canvas/images/logo-dark@2x.png" alt="Canvas Logo">
