@@ -5,14 +5,11 @@ use frontend\components\Stats;
 
 /* @var $this yii\web\View */
 /** @var $new_resources Resource[] */
-/** @var $new_electron_resources Resource[] */
-/** @var $new_audio_resources Resource[] */
-/** @var $new_video_resources Resource[] */
-/** @var $statistics Stats */
+/** @var $featured_books Resource[] */
 
 $this->title = 'Library app';
 ?>
 <?= $this->render('blocks/index/features') ?>
-<?= $this->render('blocks/index/featured_books') ?>
+<?= $this->render('blocks/index/featured_books', ['books' => $featured_books]) ?>
 <?= $this->render('blocks/index/new_books', ['resources' => $new_resources]) ?>
 <?= $this->render('blocks/index/links') ?>
