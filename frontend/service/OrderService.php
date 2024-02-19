@@ -126,10 +126,10 @@ class OrderService extends Component
     /**
      * @param $orderId
      * @param $resourceId
-     * @return array|OrderList
+     * @return OrderList|null
      */
 
-    public function getOrderList($orderId, $resourceId): array|OrderList
+    public function getOrderList($orderId, $resourceId): OrderList|null
     {
         return $this->orderListRepository->getOrderList($orderId, $resourceId);
     }
