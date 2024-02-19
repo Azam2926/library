@@ -31,4 +31,19 @@ class OrderListQuery extends ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function findByOrder($orderId): OrderListQuery
+    {
+        return $this->andWhere(['order_id' => $orderId]);
+    }
+
+    public function findByResource($resourceId): OrderListQuery
+    {
+        return $this->andWhere(['resource_id'=> $resourceId]);
+    }
+
+    public function findByOrderAndResource($orderId, $resourceId): OrderListQuery
+    {
+        return $this->findByOrder($orderId)->findByResource($resourceId);
+    }
 }

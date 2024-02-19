@@ -3,20 +3,10 @@
 namespace frontend\service;
 
 
-use backend\repositories\ResourceRepository;
-use common\models\CartItems;
-use common\models\Order;
-use common\models\OrderList;
-use common\models\Resource;
 use common\models\UserDetails;
-use frontend\dto\CartItemResponseDTO;
-use frontend\repository\CartItemRepository;
-use frontend\repository\OrderRepository;
 use frontend\repository\UserDetailsRepository;
 use Throwable;
-use Yii;
 use yii\base\Component;
-use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 
@@ -47,7 +37,7 @@ class UserDetailsService extends Component
         $userDetailsModel->description = $model->description;
         $userDetailsModel->status = UserDetails::ORDER_CREATE;
 
-        if(!$userDetailsModel->update())
+        if(!$userDetailsModel->save())
         {
             throw new Exception("Not update user details");
         }
