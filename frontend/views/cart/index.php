@@ -49,6 +49,10 @@ $(document).ready(function (){
             if(response==true){
                 $("#uuid-"+uuid).remove();
                 updateTopCard()
+                if($("#tbody").children().length < 2)
+                {
+                    $("#checkout").css("display", "none");
+                };
             }
             else{
                 alert("false or some error");
@@ -75,7 +79,7 @@ JS
             <th class="cart-product-subtotal">Total</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
         <?php foreach ($model->getItems() as $item): ?>
             <tr class="cart_item" id="uuid-<?= $item->getUUID() ?>">
                 <td class="cart-product-remove">
@@ -125,7 +129,7 @@ JS
                     </div>
                     <div class="col-lg-auto pe-lg-0">
 <!--                        <a href="#" class="button button-small button-3d m-0">Update Cart</a>-->
-                        <a href="<?= Url::to('/order') ?>" style="display: <?= !empty($model->getItems()) ? "" : "none" ?>" class="button button-small button-3d mt-2 mt-sm-0 me-0 mb-0">Proceed to Checkout</a>
+                        <a href="<?= Url::to('/order') ?>" style="display: <?= !empty($model->getItems()) ? "" : "none" ?>" id="checkout" class="button button-small button-3d mt-2 mt-sm-0 me-0 mb-0">Proceed to Checkout</a>
                     </div>
                 </div>
             </td>
