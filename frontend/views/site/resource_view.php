@@ -10,15 +10,27 @@ use yii\web\View;
 $this->registerJs(<<<JS
     const uid = document.getElementById('uuid-id')
     const form = document.getElementById('add-to-cart')
-    const addButton = document.getElementById('add-to-cart-button')
+    const qty = $('input[type=number]')
+    const addBtn = $('#add-to-cart-button')
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
 
     form.addEventListener('submit', (e) => {
         e.preventDefault()
+        $.ajaxSetup({
+            beforeSend: () => {
+                addBtn.html('<div class="css3-spinner" style="--cnvs-loader-color:var(--cnvs-themecolor);"><div class="css3-spinner-clip-rotate"><div></div></div></div>')
+                addBtn.attr('disabled', true)
+                
+            }
+        })
         $.post(
             '/cart/add-to-cart', 
-            {qty: addButton.value, uuid: uid.value, '_csrf-frontend': csrfToken },
-            (data) => $('#top-cart-modal').html(data)
+            {qty: qty.val(), uuid: uid.value, '_csrf-frontend': csrfToken },
+            (data) => {
+                $('#top-cart-modal').html(data)
+                addBtn.text('Add to cart')
+                addBtn.attr('disabled', false)
+            }
             )
             .fail(e => {
                 if (e.status === 401) {
@@ -39,7 +51,7 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
         <div class="product">
             <div class="row gutter-40">
 
-                <div class="col-md-5">
+                <div class="col-md-6">
 
                     <!-- Product Single - Gallery
                     ============================================= -->
@@ -65,104 +77,33 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
 
                 </div>
 
-                <div class="col-md-5 product-desc">
+                <div class="col-md-6 product-desc">
 
                     <div class="d-flex align-items-center justify-content-between">
-
-                        <!-- Product Single - Price
-                        ============================================= -->
-                        <div class="product-price"><?= $resource->price ?></div><!-- Product Single - Price End -->
-
-                        <!-- Product Single - Rating
-                        ============================================= -->
+                        <div class="product-price"><?= $resource->price ?></div>
                         <div class="product-rating">
                             <i class="bi-star-fill"></i>
                             <i class="bi-star-fill"></i>
                             <i class="bi-star-fill"></i>
                             <i class="bi-star-half"></i>
                             <i class="bi-star"></i>
-                        </div><!-- Product Single - Rating End -->
-
+                        </div>
                     </div>
 
                     <div class="line"></div>
 
-                    <!-- Product Single - Quantity & Cart Button
-                    ============================================= -->
                     <form id="add-to-cart" class="cart mb-0 d-flex justify-content-between align-items-center">
                         <div class="quantity">
                             <input type="button" value="-" class="minus">
-                            <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="qty"
-                                   id="add-to-cart-button">
+                            <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="qty">
                             <input type="button" value="+" class="plus">
                         </div>
-                        <button type="submit" class="add-to-cart button m-0">Add to cart</button>
+                        <button type="submit" id="add-to-cart-button" class="add-to-cart button m-0">Add to cart</button>
                     </form>
-                    <!-- Product Single - Quantity & Cart Button End -->
 
                     <div class="line"></div>
 
-                    <!-- Product Single - Short Description
-                    ============================================= -->
                     <p><?= $resource->description ?></p>
-                    <!-- Product Single - Short Description End -->
-
-                    <!-- Product Single - Meta
-                    ============================================= -->
-                    <!-- Product Single - Meta End -->
-
-                    <!-- Product Single - Share
-                    ============================================= -->
-                    <!-- Product Single - Share End -->
-
-                </div>
-
-                <div class="col-md-2">
-
-                    <a href="#" title="Brand Logo" class="d-none d-md-block"><img src="/canvas/images/shop/brand.jpg"
-                                                                                  alt="Brand Logo"></a>
-
-                    <div class="divider divider-center"><i class="bi-circle"></i></div>
-
-                    <div class="feature-box fbox-plain fbox-dark fbox-sm">
-                        <div class="fbox-icon">
-                            <i class="bi-hand-thumbs-up"></i>
-                        </div>
-                        <div class="fbox-content fbox-content-sm">
-                            <h3>100% Original</h3>
-                            <p class="mt-0">We guarantee you the sale of Original Brands.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-box fbox-plain fbox-dark fbox-sm mt-4">
-                        <div class="fbox-icon">
-                            <i class="bi-credit-card"></i>
-                        </div>
-                        <div class="fbox-content fbox-content-sm">
-                            <h3>Payment Options</h3>
-                            <p class="mt-0">We accept Visa, MasterCard and American Express.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-box fbox-plain fbox-dark fbox-sm mt-4">
-                        <div class="fbox-icon">
-                            <i class="bi-truck"></i>
-                        </div>
-                        <div class="fbox-content fbox-content-sm">
-                            <h3>Free Shipping</h3>
-                            <p class="mt-0">Free Delivery to 100+ Locations on orders above $40.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-box fbox-plain fbox-dark fbox-sm mt-4">
-                        <div class="fbox-icon">
-                            <i class="bi-arrow-counterclockwise"></i>
-                        </div>
-                        <div class="fbox-content fbox-content-sm">
-                            <h3>30-Days Returns</h3>
-                            <p class="mt-0">Return or exchange items purchased within 30 days.</p>
-                        </div>
-                    </div>
 
                 </div>
 
