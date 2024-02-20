@@ -5,6 +5,40 @@ use yii\web\View;
 
 /* @var $this View */
 /* @var $model Resource */
+
+$this->registerJs(<<<JS
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+    $('.add-to-cart').each(function () {
+        const btn = this
+        this.addEventListener('click', (e) => {
+        e.preventDefault()
+        $.ajaxSetup({
+            beforeSend: () => {
+                $(btn).html('<div class="css3-spinner" style="--cnvs-loader-color:var(--cnvs-themecolor);"><div class="css3-spinner-clip-rotate"><div></div></div></div>')
+                $(btn).attr('disabled', true)
+                
+            }
+        });
+        $.post(
+            '/cart/add-to-cart', 
+            {qty: 1, uuid: this.dataset.uid, '_csrf-frontend': csrfToken },
+            (data) => {
+                $('#top-cart-modal').html(data)
+                $(btn).html('<i class="uil uil-shopping-cart me-1"></i> Add to Cart')
+                $(btn).attr('disabled', false)
+            }
+            )
+            .fail(e => {
+                if (e.status === 401) {
+                    window.location = '/site/login'
+                    window.reload()
+                }
+            })
+    })
+    })
+
+JS, 3);
 ?>
 <div class="grid-inner">
     <div class="product-image">
@@ -14,14 +48,7 @@ use yii\web\View;
                      alt="<?= $image->name ?>">
             </a>
         <?php endforeach; ?>
-        <div class="sale-flash badge bg-secondary p-2">Out of Stock</div>
         <div class="bg-overlay">
-            <div class="bg-overlay-content align-items-end justify-content-center p-0">
-                <a href="include/ajax/shop-item.html"
-                   class="btn btn-light py-2 w-100 m-0 rounded-0 animated fadeOutDown" data-lightbox="ajax"
-                   data-hover-animate="fadeInUp" data-hover-animate-out="fadeOutDown" data-hover-speed="400"
-                   data-hover-parent=".product" style="animation-duration: 400ms;">Quick View</a>
-            </div>
             <div class="bg-overlay-bg bg-transparent"></div>
         </div>
     </div>
@@ -30,6 +57,8 @@ use yii\web\View;
         <div class="product-price">
             <?= $model->price ?>
         </div>
-        <a href="#" class="btn btn-sm btn-dark px-3 mt-2"><i class="uil uil-shopping-cart me-1"></i> Add to Cart</a>
+        <button data-uid="<?= $model->uuid ?>" class="btn btn-sm btn-dark px-3 mt-2 add-to-cart">
+            <i class="uil uil-shopping-cart me-1"></i> Add to Cart
+        </button>
     </div>
 </div>
