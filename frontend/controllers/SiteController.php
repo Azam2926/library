@@ -149,12 +149,28 @@ class SiteController extends Controller
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            return $this->redirect(['site/index']);
+            if($this->autoLogin($model))
+            {
+                return $this->redirect(['site/index']);
+            }
+            else{
+                return $this->redirect(['site/login']);
+            }
+
         }
 
         return $this->render('signup', [
             'model' => $model,
         ]);
+    }
+
+    private function autoLogin(SignupForm $signupForm): bool
+    {
+        $model = new LoginForm();
+        $model->password = $signupForm->password;
+        $model->username = $signupForm->username;
+
+        return $model->login();
     }
 
     /**
