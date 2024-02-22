@@ -5,12 +5,12 @@ namespace frontend\controllers;
 use common\models\LoginForm;
 use common\models\Resource;
 use common\models\ResourceShower;
-use frontend\components\Stats;
 use frontend\models\ResourceFilter;
 use frontend\models\SignupForm;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -143,13 +143,13 @@ class SiteController extends Controller
      * Signs user up.
      *
      * @return string|Response
+     * @throws Exception
      */
     public function actionSignup(): string|Response
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+            return $this->redirect(['site/index']);
         }
 
         return $this->render('signup', [
