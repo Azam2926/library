@@ -2,10 +2,17 @@
 /** @var Resource $resource */
 
 /** @var View $this */
+/** @var Reviews $reviewModel */
+/** @var ReviewResponseDTO $reviewList */
 
 use common\models\Resource;
+use common\models\Reviews;
+use frontend\dto\ReviewResponseDTO;
+use yii\bootstrap5\ActiveForm;
 use yii\web\JqueryAsset;
 use yii\web\View;
+
+$reviewCount = array_reduce($reviewList->getData(), function($countArray, $data) {return $countArray + count($data->getReviewList());}, 0);
 
 $this->registerJs(<<<JS
     const uid = document.getElementById('uuid-id')
@@ -42,6 +49,36 @@ $this->registerJs(<<<JS
 
 JS, 3);
 $this->registerAssetBundle(JqueryAsset::class, 3);
+
+$this->registerJs(<<<JS
+
+$(document).ready(function (){
+    
+    $("#review_create").click(function (){
+        var rating = $("#template-reviewform-rating").val();
+        var comment = $("#textarea-comment").val();
+        var uuid = $("#uuid-id").val();
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        
+        // alert(uuid);
+        $.post('/site/review', {uuid: uuid, rating: rating, comment:comment, '_csrf-frontend': csrfToken})
+        .done(function (response){
+            if(response==true){
+                 $('#reviewFormModal').modal('hide');
+                  $('#template-reviewform-rating').val('');
+                  $('#textarea-comment').val('');
+            }
+            else{
+                alert("xatolik mavjud");
+            }
+        })
+        .fail(e => {
+               alert("xatolik bor");
+        })
+    })
+})
+
+JS);
 
 ?>
 <input type="text" id="uuid-id" hidden="hidden" value="<?= $resource->uuid ?>">
@@ -134,7 +171,7 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
                                         data-bs-target="#tabs-3" type="button"
                                         role="tab" aria-controls="canvas-tabs-3" aria-selected="false"><i
                                             class="me-1 bi-star-fill"></i><span
-                                            class="d-none d-md-inline-block"> Reviews (2)</span></a></button>
+                                            class="d-none d-md-inline-block"> Reviews (<?= $reviewCount; ?>)</span></a></button>
                             </li>
                         </ul>
 
@@ -179,181 +216,95 @@ $this->registerAssetBundle(JqueryAsset::class, 3);
                                 </table>
 
                             </div>
-                            <div class="tab-pane fade" id="tabs-3" role="tabpanel" aria-labelledby="canvas-tabs-3-tab"
-                                 tabindex="0">
-
+                            <div class="tab-pane fade" id="tabs-3" role="tabpanel" aria-labelledby="canvas-tabs-3-tab" tabindex="0">
                                 <div id="reviews">
-
                                     <ol class="commentlist">
-
-                                        <li class="comment even thread-even depth-1" id="li-comment-1">
-                                            <div id="comment-1" class="comment-wrap">
-
-                                                <div class="comment-meta">
-                                                    <div class="comment-author vcard">
-																		<span class="comment-avatar">
-																			<img alt='Image'
-                                                                                 src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
-                                                                                 height='60' width='60'></span>
+                                        <?php foreach ($reviewList->getData() as $reviewListDTO): ?>
+                                            <?php foreach ($reviewListDTO->getReviewList() as $item): ?>
+                                               <li class="comment even thread-even depth-1" id="li-comment-1">
+                                                   <div id="comment-1" class="comment-wrap">
+                                                       <div class="comment-meta">
+                                                           <div class="comment-author vcard">
+                                                               <span class="comment-avatar">
+                                                                   <img alt='Image'
+                                                                 src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
+                                                                 height='60' width='60'>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                       <div class="comment-content">
+                                                           <div class="comment-author"><?= $reviewListDTO->getUsername();?>
+                                                        <span>
+                                                            <a href="#" title="Permalink to this comment"><?= $item->getCreatedAt() ?></a>
+                                                        </span>
                                                     </div>
-                                                </div>
-
-                                                <div class="comment-content">
-                                                    <div class="comment-author">John Doe<span><a href="#"
-                                                                                                 title="Permalink to this comment">April 24, 2021 at 10:46AM</a></span>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo
-                                                        perferendis aliquid
-                                                        tenetur. Aliquid, tempora, sit aliquam officiis nihil autem eum
-                                                        at repellendus
-                                                        facilis quaerat consequatur commodi laborum saepe non nemo nam
-                                                        maxime quis error
-                                                        tempore possimus est quasi reprehenderit fuga!</p>
-                                                    <div class="review-comment-ratings">
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star-half"></i>
-                                                    </div>
-                                                </div>
-
-                                                <div class="clear"></div>
-
-                                            </div>
-                                        </li>
-
-                                        <li class="comment even thread-even depth-1" id="li-comment-2">
-                                            <div id="comment-2" class="comment-wrap">
-
-                                                <div class="comment-meta">
-                                                    <div class="comment-author vcard">
-																		<span class="comment-avatar">
-																			<img alt='Image'
-                                                                                 src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
-                                                                                 height='60' width='60'></span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="comment-content">
-                                                    <div class="comment-author">Mary Jane<span><a href="#"
-                                                                                                  title="Permalink to this comment">June 16, 2021 at 6:00PM</a></span>
-                                                    </div>
-                                                    <p>Quasi, blanditiis, neque ipsum numquam odit asperiores hic dolor
-                                                        necessitatibus
-                                                        libero sequi amet voluptatibus ipsam velit qui harum temporibus
-                                                        cum nemo iste
-                                                        aperiam explicabo fuga odio ratione sint fugiat consequuntur
-                                                        vitae adipisci delectus
-                                                        eum incidunt possimus tenetur excepturi at accusantium quod
-                                                        doloremque reprehenderit
-                                                        aut expedita labore error atque?</p>
-                                                    <div class="review-comment-ratings">
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star-fill"></i>
-                                                        <i class="bi-star"></i>
-                                                        <i class="bi-star"></i>
-                                                    </div>
-                                                </div>
-
-                                                <div class="clear"></div>
-
-                                            </div>
-                                        </li>
+                                                           <p><?= $item->getComment() ?></p>
+                                                           <div class="review-comment-ratings">
+                                                               <?php for ($i=0; $i< $item->getRating(); $i++): ?>
+                                                                   <?= '<i class="bi-star-fill"></i>' ?>
+                                                               <?php endfor; ?>
+                                                           </div>
+                                                       </div>
+                                                       <div class="clear"></div>
+                                                   </div>
+                                               </li>
+                                            <?php endforeach; ?>
+                                        <?php endforeach; ?>
 
                                     </ol>
-
-                                    <!-- Modal Reviews
-                                                                                ============================================= -->
+                                    <!-- Modal Reviews -->
                                     <div class="text-end">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#reviewFormModal"
-                                           class="button button-3d m-0">Add a Review</a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#reviewFormModal" class="button button-3d m-0">Add a Review</a>
                                     </div>
-
                                     <div class="modal fade" id="reviewFormModal" tabindex="-1" role="dialog"
                                          aria-labelledby="reviewFormModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="reviewFormModalLabel">Submit a
-                                                        Review</h4>
+                                                    <h4 class="modal-title" id="reviewFormModalLabel">Submit a Review</h4>
                                                     <button type="button" class="btn-close btn-sm"
                                                             data-bs-dismiss="modal"
-                                                            aria-hidden="true"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form class="row mb-0" id="template-reviewform"
-                                                          name="template-reviewform" action="#"
-                                                          method="post">
+                                                            aria-hidden="true">
 
-                                                        <div class="col-6 mb-3">
-                                                            <label for="template-reviewform-name">Name <small>*</small></label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-text"><i
-                                                                            class="uil uil-user"></i></div>
-                                                                <input type="text" id="template-reviewform-name"
-                                                                       name="template-reviewform-name" value=""
-                                                                       class="form-control required">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-6 mb-3">
-                                                            <label for="template-reviewform-email">Email
-                                                                <small>*</small></label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-text">@</div>
-                                                                <input type="email" id="template-reviewform-email"
-                                                                       name="template-reviewform-email" value=""
-                                                                       class="required email form-control">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="w-100"></div>
-
-                                                        <div class="col-12 mb-3">
-                                                            <label for="template-reviewform-rating">Rating</label>
-                                                            <select id="template-reviewform-rating"
-                                                                    name="template-reviewform-rating"
-                                                                    class="form-select">
-                                                                <option value="">-- Select One --</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5">5</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="w-100"></div>
-
-                                                        <div class="col-12 mb-3">
-                                                            <label for="template-reviewform-comment">Comment
-                                                                <small>*</small></label>
-                                                            <textarea class="required form-control"
-                                                                      id="template-reviewform-comment"
-                                                                      name="template-reviewform-comment" rows="6"
-                                                                      cols="30"></textarea>
-                                                        </div>
-
-                                                        <div class="col-12">
-                                                            <button class="button button-3d m-0" type="submit"
-                                                                    id="template-reviewform-submit"
-                                                                    name="template-reviewform-submit"
-                                                                    value="submit">Submit Review
-                                                            </button>
-                                                        </div>
-
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close
                                                     </button>
                                                 </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                                                <div class="modal-body">
+                                                    <?php $form = ActiveForm::begin([
+                                                        'options' => [
+                                                            'class' => 'row mb-0',
+                                                            'name' => 'template-reviewform',
+                                                            'enctype' => 'multipart/form-data',
+                                                        ],
+                                                        'method' => 'post',
+                                                        'id' => 'template-reviewform',
+                                                    ]); ?>
+
+                                                    <div class="col-12 mb-3">
+                                                        <?= $form->field($reviewModel, 'rating')->dropDownList(
+                                                            ['' => '-- Select rating --', 1 => 1,2 => 2, 3 => 3, 4 => 4, 5 => 5],
+                                                            ['class' => 'form-select', 'id' => 'template-reviewform-rating']
+                                                        ) ?>
+                                                    </div>
+                                                    <div class="col-12 mb-3">
+                                                        <?= $form->field($reviewModel, 'comment')->textarea(
+                                                            ['class' => 'form-control', 'rows' => 5, 'id'=> 'textarea-comment']
+                                                        ) ?>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button class="button button-3d m-0" type="button"
+                                                                    id="review_create"
+                                                                    name="review_create"
+                                                                    value="button">Submit Review
+                                                        </button>
+                                                    </div>
+                                                    <?php ActiveForm::end(); ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- Modal Reviews End -->
 
                                 </div>

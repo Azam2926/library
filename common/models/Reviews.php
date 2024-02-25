@@ -2,9 +2,8 @@
 
 namespace common\models;
 
-use common\models\querys\ReviewsQuery;
+use common\querys\ReviewsQuery;
 use JetBrains\PhpStorm\ArrayShape;
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
@@ -92,7 +91,11 @@ class Reviews extends ActiveRecord
      */
     public function getResource(): ActiveQuery
     {
-        return $this->hasOne(Resource::class, ['id' => 'resource_id'])->inverseOf('reviews');
+        return $this->hasOne(Resource::class, ['id' => 'resource_id']);
+    }
+    public function getUser(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

@@ -5,6 +5,10 @@ namespace frontend\controllers;
 use common\models\LoginForm;
 use common\models\Resource;
 use common\models\ResourceShower;
+use common\models\Reviews;
+use frontend\dto\ReviewRequestDTO;
+use frontend\service\ReviewService;
+use Throwable;
 use frontend\models\ResourceFilter;
 use frontend\models\SignupForm;
 use JetBrains\PhpStorm\ArrayShape;
@@ -19,6 +23,15 @@ use yii\web\Response;
 
 class SiteController extends Controller
 {
+    private ReviewService $reviewService;
+
+    public function __construct($id, $module,
+                                ReviewService $reviewService,
+                                $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->reviewService = $reviewService;
+    }
     #[ArrayShape(['error' => "string[]"])]
     public function actions(): array
     {
@@ -45,13 +58,34 @@ class SiteController extends Controller
 
     /**
      * @throws NotFoundHttpException
+     * @throws Exception
      */
     public function actionResource($uuid): string
     {
-        $resource = $this->findResourceWithVD($uuid);
+        $reviewModel = new Reviews();
+
         return $this->render('resource_view', [
-            'resource' => $resource,
+            'resource'    => $this->findResourceWithVD($uuid),
+            'reviewModel' => $reviewModel,
+            'reviewList'  => $this->reviewService->getReviewsList($uuid)
         ]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function actionReview(): bool|string
+    {
+        if(Yii::$app->request->isAjax)
+        {
+            $reviewDTO = new ReviewRequestDTO(Yii::$app->request->post());
+            $this->reviewService->createReview($reviewDTO);
+            return true;
+        }
+        else{
+            return $this->render('index');
+        }
     }
 
     /**

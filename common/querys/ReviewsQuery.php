@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\querys;
+namespace common\querys;
 
 use common\models\Reviews;
 use yii\db\ActiveQuery;
@@ -10,6 +10,9 @@ use yii\db\ActiveRecord;
  * This is the ActiveQuery class for [[Reviews]].
  *
  * @see Reviews
+ *
+ * @property-read ReviewsQuery $byComment
+ * @property-read ReviewsQuery $byRating
  */
 class ReviewsQuery extends ActiveQuery
 {

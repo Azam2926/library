@@ -6,6 +6,10 @@ namespace frontend\service;
 use backend\service\ResourceService;
 use common\models\Resource;
 use common\models\Reviews;
+use common\models\User;
+use frontend\dto\ReviewDTO;
+use frontend\dto\ReviewListDTO;
+use frontend\dto\ReviewResponseDTO;
 use frontend\dto\ReviewRequestDTO;
 use frontend\repository\ReviewRepository;
 use Yii;
@@ -52,11 +56,38 @@ class ReviewService extends Component
     /**
      * @throws Exception
      */
-    public function getReviewsList(string $uuid): array
+    public function getReviewsList(string $uuid): ReviewResponseDTO
     {
-        $resourceModel =  $this->getResource($uuid);
+        $resultDTO = new ReviewResponseDTO();
 
-        return $this->reviewRepository->getReviewsList($resourceModel->id);
+        $resourceModel =  $this->getResource($uuid);
+        $reviewList = $this->reviewRepository->reviewsListGroupByUser($resourceModel->id);
+
+        foreach ($reviewList as $item)
+        {
+            $reviewListDTO = new ReviewListDTO();
+
+            $inlineReviews = $this->reviewRepository->getByUserId($item->user_id);
+
+//            dd($inlineReviews);
+
+            foreach ($inlineReviews as $review)
+            {
+                $dto = new ReviewDTO();
+
+                $dto->setRating($review->rating);
+                $dto->setComment($review->comment);
+                $dto->setCreatedAt($review->created_at);
+
+                $reviewListDTO->setReviewList($dto);
+            }
+
+            $reviewListDTO->setUsername($review->user->username);
+
+            $resultDTO->setData($reviewListDTO);
+        }
+
+        return $resultDTO;
     }
 
 
@@ -111,6 +142,11 @@ class ReviewService extends Component
     private function getResource(string $uuid): Resource
     {
        return $this->resourceService->getResource($uuid);
+    }
+
+    private function getUser(int $userId): array|User|null
+    {
+        return User::find()->andWhere(['user_id' => $userId])->one();
     }
 
 
