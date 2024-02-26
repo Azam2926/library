@@ -24,7 +24,7 @@ CanvasAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="stretched">
+    <body class="stretched adaptive-color-scheme">
     <?php $this->beginBody() ?>
 
     <div id="wrapper">

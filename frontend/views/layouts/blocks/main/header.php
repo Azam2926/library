@@ -18,7 +18,7 @@
                 </div>
                 <div class="header-misc">
 
-                    <div id="top-search" class="header-misc-icon">
+                    <div id="top-theme-toggle" class="header-misc-icon">
                         <button type="button" class="btn btn-sm body-scheme-toggle btn-dark" data-bodyclass-toggle="dark" data-add-class="btn-warning" data-remove-class="btn-dark" data-add-html="<i class='bi-brightness-high'></i><span class='visually-hidden'>Light Mode</span>" data-remove-html="<i class='bi-moon-stars'></i><span class='visually-hidden'>Dark Mode</span>"><i class="bi-moon-stars"></i><span class="visually-hidden">Dark Mode</span></button>
                     </div>
 
