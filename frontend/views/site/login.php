@@ -32,8 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= $form->field($model, 'password')->passwordInput() ?>
                         </div>
                         <div class="col-12 form-group">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <?= Html::submitButton('Login', ['class' => 'button button-3d button-black m-0', 'name' => 'login-form-submit']) ?>
+                                <a href="/site/signup">or signup first</a>
                             </div>
                         </div>
                     </div>
