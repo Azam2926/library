@@ -3,6 +3,7 @@
 
 /** @var View $this */
 /** @var Reviews $reviewModel */
+
 /** @var ReviewResponseDTO $reviewList */
 
 use common\models\Resource;
@@ -12,7 +13,9 @@ use yii\bootstrap5\ActiveForm;
 use yii\web\JqueryAsset;
 use yii\web\View;
 
-$reviewCount = array_reduce($reviewList->getData(), function($countArray, $data) {return $countArray + count($data->getReviewList());}, 0);
+$reviewCount = array_reduce($reviewList->getData(), function ($countArray, $data) {
+    return $countArray + count($data->getReviewList());
+}, 0);
 
 $this->registerJs(<<<JS
     const uid = document.getElementById('uuid-id')
@@ -78,7 +81,8 @@ $(document).ready(function (){
     })
 })
 
-JS);
+JS
+);
 
 ?>
 <input type="text" id="uuid-id" hidden="hidden" value="<?= $resource->uuid ?>">
@@ -140,7 +144,12 @@ JS);
 
                     <div class="line"></div>
 
-                    <p><?= $resource->description ?></p>
+                    <div data-readmore="true" data-readmore-trigger-open="Read More <i class='fa-solid fa-chevron-down'></i>"
+                         data-readmore-trigger-close="Read Less <i class='fa-solid fa-chevron-up'></i>" class="read-more-wrap" style="transition-duration: 500ms; height: 10rem;">
+                        <p><?= $resource->description ?></p>
+                        <a href="#" class="btn btn-link text-primary read-more-trigger read-more-trigger-center">Read More <i class="fa-solid fa-chevron-down"></i></a>
+                        <div class="read-more-mask op-ts op-1" style="height: 100%; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));"></div>
+                    </div>
 
                 </div>
 
@@ -221,33 +230,33 @@ JS);
                                     <ol class="commentlist">
                                         <?php foreach ($reviewList->getData() as $reviewListDTO): ?>
                                             <?php foreach ($reviewListDTO->getReviewList() as $item): ?>
-                                               <li class="comment even thread-even depth-1" id="li-comment-1">
-                                                   <div id="comment-1" class="comment-wrap">
-                                                       <div class="comment-meta">
-                                                           <div class="comment-author vcard">
+                                                <li class="comment even thread-even depth-1" id="li-comment-1">
+                                                    <div id="comment-1" class="comment-wrap">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-author vcard">
                                                                <span class="comment-avatar">
                                                                    <img alt='Image'
-                                                                 src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
-                                                                 height='60' width='60'>
+                                                                        src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
+                                                                        height='60' width='60'>
                                                                </span>
-                                                           </div>
-                                                       </div>
-                                                       <div class="comment-content">
-                                                           <div class="comment-author"><?= $reviewListDTO->getUsername();?>
-                                                        <span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-content">
+                                                            <div class="comment-author"><?= $reviewListDTO->getUsername(); ?>
+                                                                <span>
                                                             <a href="#" title="Permalink to this comment"><?= $item->getCreatedAt() ?></a>
                                                         </span>
+                                                            </div>
+                                                            <p><?= $item->getComment() ?></p>
+                                                            <div class="review-comment-ratings">
+                                                                <?php for ($i = 0; $i < $item->getRating(); $i++): ?>
+                                                                    <?= '<i class="bi-star-fill"></i>' ?>
+                                                                <?php endfor; ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clear"></div>
                                                     </div>
-                                                           <p><?= $item->getComment() ?></p>
-                                                           <div class="review-comment-ratings">
-                                                               <?php for ($i=0; $i< $item->getRating(); $i++): ?>
-                                                                   <?= '<i class="bi-star-fill"></i>' ?>
-                                                               <?php endfor; ?>
-                                                           </div>
-                                                       </div>
-                                                       <div class="clear"></div>
-                                                   </div>
-                                               </li>
+                                                </li>
                                             <?php endforeach; ?>
                                         <?php endforeach; ?>
 
@@ -281,26 +290,26 @@ JS);
 
                                                     <div class="col-12 mb-3">
                                                         <?= $form->field($reviewModel, 'rating')->dropDownList(
-                                                            ['' => '-- Select rating --', 1 => 1,2 => 2, 3 => 3, 4 => 4, 5 => 5],
+                                                            ['' => '-- Select rating --', 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5],
                                                             ['class' => 'form-select', 'id' => 'template-reviewform-rating']
                                                         ) ?>
                                                     </div>
                                                     <div class="col-12 mb-3">
                                                         <?= $form->field($reviewModel, 'comment')->textarea(
-                                                            ['class' => 'form-control', 'rows' => 5, 'id'=> 'textarea-comment']
+                                                            ['class' => 'form-control', 'rows' => 5, 'id' => 'textarea-comment']
                                                         ) ?>
                                                     </div>
                                                     <div class="col-12">
                                                         <button class="button button-3d m-0" type="button"
-                                                                    id="review_create"
-                                                                    name="review_create"
-                                                                    value="button">Submit Review
+                                                                id="review_create"
+                                                                name="review_create"
+                                                                value="button">Submit Review
                                                         </button>
                                                     </div>
                                                     <?php ActiveForm::end(); ?>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
