@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 use common\models\UserDetails;
-use frontend\dto\CartItemResponseDTO;
 use frontend\service\CartService;
 use frontend\service\OrderService;
 use frontend\service\UserDetailsService;
@@ -11,6 +10,7 @@ use Throwable;
 use Yii;
 use yii\db\Exception;
 use yii\web\Controller;
+use yii\web\Response;
 
 class OrderController extends Controller
 {
@@ -34,12 +34,11 @@ class OrderController extends Controller
      * @throws Exception
      * @throws Throwable
      */
-    public function actionIndex(): string
+    public function actionIndex(): Response|string
     {
         $model = new UserDetails();
 
-        if(Yii::$app->request->post() && $model->load(Yii::$app->request->post()))
-        {
+        if (Yii::$app->request->post() && $model->load(Yii::$app->request->post())) {
             $this->orderService->addOrder($this->cartService->getCartItemList());
             $this->userDetailsService->update($model);
 
@@ -50,8 +49,12 @@ class OrderController extends Controller
 
         }
 
+        $cartItems = $this->cartService->getUserCartItems();
+        if (empty($cartItems->getItems()))
+            return $this->redirect("site");
+
         return $this->render('index', [
-            'cartData' => $this->cartService->getUserCartItems(),
+            'cartData' => $cartItems,
             'model' => $model
         ]);
     }
@@ -63,7 +66,7 @@ class OrderController extends Controller
 
     public function actionView($id)
     {
-            
+
     }
 
 }
