@@ -88,47 +88,6 @@ $this->title = 'Order';
                     </tbody>
                 </table>
             </div>
-            <div class="accordion">
-                <div class="accordion-header accordion-active">
-                    <div class="accordion-icon">
-                        <i class="accordion-closed uil uil-minus"></i>
-                        <i class="accordion-open bi-check-lg"></i>
-                    </div>
-                    <div class="accordion-title">
-                        Direct Bank Transfer
-                    </div>
-                </div>
-                <div class="accordion-content" style="display: block;">Donec sed odio dui. Nulla vitae elit libero, a
-                    pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante
-                    venenatis dapibus posuere velit aliquet.
-                </div>
-                <div class="accordion-header">
-                    <div class="accordion-icon">
-                        <i class="accordion-closed uil uil-minus"></i>
-                        <i class="accordion-open bi-check-lg"></i>
-                    </div>
-                    <div class="accordion-title">
-                        Cheque Payment
-                    </div>
-                </div>
-                <div class="accordion-content" style="display: none;">Integer posuere erat a ante venenatis dapibus
-                    posuere velit aliquet. Duis mollis, est non commodo luctus. Aenean lacinia bibendum nulla sed
-                    consectetur. Cras mattis consectetur purus sit amet fermentum.
-                </div>
-                <div class="accordion-header">
-                    <div class="accordion-icon">
-                        <i class="accordion-closed uil uil-minus"></i>
-                        <i class="accordion-open bi-check-lg"></i>
-                    </div>
-                    <div class="accordion-title">
-                        Paypal
-                    </div>
-                </div>
-                <div class="accordion-content" style="display: none;">Nullam id dolor id nibh ultricies vehicula ut id
-                    elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non
-                    commodo luctus. Aenean lacinia bibendum nulla sed consectetur.
-                </div>
-            </div>
         </div>
         <div class="col-lg-6 offset-lg-3">
             <?php $form = ActiveForm::begin(); ?>
