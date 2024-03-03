@@ -44,7 +44,7 @@ JS
         <?php else: ?>
 
         <div class="top-cart-title">
-            <h4 class="text-dark">Shopping Cart</h4>
+            <h4>Shopping Cart</h4>
         </div>
         <div class="top-cart-items">
             <?php foreach ($cartItems as $cartItem): ?>
@@ -52,9 +52,9 @@ JS
             <?php endforeach; ?>
         </div>
         <div class="top-cart-action">
-            <span class="top-checkout-price fw-semibold text-dark"><?= $sumOfItems . " UZS" ?></span>
+            <span><?= $sumOfItems . " UZS" ?></span>
             <a href="<?= Url::to(['cart/index']) ?>"
-               class="button button-mini rounded-pill button-border text-dark h-text-color m-0">
+               class="button button-small m-0">
                 View Cart
             </a>
         </div>
